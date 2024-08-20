@@ -17,7 +17,7 @@ const firebaseConfig = {
  googleLogout.addEventListener("click",function(){
     signOut(auth).then(() => {
         alert("User has successfully signed out");
-        window.location.href = 'LogIn.html';
+        window.location.href = 'index.html';
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
