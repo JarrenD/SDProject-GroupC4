@@ -52,7 +52,7 @@ SignUpForm.addEventListener('submit', function(e) {
             .then(() => {
                 alert("SignUp Successful!");
                 alert("You will now be forwarded to the LogIn page to LogIn");
-                window.location.href = "../LogIn.html"; // Redirect after successful sign-up
+                window.location.href = "../index.html"; // Redirect after successful sign-up
             })
             .catch((error) => {
                 alert("Error storing user data: " + error.message);
