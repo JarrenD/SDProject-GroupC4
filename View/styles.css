@@ -1,0 +1,84 @@
+/* Reset some default browser styling */
+body, h1, a, button {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Set the body background to white and ensure full height */
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the navigation bar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white; /* White background for the nav */
+    color: black; /* Black text for contrast */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+/* Style the logo */
+#logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Style the navigation links */
+nav a {
+    color: black; /* Black text for the links */
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Style the main section to be below the nav */
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #F7F7F7; /* Very light gray background for the main section */
+}
+
+/* Style the heading and map container */
+#message {
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#map {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background-color: black; /* Black background for the map */
+    border: 2px solid #BDC3C7; /* Light gray border */
+    margin-bottom: 20px;
+}
+
+/* Style the button */
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #1A5276; /* Darker blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #154360; /* Even darker blue on hover */
+}
