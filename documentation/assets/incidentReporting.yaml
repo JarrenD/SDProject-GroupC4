@@ -1,0 +1,142 @@
+openapi: 3.0.0
+info:
+  title: Incident Reporting API
+  description: Provides endpoints to report and manage incidents.
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/2541773_1/incident-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /incidents:
+    get:
+      summary: Retrieve All Incident Reports
+      responses:
+        "200":
+          description: List of all incident reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Incident'
+    post:
+      summary: Submit a New Incident Report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Incident'
+        required: true
+      responses:
+        "201":
+          description: Incident report created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+  /incidents/{incident_id}:
+    get:
+      summary: Retrieve Specific Incident Report
+      parameters:
+      - name: incident_id
+        in: path
+        description: The unique ID of the incident report
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Specific incident report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+    put:
+      summary: Update an Existing Incident Report
+      parameters:
+      - name: incident_id
+        in: path
+        description: The unique ID of the incident report
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Incident'
+        required: true
+      responses:
+        "200":
+          description: Incident report updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+    delete:
+      summary: Delete Specific Incident Report
+      parameters:
+      - name: incident_id
+        in: path
+        description: The unique ID of the incident report
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Incident report deleted successfully
+components:
+  schemas:
+    Incident:
+      type: object
+      properties:
+        type:
+          type: string
+          example: theft
+        description:
+          type: string
+          example: Wallet stolen from the library
+        photoURL:
+          type: string
+          example: https://example.com/photo.jpg
+        timestamp:
+          type: string
+          format: date-time
+          example: 2024-08-25T14:15:00Z
+        anonymous:
+          type: boolean
+          example: true
+        location:
+          $ref: '#/components/schemas/Incident_location'
+    inline_response_201:
+      type: object
+      properties:
+        incident_id:
+          type: string
+          example: incident_123
+        message:
+          type: string
+          example: Incident report created successfully.
+    inline_response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Incident report updated successfully.
+    Incident_location:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: float
+          example: 34.0522
+        longitude:
+          type: number
+          format: float
+          example: -118.2437

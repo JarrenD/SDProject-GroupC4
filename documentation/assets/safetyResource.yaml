@@ -1,0 +1,252 @@
+openapi: 3.0.0
+info:
+  title: Safety Resource API
+  description: Provides access to safety resources and emergency contact information.
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/2541773_1/safety-resources-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /resources:
+    get:
+      summary: Get All Safety Resources
+      parameters:
+      - name: type
+        in: query
+        description: Filter resources by type
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: fire
+      responses:
+        "200":
+          description: A list of safety resources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SafetyResource'
+    post:
+      summary: Add a New Safety Resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SafetyResource'
+        required: true
+      responses:
+        "201":
+          description: Safety resource created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+  /resources/{id}:
+    get:
+      summary: Get Safety Resource by ID
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the safety resource
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: resource_1
+      responses:
+        "200":
+          description: A specific safety resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafetyResource'
+    put:
+      summary: Update an Existing Safety Resource
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the safety resource
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: resource_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SafetyResource'
+        required: true
+      responses:
+        "200":
+          description: Safety resource updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+    delete:
+      summary: Delete a Safety Resource
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the safety resource
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: resource_1
+      responses:
+        "204":
+          description: No Content
+  /contacts:
+    get:
+      summary: Get Emergency Contacts
+      parameters:
+      - name: region
+        in: query
+        description: Filter contacts by region
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: us
+      responses:
+        "200":
+          description: A list of emergency contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmergencyContact'
+    post:
+      summary: Add an Emergency Contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyContact'
+        required: true
+      responses:
+        "201":
+          description: Emergency contact created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+  /contacts/{id}:
+    put:
+      summary: Update an Emergency Contact
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the emergency contact
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: contact_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyContact'
+        required: true
+      responses:
+        "200":
+          description: Emergency contact updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+    delete:
+      summary: Delete an Emergency Contact
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the emergency contact
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          example: contact_1
+      responses:
+        "204":
+          description: No Content
+components:
+  schemas:
+    SafetyResource:
+      type: object
+      properties:
+        id:
+          type: string
+          example: resource_1
+        title:
+          type: string
+          example: Fire Safety Guidelines
+        description:
+          type: string
+          example: Guidelines to follow during a fire emergency.
+        type:
+          type: string
+          example: fire
+        url:
+          type: string
+          example: https://safetyresource.com/resources/fire_safety_guidelines
+        content:
+          type: string
+          example: Full content of the fire safety guidelines...
+    EmergencyContact:
+      type: object
+      properties:
+        id:
+          type: string
+          example: contact_1
+        name:
+          type: string
+          example: Fire Department
+        phone:
+          type: string
+          example: +27 84 691 6590
+        region:
+          type: string
+          example: Braamfontein
+    inline_response_201:
+      type: object
+      properties:
+        id:
+          type: string
+          example: resource_2
+        message:
+          type: string
+          example: Safety resource created successfully.
+    inline_response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Safety resource updated successfully.
+    inline_response_201_1:
+      type: object
+      properties:
+        id:
+          type: string
+          example: contact_2
+        message:
+          type: string
+          example: Emergency contact created successfully.
+    inline_response_200_1:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Emergency contact updated successfully.

@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Location Services API
+  description: Provides endpoints for location tracking and sharing during emergencies.
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/2541773_1/location-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /location/share:
+    post:
+      summary: Share Real-Time Location
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationData'
+        required: true
+      responses:
+        "200":
+          description: Location shared successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+  /location/users:
+    get:
+      summary: Retrieve Real-Time Location of Users
+      parameters:
+      - name: user_id
+        in: query
+        description: The ID of the user to retrieve the location for
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: timestamp
+        in: query
+        description: Filter location data by time
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: List of users and their locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocationData'
+  /location/stop:
+    delete:
+      summary: Stop Sharing Real-Time Location
+      parameters:
+      - name: user_id
+        in: query
+        description: The ID of the user to stop sharing location
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Location sharing stopped successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+components:
+  schemas:
+    LocationData:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: user_123
+        latitude:
+          type: number
+          format: float
+          example: 34.0522
+        longitude:
+          type: number
+          format: float
+          example: -118.2437
+        timestamp:
+          type: string
+          format: date-time
+          example: 2024-08-25T14:15:00Z
+    inline_response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Location shared successfully.
+    inline_response_200_1:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Location sharing stopped successfully.

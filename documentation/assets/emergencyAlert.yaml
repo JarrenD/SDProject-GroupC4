@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: Emergency Alert API
+  description: Sends and manages real-time emergency alerts and notifications.
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/2541773_1/alert-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /alerts/send:
+    post:
+      summary: Send a New Emergency Alert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmergencyAlert'
+        required: true
+      responses:
+        "201":
+          description: Emergency alert sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+  /alerts/status/{alert_id}:
+    get:
+      summary: Retrieve Status of a Specific Alert
+      parameters:
+      - name: alert_id
+        in: path
+        description: The unique ID of the alert
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Status of the alert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+components:
+  schemas:
+    EmergencyAlert:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Campus Evacuation
+        message:
+          type: string
+          example: All students must evacuate the campus immediately.
+        severity:
+          type: string
+          example: high
+        location:
+          $ref: '#/components/schemas/EmergencyAlert_location'
+        send_time:
+          type: string
+          format: date-time
+          example: 2024-08-25T14:15:00Z
+    inline_response_201:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Emergency alert sent successfully.
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          type: string
+          example: active
+        details:
+          type: string
+          example: Alert is currently active.
+    EmergencyAlert_location:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: float
+          example: 34.0522
+        longitude:
+          type: number
+          format: float
+          example: -118.2437

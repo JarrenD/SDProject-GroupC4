@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: Notification Services API
+  description: Manages real-time notifications for emergency alerts and announcements.
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/2541773_1/notification-api/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /notifications:
+    post:
+      summary: Send Notifications to Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+        required: true
+      responses:
+        "201":
+          description: Notification sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+  /notifications/{notification_id}:
+    get:
+      summary: Retrieve Notification by ID
+      parameters:
+      - name: notification_id
+        in: path
+        description: The unique ID of the notification
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Specific notification details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+    delete:
+      summary: Remove Notification
+      parameters:
+      - name: notification_id
+        in: path
+        description: The unique ID of the notification to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Notification deleted successfully
+components:
+  schemas:
+    Notification:
+      type: object
+      properties:
+        type:
+          type: string
+          example: emergency alert
+        title:
+          type: string
+          example: Campus Evacuation
+        message:
+          type: string
+          example: All students must evacuate the campus immediately.
+        timestamp:
+          type: string
+          format: date-time
+          example: 2024-08-25T14:15:00Z
+        user_group:
+          type: string
+          example: students
+    inline_response_201:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Notification sent successfully.
