@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Safety Notification Center</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="App">
+      <header class="App-header">
+        <h1>CAMPUS SAFETY</h1>
+        <h2>NOTIFICATION CENTER</h2>
+      </header>
+      <div class="main-container">
+        <div class="welcome-section">
+          <h2>WELCOME BACK, USER!</h2>
+          <div class="notification-buttons">
+            <button class="tab active" id="inbox-tab">Inbox</button>
+            <button class="tab" id="announcements-tab">Announcements</button>
+          </div>
+
+          <div id="inbox-content" class="announcements">
+            <div class="notification-caution">
+              <strong
+                >Caution: Due to heavy rain, roads on campus will be
+                slippery.</strong
+              >
+              <p>
+                Due to heavy rains and flooding, roads on campus will be
+                slippery. Be mindful of your speed limit.
+              </p>
+            </div>
+            <div class="notification-emergency">
+              <strong>Emergency: COVID-19 exposure on campus.</strong>
+              <p>
+                There have been three confirmed cases of COVID-19 on campus, two
+                were identified in MSL and 1 was identified in the Chamber of
+                Mines. If you were in contact with the infected individuals or
+                were in these areas within the past 24 hours get tested
+                IMMEDIATELY.
+              </p>
+            </div>
+            <div class="notification-safe">
+              <strong>Safe: Snake captured on campus.</strong>
+              <p>
+                The snake that was detected at Law Lawns at 11:45 has been
+                captured by the Snake Safety Association. All activities around
+                this area may resume as normal.
+              </p>
+            </div>
+          </div>
+
+          <div
+            id="announcements-content"
+            class="announcements"
+            style="display: none"
+          >
+            <!-- Announcements will be dynamically added here -->
+          </div>
+        </div>
+
+        <div class="notifications-panel">
+          <h3>Real-Time Notifications</h3>
+          <div class="real-time-notification">
+            <p>No new notifications</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const announcements = [
+        {
+          title: "Lock Your Car Doors:",
+          description:
+            "As a reminder, please ensure you lock your car doors and keep valuables out of sight. This simple precaution can help prevent theft.",
+        },
+        {
+          title: "Speed Limit:",
+          description:
+            "Remember to stay within the campus speed limit of 60 km/h. Adhering to this speed limit ensures safety for both drivers and pedestrians.",
+        },
+        {
+          title: "Phone Theft:",
+          description:
+            "With the upcoming Wits Concert, we are aware of the increased risk of phone theft at campus events of this nature. Therefore, the university will be following protocols to ensure your safety. Remember to stay vigilant!",
+        },
+      ];
+
+      function showContent(tabId) {
+        document.getElementById("inbox-content").style.display =
+          tabId === "inbox" ? "block" : "none";
+        document.getElementById("announcements-content").style.display =
+          tabId === "announcements" ? "block" : "none";
+
+        document
+          .getElementById("inbox-tab")
+          .classList.toggle("active", tabId === "inbox");
+        document
+          .getElementById("announcements-tab")
+          .classList.toggle("active", tabId === "announcements");
+      }
+
+      document
+        .getElementById("inbox-tab")
+        .addEventListener("click", () => showContent("inbox"));
+      document
+        .getElementById("announcements-tab")
+        .addEventListener("click", () => showContent("announcements"));
+
+      function loadAnnouncements() {
+        const container = document.getElementById("announcements-content");
+        announcements.forEach((announcement) => {
+          const div = document.createElement("div");
+          div.className = "announcement";
+          div.innerHTML = `<div class="announcement-text">
+                                    <strong>${announcement.title}</strong>
+                                    <p>${announcement.description}</p>
+                                  </div>`;
+          container.appendChild(div);
+        });
+      }
+
+      loadAnnouncements();
+    </script>
+  </body>
+</html>
