@@ -1,5 +1,5 @@
 import React from 'react';
-import NotificationCenter from './notifications';
+import NotificationCenter from './views/notifications';
 
 function App() {
   return (
