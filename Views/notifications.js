@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './style.css'; // Ensure this path is correct
+import './style.css'; 
 
 const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
