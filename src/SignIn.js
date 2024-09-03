@@ -26,7 +26,7 @@ googleLogin.addEventListener("click", function() {
         .then((result) => {
             const user = result.user;
             console.log(user);
-            window.location.href = "../back.html";
+            window.location.href = "../src/Incident_alert.html";
         })
         .catch((error) => {
             console.error("Error during Google Sign-In: ", error.message);
@@ -52,7 +52,7 @@ SignUpForm.addEventListener('submit', function(e) {
             .then(() => {
                 alert("SignUp Successful!");
                 alert("You will now be forwarded to the LogIn page to LogIn");
-                window.location.href = "../index.html"; // Redirect after successful sign-up
+                window.location.href = "../public/index.html"; // Redirect after successful sign-up
             })
             .catch((error) => {
                 alert("Error storing user data: " + error.message);
