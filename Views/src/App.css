@@ -145,6 +145,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column; /* Stack child elements vertically */
+  position: relative;
+  padding-bottom: 30px; /* Add some space at the bottom for the link */
 }
 
 .card h3 {
@@ -205,14 +207,84 @@
   text-decoration: underline;
 }
 
-.card {
-  /* ... (existing styles) ... */
-  position: relative;
-  padding-bottom: 30px; /* Add some space at the bottom for the link */
-}
-
 .card .read-more-link {
   position: absolute;
   bottom: 10px;
   left: 20px;
+}
+
+
+/* Navbar Styles */
+.navbar {
+  display: none; /* Hide by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(235, 235, 235);
+  color: rgb(55, 53, 47);
+  padding: 20px;
+  z-index: 1000;
+}
+
+.navbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.navbar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.navbar-menu.open {
+  max-height: 5%;
+}
+
+.navbar-menu li {
+  margin: 18px 0;
+}
+
+.navbar-menu li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: rgb(55, 53, 47);
+}
+
+.navbar-icon {
+  margin-right: 10px;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .navbar {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-top: 60px; /* Adjust based on navbar height */
+  }
+
+  .app-container {
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
 }
