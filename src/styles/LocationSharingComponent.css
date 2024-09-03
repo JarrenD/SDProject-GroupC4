@@ -1,0 +1,53 @@
+/* Center the container and add padding */
+.location-sharing-container {
+    max-width: 500px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    border: 2px solid #ddd; /* Border around the component */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
+    background-color: #fff; /* Background color */
+  }
+  
+  /* Style for the textarea */
+  .location-sharing-container textarea {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside the textarea */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    resize: vertical; /* Allow vertical resizing */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+  }
+  
+  /* Style for the button */
+  .location-sharing-container button {
+    background-color: #003366; /* Dark blue button color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px 20px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth color transition */
+  }
+  
+  .location-sharing-container button:hover {
+    background-color: #002244; /* Even darker blue on hover */
+  }
+  
+  /* Style for the location info */
+  .location-info {
+    margin-top: 20px; /* Space above the location info */
+  }
+  
+  .location-info p {
+    margin: 5px 0; /* Space between lines */
+  }
+  
+  /* Style for the status message */
+  .status {
+    margin-top: 10px; /* Space above the status message */
+    font-weight: bold; /* Bold text */
+  }
+  
