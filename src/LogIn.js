@@ -27,7 +27,7 @@ const auth = getAuth(app);
   .then((result) => {
     const user = result.user;
     console.log(user);
-    window.location.href ="../back.html";
+    window.location.href ="Incident_alert.html";
   }).catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -50,7 +50,7 @@ LogInForm.addEventListener('submit', function(e) {
       .then((userCredential) => {
           const user = userCredential.user;
           alert("Login Successful!");
-          window.location.href = "back.html"; // Redirect to a dashboard or main page
+          window.location.href = "../public/Incident_alert.html"; // Redirect to a dashboard or main page
       })
       .catch((error) => {
           const errorCode = error.code;
