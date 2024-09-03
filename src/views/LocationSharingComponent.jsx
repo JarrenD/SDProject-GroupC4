@@ -2,16 +2,13 @@
 import React, { useState } from "react";
 import "../styles/LocationSharingComponent.css";
 import { LocationController } from "../controllers/LocationController";
-import { User } from "../models/User";
 
 const LocationSharingComponent = () => {
   const [location, setLocation] = useState(null);
   const [status, setStatus] = useState("");
   const [description, setDescription] = useState("");
 
-  // Example user ID for demonstration purposes
-  const user = new User("exampleUserId");
-  const controller = new LocationController(user);
+  const controller = new LocationController();
 
   const handleShareLocation = async () => {
     setStatus("Sharing location...");
@@ -21,7 +18,7 @@ const LocationSharingComponent = () => {
       setLocation(result.location);
       setStatus(result.message);
     } else {
-      setStatus(`Error: ${result.message}`);
+      setStatus(`${result.message}`);
     }
   };
 

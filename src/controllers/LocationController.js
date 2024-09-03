@@ -1,10 +1,9 @@
-// src/controllers/LocationController.js
 import { LocationModel } from "../models/LocationModel";
+import { auth } from "../firebase/firebaseConfig";
 
 export class LocationController {
-  constructor(user) {
-    this.user = user;
-    this.locationModel = new LocationModel(user.getUserId());
+  constructor() {
+    this.locationModel = new LocationModel();
   }
 
   async getUserLocation() {
@@ -30,13 +29,19 @@ export class LocationController {
   async shareLocation(description) {
     try {
       const location = await this.getUserLocation();
+      const user = auth.currentUser;
+
+      if (!user){
+        throw new Error("Please log in");
+      }
+
       const locationData = {
         latitude: location.latitude,
         longitude: location.longitude,
         description: description || ""
       };
 
-      return await this.locationModel.saveLocation(locationData);
+      return await this.locationModel.saveLocation(user.uid,locationData);
     } catch (error) {
       return { success: false, message: error };
     }

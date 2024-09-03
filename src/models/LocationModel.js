@@ -1,14 +1,10 @@
-// src/models/LocationModel.js
-//import database from "../firebase/firebaseConfig";
+import { db } from "../firebase/firebaseConfig";
+import { ref, set } from "firebase/database";
 
 export class LocationModel {
-  constructor(userId) {
-    this.userId = userId;
-  }
-
-  async saveLocation(locationData) {
+  async saveLocation(userId, locationData) {
     try {
-      //await database.ref('locations/' + this.userId).set(locationData);
+      await set(ref(db, 'locations/' + userId), locationData);
       return { success: true, location: locationData, message: "Location shared successfully." };
     } catch (error) {
       return { success: false, message: error.message };
