@@ -1,0 +1,13 @@
+.emergency-contacts {
+    margin-bottom: 20px;
+  }
+  
+  .emergency-contacts a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .emergency-contacts a:hover {
+    text-decoration: underline;
+  }
+  

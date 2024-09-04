@@ -1,0 +1,103 @@
+/* src/pages/LoginPage.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light grey background */
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+  }
+  
+  .login-box {
+    background-color: #ffffff; /* White background for the form */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333; /* Black for letters */
+  }
+  
+  .inputbox {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .inputbox input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  .inputbox input:focus + span,
+  .inputbox input:not(:placeholder-shown) + span {
+    top: -15px;
+    left: 12px;
+    font-size: 12px;
+    color: #007bff; /* Light blue for the floating label */
+  }
+  
+  .inputbox span {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    color: #999;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    pointer-events: none;
+  }
+  
+  .login-button {
+    background-color: #007bff; /* Light blue for the button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .google-button {
+    background-color: #db4437; /* Google red color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .google-button:hover {
+    background-color: #c1351d; /* Darker Google red on hover */
+  }
+  
+  .error-message {
+    color: #e74c3c; /* Red color for error messages */
+    margin-bottom: 20px;
+  }
+  
+  a {
+    color: #007bff; /* Light blue for links */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

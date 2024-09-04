@@ -1,0 +1,13 @@
+.safety-resources {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .content {
+    padding: 20px;
+    flex: 1;
+    background-color: #ffffff; /* White background */
+    overflow-y: auto; /* Allow scrolling if content is long */
+  }
+  
