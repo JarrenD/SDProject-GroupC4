@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './style.css'; 
+import './notifications.css';
+import { fetchAlertsFromFirebase, removeFirebaseListener } from './firebaseApi'; // Import the API
 
 const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
   const [announcements, setAnnouncements] = useState([]);
+  const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    // Load announcements data
+    // Load static announcements data
     setAnnouncements([
       {
         title: "Lock Your Car Doors:",
@@ -24,6 +26,21 @@ const NotificationCenter = () => {
           "With the upcoming Wits Concert, we are aware of the increased risk of phone theft at campus events of this nature. Therefore, the university will be following protocols to ensure your safety. Remember to stay vigilant!",
       },
     ]);
+
+    // Fetch alerts using the API
+    const fetchAlerts = async () => {
+      try {
+        const fetchedAlerts = await fetchAlertsFromFirebase();
+        setAlerts(fetchedAlerts);
+      } catch (error) {
+        console.error("Error fetching alerts: ", error);
+      }
+    };
+
+    fetchAlerts();
+
+    // Clean up Firebase listener on component unmount
+    return () => removeFirebaseListener();
   }, []);
 
   const handleTabClick = (tabId) => {
@@ -55,18 +72,16 @@ const NotificationCenter = () => {
           </div>
 
           <div id="inbox-content" className="announcements" style={{ display: activeTab === 'inbox' ? 'block' : 'none' }}>
-            <div className="notification-caution">
-              <strong>Caution: Due to heavy rain, roads on campus will be slippery.</strong>
-              <p>Due to heavy rains and flooding, roads on campus will be slippery. Be mindful of your speed limit.</p>
-            </div>
-            <div className="notification-emergency">
-              <strong>Emergency: COVID-19 exposure on campus.</strong>
-              <p>There have been three confirmed cases of COVID-19 on campus, two were identified in MSL and 1 was identified in the Chamber of Mines. If you were in contact with the infected individuals or were in these areas within the past 24 hours get tested IMMEDIATELY.</p>
-            </div>
-            <div className="notification-safe">
-              <strong>Safe: Snake captured on campus.</strong>
-              <p>The snake that was detected at Law Lawns at 11:45 has been captured by the Snake Safety Association. All activities around this area may resume as normal.</p>
-            </div>
+            {alerts.length === 0 ? (
+              <p>No alerts to display</p>
+            ) : (
+              alerts.map((alert, index) => (
+                <div key={index} className="notification-alert">
+                  <strong>{alert.title}</strong>
+                  <p>{alert.description}</p>
+                </div>
+              ))
+            )}
           </div>
 
           <div id="announcements-content" className="announcements" style={{ display: activeTab === 'announcements' ? 'block' : 'none' }}>
@@ -82,9 +97,18 @@ const NotificationCenter = () => {
         </div>
 
         <div className="notifications-panel">
-          <h3>Real-Time Notifications</h3>
+          <h3>Alerts</h3>
           <div className="real-time-notification">
-            <p>No new notifications</p>
+            {alerts.length === 0 ? (
+              <p>No new alerts</p>
+            ) : (
+              alerts.map((alert, index) => (
+                <div key={index} className="notification-alert">
+                  <strong>{alert.title}</strong>
+                  <p>{alert.description}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
