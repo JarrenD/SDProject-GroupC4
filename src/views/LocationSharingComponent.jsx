@@ -6,13 +6,12 @@ import { LocationController } from "../controllers/LocationController";
 const LocationSharingComponent = () => {
   const [location, setLocation] = useState(null);
   const [status, setStatus] = useState("");
-  const [description, setDescription] = useState("");
 
   const controller = new LocationController();
 
   const handleShareLocation = async () => {
     setStatus("Sharing location...");
-    const result = await controller.shareLocation(description);
+    const result = await controller.shareLocation();
 
     if (result.success) {
       setLocation(result.location);
@@ -25,19 +24,13 @@ const LocationSharingComponent = () => {
   return (
     <div className="location-sharing-container">
       <h3>Location Sharing</h3>
-      <textarea
-        placeholder="Enter a description (optional)"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        rows="3"
-      />
       <button onClick={handleShareLocation}>Share My Location</button>
       <div className="location-info">
         <p>Location:</p>
         <p>Latitude: {location ? location.latitude : "N/A"}</p>
         <p>Longitude: {location ? location.longitude : "N/A"}</p>
-        {location && location.description && (
-          <p>Description: {location.description}</p>
+        {location && location.timestamp && (
+          <p>Shared at: {new Date(location.timestamp).toLocaleString()}</p>
         )}
       </div>
       <p className="status">{status}</p>
