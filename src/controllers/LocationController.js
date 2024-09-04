@@ -26,19 +26,22 @@ export class LocationController {
     });
   }
 
-  async shareLocation(description) {
+  async shareLocation() {
     try {
       const location = await this.getUserLocation();
       const user = auth.currentUser;
 
-      if (!user){
-        throw new Error("Please log in");
-      }
+     // if (!user){
+     //   throw new Error("Please log in");
+     // }
+
+      const timestamp = new Date().toISOString();
 
       const locationData = {
+        user_id: user.uid,
         latitude: location.latitude,
         longitude: location.longitude,
-        description: description || ""
+        timestamp: timestamp
       };
 
       return await this.locationModel.saveLocation(user.uid,locationData);
