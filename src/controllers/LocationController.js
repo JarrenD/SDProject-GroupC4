@@ -31,9 +31,9 @@ export class LocationController {
       const location = await this.getUserLocation();
       const user = auth.currentUser;
 
-     // if (!user){
-     //   throw new Error("Please log in");
-     // }
+      if (!user){
+        throw new Error("Please log in");
+      }
 
       const timestamp = new Date().toISOString();
 
