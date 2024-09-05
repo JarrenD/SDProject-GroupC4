@@ -1,5 +1,12 @@
 {
-    "navigationFallback": {
-        "rewrite": "/index.html"
-    }
+  "routes": [
+      {
+          "route": "/api/*",
+          "methods": ["GET", "POST", "PUT", "DELETE"],
+          "allowedRoles": ["anonymous", "authenticated"]
+      }
+  ],
+  "navigationFallback": {
+      "rewrite": "/index.html"
+  }
 }
