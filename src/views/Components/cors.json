@@ -1,6 +1,6 @@
 [
     {
-      "origin": ["http://localhost:5500", "https://polite-pond-04aadc51e-3.westus2.5.azurestaticapps.net"],
+      "origin": ["http://localhost:5500","http://localhost:3000", "https://polite-pond-04aadc51e-3.westus2.5.azurestaticapps.net"],
       "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600,
       "responseHeader": ["Content-Type"]
