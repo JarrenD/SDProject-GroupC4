@@ -23,10 +23,9 @@ const db = getDatabase(app);
 const storage = getStorage(app);
 
 function IncidentAlert() {
-    const [incidentType, setIncidentType] = useState('theft');
+    const [incidentType] = useState('theft');
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState(null);
-    const [anonymous, setAnonymous] = useState(false);
     const [type, setType] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
 
@@ -111,7 +110,6 @@ function IncidentAlert() {
         setType('');
         setDescription('');
         setPhoto(null);
-        setAnonymous(false);
         document.getElementById('uploadPhoto').value = ''; // Reset the photo input
       };
 

@@ -33,7 +33,6 @@ const SignIn = () => {
                 });
             })
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 alert("Error: " + errorMessage);
             });
@@ -42,7 +41,6 @@ const SignIn = () => {
     const handleGoogleLogin = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-                const user = result.user;
                 navigate('/IncidentAlert'); // Redirect to IncidentAlert
             })
             .catch((error) => {
