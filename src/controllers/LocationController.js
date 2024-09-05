@@ -1,5 +1,5 @@
 import { LocationModel } from "../models/LocationModel";
-import { auth } from "../firebase/firebaseConfig";
+import { auth } from '../../models/firebase/firebaseConfig.js';
 
 export class LocationController {
   constructor() {
