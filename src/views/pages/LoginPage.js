@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './LoginPage.css'; // Import the CSS for styling
+import { useNavigate } from 'react-router-dom';
+import './LoginPage.css';
 
-function LoginPage() {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+function LoginPage({ handleLogin }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    // Test login credentials
     if (email === 'email@email.com' && password === 'pass') {
-      // On successful login, navigate to the Safety Resources page
-      navigate('/safety-resources');
+      handleLogin();
+      navigate('/dashboard');
     } else {
-      setError('Invalid email or password'); // Set error message
+      setError('Invalid email or password');
     }
   };
 
@@ -24,7 +23,7 @@ function LoginPage() {
       <div className="login-box">
         <h2>Login</h2>
         {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLoginSubmit}>
           <div className="inputbox">
             <input 
               type="email" 

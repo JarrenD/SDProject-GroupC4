@@ -56,7 +56,7 @@
 
 
 import React from 'react';
-import ExpandableCard from './ExpandableCard';
+import ExpandableCard from '../ExpandableCard';
 
 const DashboardContent = () => {
   const recentAlerts = [

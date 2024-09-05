@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import TopNav from '../components/TopNav'; // Adjusted path
-import EmergencyContacts from '../components/EmergencyContacts'; // Adjusted path
-import SafetyTips from '../components/SafetyTips'; // Adjusted path
-import CampusSafetyPolicies from '../components/CampusSafetyPolicies'; // Adjusted path
+import TopNav from '../components/TopNav.js'; // Adjusted path
+import EmergencyContacts from '../components/EmergencyContacts.js'; // Adjusted path
+import SafetyTips from '../components/SafetyTips.js'; // Adjusted path
+import CampusSafetyPolicies from '../components/CampusSafetyPolicies.js'; // Adjusted path
 import './SafetyResources.css'; // Make sure this file is correctly placed in pages directory
 
 function SafetyResources() {

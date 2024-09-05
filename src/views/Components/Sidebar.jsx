@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, HelpCircle, Settings, LogOut, Menu } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -9,12 +10,12 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { name: 'Homepage', icon: Home, href: '#homepage' },
-    { name: 'Dashboard', icon: LayoutDashboard, href: '#dashboard' },
-    { name: 'Notifications', icon: Bell, href: '#notifications' },
-    { name: 'Emergency Contacts', icon: PhoneCall, href: '#emergency-contacts' },
-    { name: 'Incident Reports', icon: Clipboard, href: '#incident-reports' },
-    { name: 'Campus Resources', icon: Book, href: '#campus-resources' },
+    { name: 'Homepage', icon: Home, href: '/dashboard' },
+    { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+    { name: 'Notifications', icon: Bell, href: '/notification-centre' },
+    { name: 'Emergency Contacts', icon: PhoneCall, href: '/safety-resources' },
+    { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
+    { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
     { name: 'Help', icon: HelpCircle, href: '#help' },
     { name: 'Settings', icon: Settings, href: '#settings' },
     { name: 'Logout', icon: LogOut, href: '#logout' }
@@ -31,10 +32,10 @@ const Sidebar = () => {
       <ul>
         {menuItems.map((item, index) => (
           <li key={index}>
-            <a href={item.href}>
+            <Link to={item.href}>
               <item.icon className="sidebar-icon" size={20} />
               {isOpen && <span>{item.name}</span>}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
