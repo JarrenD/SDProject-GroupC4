@@ -1,8 +1,14 @@
-const express = require('express');
-const admin = require('firebase-admin');
-const serviceAccount = require("C:\\Users\\Vinay\\OneDrive\\HRS 1D 01122021\\OneDrive\\Desktop\\Ruaans stuff\\Coms 3\\SDP\\key\\creativetutorial-ba1bf-firebase-adminsdk-9p4al-3b39e9b2a5.json");
+import express from 'express';
+import admin from 'firebase-admin';
+import { readFile } from 'fs/promises';
+import path from 'path';
+
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Load the service account JSON dynamically
+const serviceAccountPath = path.resolve("C:\\Users\\Vinay\\OneDrive\\HRS 1D 01122021\\OneDrive\\Desktop\\Ruaans stuff\\Coms 3\\SDP\\key\\creativetutorial-ba1bf-firebase-adminsdk-9p4al-3b39e9b2a5.json");
+const serviceAccount = JSON.parse(await readFile(serviceAccountPath, 'utf8'));
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
