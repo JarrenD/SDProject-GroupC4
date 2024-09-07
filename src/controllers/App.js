@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LogIn from '../views/Components/LogIn.js';
-import SignIn from '../views/Components/SignIn.js';
-import IncidentAlert from '../views/Components/IncidentAlert.js';
+import LogIn from '../views/components/LogIn.js';
+import SignIn from '../views/components/SignIn.js';
+import IncidentAlert from '../views/components/IncidentAlert.js';
 
 function App() {
     return (
