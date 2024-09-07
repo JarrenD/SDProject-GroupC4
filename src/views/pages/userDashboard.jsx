@@ -3,7 +3,7 @@ import Sidebar from '../Components/Sidebar';
 import Navbar from '../Components/Navbar';
 import Header from '../Components/Header';
 import DashboardContent from '../Components/DashboardContent';
-import '../../styles/UserDashboard.css';
+import './UserDashboard.css';
 
 function userDashboard() {
   return (
