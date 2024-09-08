@@ -1,0 +1,35 @@
+.topnav {
+    display: flex;
+    align-items: center; /* Center align buttons vertically */
+    background-color: #f0f0f0; /* Light grey background for the navbar */
+    border: 1px solid #d0d0d0; /* Optional: border for the navbar */
+  }
+  
+  .topnav-button {
+    padding: 10px 20px; /* Add padding for a better appearance */
+    background-color: #e0e0e0; /* Light grey for buttons */
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    color: #333; /* Darker text color for contrast */
+    border-right: 2px solid #d0d0d0; /* Vertical line */
+  }
+  
+  .topnav-button:last-child {
+    border-right: none; /* Remove the border from the last button */
+  }
+  
+  .topnav-button:hover {
+    background-color: #d0d0d0; /* Slightly darker grey on hover */
+  }
+  
+  .topnav-button.active {
+    background-color: #c0c0c0; /* Active button background */
+  }
+  
+  .topnav-spacer {
+    flex-grow: 1; /* Take up the remaining space */
+    background-color: #f0f0f0; /* Same light grey color as the navbar */
+  }
+  
