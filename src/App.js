@@ -6,8 +6,8 @@ import SafetyResources from './views/pages/SafetyResources.js';
 import IncidentReporting from './views/pages/IncidentReporting.js';
 import NotificationCentre from './views/pages/NotificationCentre.js';
 import LocationSharing from './views/pages/LocationSharing.js';
-import Navbar from './views/Components/Navbar.jsx';
-import Sidebar from './views/Components/Sidebar.jsx';
+import Navbar from './views/components/Navbar.jsx';
+import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
 import './App.css';
 

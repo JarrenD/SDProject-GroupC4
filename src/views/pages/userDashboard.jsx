@@ -1,8 +1,8 @@
 import React from 'react';
-import Sidebar from '../Components/Sidebar';
-import Navbar from '../Components/Navbar';
-import Header from '../Components/Header';
-import DashboardContent from '../Components/DashboardContent';
+import Sidebar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
+import Header from '../components/Header';
+import DashboardContent from '../components/DashboardContent';
 import './UserDashboard.css';
 
 function userDashboard() {
