@@ -57,6 +57,7 @@
 
 import React from 'react';
 import ExpandableCard from '../ExpandableCard';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardContent = () => {
   const recentAlerts = [
@@ -74,19 +75,20 @@ const DashboardContent = () => {
     "🚶‍♀️ Use well-lit walkways and avoid isolated areas, especially at night.",
     "📱 Keep your mobile phone with you and fully charged in case of emergencies."
   ];
-
+  const navigate = useNavigate();
   return (
+    
     <div className="dashboard-content">
       <div className="card">
         <h3>Emergency Alert</h3>
         <p>Press for immediate help. Your location will be shared with campus security.</p>
-        <button>Alert Campus Security</button>
+        <button onClick={() => navigate('/location-sharing')}>Alert Campus Security</button>
       </div>
 
       <div className="card">
         <h3>Report Incident</h3>
         <p>Click to provide details of any suspicious or dangerous activities on campus.</p>
-        <button>Report Now</button>
+        <button onClick={()=> navigate('/incident-reporting')}>Report Now</button>
       </div>
 
       <ExpandableCard title="Recent Alerts" items={recentAlerts} />
