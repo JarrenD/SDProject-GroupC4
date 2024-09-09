@@ -1,13 +1,71 @@
-.emergency-contacts {
-    margin-bottom: 20px;
+.contacts-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 30px;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contact-card h3 {
+  font-size: 1.5em;
+  color: #000; /* Updated to black */
+  margin-bottom: 10px;
+}
+
+.phone-number {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.phone-link {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.phone-link:hover {
+  color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .contacts-container {
+    padding: 15px;
   }
-  
-  .emergency-contacts a {
-    color: #007bff;
-    text-decoration: none;
+
+  h2 {
+    font-size: 1.8em;
   }
-  
-  .emergency-contacts a:hover {
-    text-decoration: underline;
+
+  .contact-card h3 {
+    font-size: 1.3em;
   }
-  
+
+  .phone-number {
+    font-size: 1em;
+  }
+}
