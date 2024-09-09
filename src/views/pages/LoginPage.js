@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth, provider } from '../../models/firebase/firebaseConfig.js';  // Import from firebaseConfig.js
+import { signInWithPopup } from 'firebase/auth';
 import './LoginPage.css';
 
 function LoginPage({ handleLogin }) {
@@ -7,6 +9,19 @@ function LoginPage({ handleLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, provider)
+        .then(result => {
+            console.log(result.user);
+            handleLogin();
+            navigate('/dashboard');
+        })
+        .catch(error => {
+            console.error("Error during Google Sign-In: ", error.message);
+            setError("Error during Google Sign-In: " + error.message);
+        });
+  };
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -49,7 +64,7 @@ function LoginPage({ handleLogin }) {
           <button type="submit" className="login-button">Login</button>
         </form>
         <div className="input">
-          <button id="google-login-btn" className="google-button">
+          <button id="google-login-btn" onClick={handleGoogleLogin} className="google-button">
             <i className="text1">Login with Google</i>
           </button>
         </div>

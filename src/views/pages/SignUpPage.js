@@ -1,11 +1,26 @@
 // src/pages/SignUpPage.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SignUpPage.css'; // Import the CSS for styling
+import { auth, provider } from '../../models/firebase/firebaseConfig.js';  // Import from firebaseConfig.js
+import { signInWithPopup } from 'firebase/auth';
 
-function SignUpPage() {
+function SignUpPage({ handleLogin }) {
+  const navigate = useNavigate();
   const handleSignUp = (e) => {
     e.preventDefault();
     // Add sign-up logic here
+  };
+
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+          handleLogin();  // Call handleLogin to update state
+          navigate('/dashboard');  // Redirect to the dashboard
+        })
+        .catch((error) => {
+            console.error("Error during Google Sign-In: ", error.message);
+        });
   };
 
   return (
@@ -28,7 +43,7 @@ function SignUpPage() {
           <button type="submit" className="signup-button">Sign Up</button>
         </form>
         <div className="input">
-          <button id="google-login-btn" className="google-button">
+          <button id="google-login-btn" onClick={handleGoogleLogin} className="google-button">
             <i className="text1">Login with Google</i>
           </button>
         </div>
