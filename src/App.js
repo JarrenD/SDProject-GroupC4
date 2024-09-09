@@ -5,6 +5,7 @@ import SignUpPage from './views/pages/SignUpPage.js';
 import SafetyResources from './views/pages/SafetyResources.js';
 import IncidentReporting from './views/components/IncidentAlert.js';
 import NotificationCentre from './views/pages/NotificationCentre.js';
+import EmergencyContacts from './views/components/EmergencyContacts.js';
 import LocationSharing from './views/pages/LocationSharingComponent.jsx';
 import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
@@ -60,6 +61,18 @@ function App() {
               <Sidebar />
               <div className="main-content">
                 <IncidentReporting />
+              </div>
+            </div>
+          ) : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/emergency-contacts" 
+          element={isAuthenticated ? (
+            <div className="app-container">
+              <Navbar />
+              <Sidebar />
+              <div className="main-content">
+                <EmergencyContacts />
               </div>
             </div>
           ) : <Navigate to="/login" />} 
