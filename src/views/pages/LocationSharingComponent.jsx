@@ -1,7 +1,7 @@
 // src/views/LocationSharingComponent.jsx
 import React, { useState } from "react";
-import "../styles/LocationSharingComponent.css";
-import { LocationController } from "../controllers/LocationController";
+import "./LocationSharingComponent.css";
+import { LocationController } from "../../controllers/LocationController";
 
 const LocationSharingComponent = () => {
   const [location, setLocation] = useState(null);

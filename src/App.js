@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './views/pages/LoginPage.js';
 import SignUpPage from './views/pages/SignUpPage.js';
 import SafetyResources from './views/pages/SafetyResources.js';
-import IncidentReporting from './views/pages/IncidentReporting.js';
+import IncidentReporting from './views/components/IncidentAlert.js';
 import NotificationCentre from './views/pages/NotificationCentre.js';
 import EmergencyContacts from './views/components/EmergencyContacts.js';
-import LocationSharing from './views/pages/LocationSharing.js';
+import LocationSharing from './views/pages/LocationSharingComponent.jsx';
 import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
