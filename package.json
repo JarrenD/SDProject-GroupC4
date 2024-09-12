@@ -37,5 +37,10 @@
       "last 1 safari version"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "install": "^0.13.0",
+    "npm": "^10.8.3"
+  }
 }
