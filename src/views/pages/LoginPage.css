@@ -74,17 +74,28 @@ body {
   }
   
   .google-button {
-    background-color: #db4437; /* Google red color */
-    color: #fff;
-    border: none;
+    background-color: #ffffff; /* White background */
+    color: #5f6368; /* Dark gray color for the text */
+    border: 1px solid #dadce0; /* Light gray border */
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 16px;
+    display: flex; /* Make the button a flex container */
+    align-items: center; /* Vertically center the items */
+    justify-content: center; /* Horizontally center the items */
+    margin: 0 auto; /* Centers the button itself within its container */
+  }
+
+  .google-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px; /* Adds space between the logo and the text */
   }
   
   .google-button:hover {
-    background-color: #c1351d; /* Darker Google red on hover */
+    background-color: #f8f9fa; /* Light gray background on hover */
+    border-color: #c1c3c5; /* Slightly darker border on hover */
   }
   
   .error-message {

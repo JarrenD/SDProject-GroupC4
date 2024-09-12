@@ -28,6 +28,7 @@ function IncidentAlert() {
     const [photo, setPhoto] = useState(null);
     const [type, setType] = useState('');
     const [authenticated, setAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     React.useEffect(() => {
         const auth = getAuth();
@@ -48,7 +49,7 @@ function IncidentAlert() {
             alert('You must be logged in to submit an incident.');
             return;
         }
-        
+        setLoading(true);
         if (photo) {
             EXIF.getData(photo, function() {
                 const gpsLatitude = EXIF.getTag(this, "GPSLatitude");
@@ -67,6 +68,7 @@ function IncidentAlert() {
                 uploadIncidentData(incidentType, description, photo, latitude, longitude);
             });
         } else {
+            setLoading(false);
             alert("Please upload a photo.");
         }
     };
@@ -86,14 +88,18 @@ function IncidentAlert() {
                     timestamp: new Date().toISOString()
                 })
                 .then(() => {
+                    setLoading(false);
+                    resetForm();
                     alert("Incident reported successfully!");
                 })
                 .catch(error => {
+                    setLoading(false);
                     console.error("Error storing incident data: ", error);
                     alert("Failed to report incident: " + error.message);
                 });
             })
             .catch(error => {
+                setLoading(false);
                 console.error("Error uploading photo: ", error);
                 alert("Failed to upload photo: " + error.message);
             });
@@ -106,7 +112,7 @@ function IncidentAlert() {
         setDescription(selectedType); // Automatically set description to the selected type
     };
 
-    const handleCancel = () => {
+    const resetForm = () => {
         setType('');
         setDescription('');
         setPhoto(null);
@@ -117,10 +123,11 @@ function IncidentAlert() {
         <div className="container">
             <h1>Report an Incident</h1>
             <h2>Anonymous Reporting</h2>
+            {loading && <p>Submitting your incident, please wait...</p>}
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
                     <label htmlFor="incidentType">Type of Incident:</label>
-                    <select id="incidentType" value={type} onChange={handleTypeChange}>
+                    <select id="incidentType" value={type} onChange={handleTypeChange} disabled={loading}>
                         <option value="">Select Type</option>
                         <option value="Theft">Theft</option>
                         <option value="Injury">Injury</option>
@@ -136,6 +143,7 @@ function IncidentAlert() {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Please describe the incident..."
+                        disabled={loading}
                     />
                 </div>
 
@@ -146,12 +154,13 @@ function IncidentAlert() {
                         id="uploadPhoto"
                         accept="image/*"
                         onChange={(e) => setPhoto(e.target.files[0])}
+                        disabled={loading}
                     />
                 </div>
 
                 <div className="buttons">
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={handleCancel}>Cancel</button>
+                    <button disabled={loading} type="submit">Submit</button>
+                    <button type="button" onClick={resetForm}>Cancel</button>
                 </div>
             </form>
         </div>
