@@ -16,22 +16,18 @@
   font-size: x-large;
 }
 
-
 .main-container {
   display: flex;
   justify-content: space-between;
   padding: 20px;
 }
 
-
 .welcome-section {
   background-color: white;
   padding: 20px;
-
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex: 3;
-
 }
 
 .welcome-section h2 {
@@ -119,7 +115,6 @@
   color: #333;
 }
 
-
 .notifications-panel {
   background-color: #f5f5f5;
   padding: 15px;
@@ -128,7 +123,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: auto;
   flex: 1;
-
 }
 
 .notifications-panel h3 {
@@ -143,7 +137,6 @@
   margin: 5px 0;
   border-radius: 5px;
 }
-
 
 /* Pop-up Notification */
 .popup-notification {
@@ -181,7 +174,6 @@
   }
 }
 
-
 .banner-notification {
   position: fixed;
   top: 0;
@@ -203,7 +195,6 @@
     opacity: 0;
   }
 
-
   to {
     opacity: 1;
   }
@@ -219,6 +210,7 @@
   }
 }
 
+/* Inbox Styling */
 .notification-inbox,
 .real-time-notification {
   background-color: #fff;
@@ -238,4 +230,84 @@
 .real-time-notification p {
   font-size: 14px;
   color: #666;
+}
+
+.inbox {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Notification message container */
+.inbox .message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+/* Hover effect for each message */
+.inbox .message:hover {
+  background-color: #f0f8ff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for unread messages */
+.inbox .message.unread {
+  background-color: #f0f4ff;
+  font-weight: bold;
+}
+
+/* Message content container */
+.inbox .message .content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Sender's name */
+.inbox .message .sender {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Subject or preview of the message */
+.inbox .message .preview {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Timestamp container */
+.inbox .message .timestamp {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+
+/* Add responsive styles */
+@media screen and (max-width: 768px) {
+  .inbox .message {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inbox .message .timestamp {
+    margin-top: 10px;
+  }
 }
