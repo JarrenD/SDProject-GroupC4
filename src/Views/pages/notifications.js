@@ -73,6 +73,7 @@ const NotificationCenter = () => {
   };
 
   return (
+    
     <div className="App">
       <header className="App-header">
         <h1>CAMPUS SAFETY</h1>
@@ -80,7 +81,6 @@ const NotificationCenter = () => {
       </header>
       <div className="main-container">
         <div className="welcome-section">
-          <h2>WELCOME BACK, USER!</h2>
           <div className="notification-buttons">
             <button
               className={`tab ${activeTab === 'inbox' ? 'active' : ''}`}
