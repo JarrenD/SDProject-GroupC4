@@ -1,32 +1,28 @@
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, off } from "firebase/database"; // Import Firebase Database
 import React, { useState, useEffect } from 'react';
 import './notifications.css';
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
+//Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
-    authDomain: "creativetutorial-ba1bf.firebaseapp.com",
-    databaseURL: "https://creativetutorial-ba1bf-default-rtdb.firebaseio.com",
-    projectId: "creativetutorial-ba1bf",
-    storageBucket: "creativetutorial-ba1bf",
-    messagingSenderId: "945665449612",
-    appId: "1:945665449612:web:7cb4ac69350bfc6ad065a9"
+  apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
+  authDomain: "creativetutorial-ba1bf.firebaseapp.com",
+  databaseURL: "https://creativetutorial-ba1bf-default-rtdb.firebaseio.com",
+  projectId: "creativetutorial-ba1bf",
+  storageBucket: "creativetutorial-ba1bf",
+  messagingSenderId: "945665449612",
+  appId: "1:945665449612:web:7cb4ac69350bfc6ad065a9"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-const storage = getStorage(app);
+const db = getDatabase(app); // Initialize Firebase Realtime Database
 
 const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
   const [announcements, setAnnouncements] = useState([]);
   const [alerts, setAlerts] = useState([]);
+  let alertsRef; // Declare a variable to store the Firebase reference
 
   useEffect(() => {
     // Load static announcements data
@@ -48,11 +44,15 @@ const NotificationCenter = () => {
       },
     ]);
 
-    // Fetch alerts using the API
+    // Fetch alerts using Firebase Database
     const fetchAlerts = async () => {
       try {
-        const fetchedAlerts = await fetchAlertsFromFirebase();
-        setAlerts(fetchedAlerts);
+        alertsRef = ref(db, 'Incident_Alerts'); // Use the reference variable
+        onValue(alertsRef, (snapshot) => {
+          const data = snapshot.val();
+          const fetchedAlerts = data ? Object.values(data) : [];
+          setAlerts(fetchedAlerts);
+        });
       } catch (error) {
         console.error("Error fetching alerts: ", error);
       }
@@ -61,7 +61,11 @@ const NotificationCenter = () => {
     fetchAlerts();
 
     // Clean up Firebase listener on component unmount
-    return () => removeFirebaseListener();
+    return () => {
+      if (alertsRef) {
+        off(alertsRef); // Remove listener
+      }
+    };
   }, []);
 
   const handleTabClick = (tabId) => {
