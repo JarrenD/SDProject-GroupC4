@@ -46,7 +46,7 @@ const NotificationCenter = () => {
           const data = snapshot.val();
           const fetchedAlerts = data ? Object.values(data) : [];
           setAlerts(fetchedAlerts);
-          
+
           const newInboxMessages = fetchedAlerts.map(alert => ({
             title: alert.title,
             description: alert.description,
@@ -54,7 +54,9 @@ const NotificationCenter = () => {
             isNew: true
           }));
           setInboxMessages(prevMessages => [...newInboxMessages, ...prevMessages]);
-        });
+
+         
+        }); 
       } catch (error) {
         console.error("Error fetching alerts: ", error);
       }
@@ -73,6 +75,7 @@ const NotificationCenter = () => {
     setActiveTab(tabId);
   };
 
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -129,10 +132,10 @@ const NotificationCenter = () => {
             {alerts.length === 0 ? (
               <p>No new alerts</p>
             ) : (
-                <div className="notification-alert">
-                  <strong>{alerts[0].title}</strong>
-                  <p>{alerts[0].description}</p>
-                </div>
+              <div className="notification-alert">
+                <strong>{alerts[0].title}</strong>
+                <p>{alerts[0].description}</p>
+              </div>
             )}
           </div>
         </div>
