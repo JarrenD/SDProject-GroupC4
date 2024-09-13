@@ -41,6 +41,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "install": "^0.13.0",
+    "jest": "^27.5.1",
     "npm": "^10.8.3"
   }
 }
