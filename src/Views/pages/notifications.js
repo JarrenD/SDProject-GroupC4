@@ -129,12 +129,10 @@ const NotificationCenter = () => {
             {alerts.length === 0 ? (
               <p>No new alerts</p>
             ) : (
-              alerts.map((alert, index) => (
-                <div key={index} className="notification-alert">
-                  <strong>{alert.title}</strong>
-                  <p>{alert.description}</p>
+                <div className="notification-alert">
+                  <strong>{alerts[0].title}</strong>
+                  <p>{alerts[0].description}</p>
                 </div>
-              ))
             )}
           </div>
         </div>
