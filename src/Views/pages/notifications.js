@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, off } from "firebase/database";
+import { getDatabase, ref, onValue, off, query, equalTo, orderByChild, get } from "firebase/database";
 import React, { useState, useEffect } from 'react';
 import './notifications.css';
 
@@ -21,7 +21,8 @@ const NotificationCenter = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [inboxMessages, setInboxMessages] = useState([]);
-  let alertsRef;
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [alertsRef, setAlertsRef] = useState(null);
 
   useEffect(() => {
     setAnnouncements([
@@ -39,43 +40,62 @@ const NotificationCenter = () => {
       },
     ]);
 
-    const fetchAlerts = async () => {
+    const fetchAlerts = async (category) => {
       try {
-        alertsRef = ref(db, 'Incident_Alerts');
-        onValue(alertsRef, (snapshot) => {
+        let alertsQuery;
+        if (category === 'All') {
+          alertsQuery = ref(db, 'Incident_Alerts');
+        } else {
+          alertsQuery = query(ref(db, 'Incident_Alerts'), orderByChild('type'), equalTo(category.toLowerCase().replace(' ', '-')));
+        }
+
+        setAlertsRef(alertsQuery); // Update with current query
+
+        const snapshot = await get(alertsQuery);
+        if (snapshot.exists()) {
           const data = snapshot.val();
           const fetchedAlerts = data ? Object.values(data) : [];
           setAlerts(fetchedAlerts);
 
+          // Create inbox messages
           const newInboxMessages = fetchedAlerts.map(alert => ({
             title: alert.title,
             description: alert.description,
-            timestamp: new Date().toLocaleString(),
-            isNew: true
+            timestamp: new Date(alert.timestamp).toLocaleString(),  // Use the timestamp from Firebase
+            isNew: true,
+            category: alert.type // Ensure category is set correctly
           }));
-          setInboxMessages(prevMessages => [...newInboxMessages, ...prevMessages]);
-
-         
-        }); 
+          setInboxMessages(newInboxMessages);
+        } else {
+          setAlerts([]);
+          setInboxMessages([]);
+        }
       } catch (error) {
         console.error("Error fetching alerts: ", error);
       }
     };
 
-    fetchAlerts();
+    
+    fetchAlerts(selectedCategory);
 
     return () => {
       if (alertsRef) {
         off(alertsRef);
       }
     };
-  }, []);
+  }, [selectedCategory]); // Dependency array includes selectedCategory to refetch on change
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
 
-  
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  // Filter inbox messages based on selected category
+  const filteredMessages = selectedCategory === 'All' ? inboxMessages : inboxMessages.filter(message => message.category === selectedCategory.toLowerCase().replace(' ', '-'));
+
   return (
     <div className="App">
       <header className="App-header">
@@ -84,7 +104,6 @@ const NotificationCenter = () => {
       </header>
       <div className="main-container">
         <div className="welcome-section">
-        
           <div className="notification-buttons">
             <button
               className={`tab ${activeTab === 'inbox' ? 'active' : ''}`}
@@ -101,10 +120,20 @@ const NotificationCenter = () => {
           </div>
 
           <div id="inbox-content" className="content-area" style={{ display: activeTab === 'inbox' ? 'block' : 'none' }}>
-            {inboxMessages.length === 0 ? (
+            <div className="dropdown">
+              <label htmlFor="category-select">Filter by category:</label>
+              <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
+                <option value="All">All</option>
+                <option value="Theft">Theft</option>
+                <option value="Injury">Injury</option>
+                <option value="Traffic Jam">Traffic Jam</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            {filteredMessages.length === 0 ? (
               <p>No messages in inbox</p>
             ) : (
-              inboxMessages.map((message, index) => (
+              filteredMessages.map((message, index) => (
                 <div key={index} className={`inbox-message ${message.isNew ? 'new-message' : ''}`}>
                   <strong>{message.title}</strong>
                   <p>{message.description}</p>
@@ -133,8 +162,8 @@ const NotificationCenter = () => {
               <p>No new alerts</p>
             ) : (
               <div className="notification-alert">
-                <strong>{alerts[0].title}</strong>
-                <p>{alerts[0].description}</p>
+                <strong>{alerts[alerts.length - 1].title}</strong>
+                <p>{alerts[alerts.length - 1].description}</p>
               </div>
             )}
           </div>

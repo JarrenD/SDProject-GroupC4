@@ -103,7 +103,7 @@ const DashboardContent = () => {
       const data = snapshot.val();
       const fetchedAlerts = data ? Object.values(data) : [];
       if (fetchedAlerts.length > 0) {
-        const mostRecentAlert = fetchedAlerts[0]; // Get the latest alert
+        const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1]; // Get the latest alert
         setLatestAlert(mostRecentAlert);
         setShowModal(true); // Display the modal as soon as the latest alert is fetched
       }
