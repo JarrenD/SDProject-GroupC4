@@ -12,26 +12,6 @@ import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
 import './App.css';
 
-async function fetchContacts() {
-  try {
-      // Fetch data from the API
-      const response = await fetch('/api/contacts');
-      
-      // Check if the response is ok (status in the range 200-299)
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      // Parse the JSON from the response
-      const data = await response.json();
-      
-      // Print the resulting JSON object to the console
-      console.log(data);
-  } catch (error) {
-      // Handle errors
-      console.error('Error fetching the contacts:', error);
-  }
-}
 
 function App() {
   
@@ -43,15 +23,14 @@ function App() {
     if (storedAuth === 'true') {
       setIsAuthenticated(true);
     }
+    
+   
   }, []);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
     localStorage.setItem('isAuthenticated', 'true'); // Persist authentication state
   };
-
-  fetchContacts();
-
 
   return (
     <Router>

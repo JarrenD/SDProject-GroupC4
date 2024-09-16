@@ -6,6 +6,8 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@azure/functions": "^4.5.1",
+    "firebase-admin": "^12.5.0"
+  }
 }
