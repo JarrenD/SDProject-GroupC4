@@ -1,19 +1,23 @@
-const fs = require('fs');
+const admin = require('firebase-admin');
+const { HttpFunctionContext, HttpRequest } = require('@azure/functions');
+const path = require('path');
+
+// Initialize Firebase Admin with Service Account
+if (!admin.apps.length) {
+    const serviceAccountPath = path.join(__dirname, '../creativetutorial-ba1bf-firebase-adminsdk-9p4al-0c98afc609.json'); // Update this path
+    admin.initializeApp({
+        credential: admin.credential.cert(require(serviceAccountPath)),
+        databaseURL: 'https://creativetutorial-ba1bf-default-rtdb.firebaseio.com'
+    });
+}
+
+const db = admin.database();
 
 module.exports = async function (context, req) {
     const method = req.method;
     switch (method) {
         case 'GET':
-            await getCars(context);
-            break;
-        case 'POST':
-            await addCar(context, req.body);
-            break;
-        case 'PUT':
-            await updateCar(context, req.params.id, req.body);
-            break;
-        case 'DELETE':
-            await deleteCar(context, req.query.index); // Use req.params.id directly
+            await getContacts(context);
             break;
         default:
             context.res = {
@@ -24,83 +28,28 @@ module.exports = async function (context, req) {
     }
 };
 
-const cars = require('./cars.json');
-
-async function getCars(context) {
-    context.res = {
-        body: cars
-    };
-}
-
-async function addCar(context, newCar) {
-    cars.push(newCar);
+async function getContacts(context) {
     try {
-        const data = JSON.stringify(cars, null, 2);  
-        await fs.promises.writeFile('./cars.json', data);
-        context.res = {
-            status: 201,
-            body: newCar
-        };
+        const contactsRef = db.ref('Emergency_Contacts'); // Use db.ref() for Firebase Admin SDK
+        const snapshot = await contactsRef.once('value'); // Use once() to get data
+
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            context.res = {
+                status: 200,
+                body: data
+            };
+        } else {
+            context.res = {
+                status: 404,
+                body: 'No data available'
+            };
+        }
     } catch (error) {
-        console.error('Error writing to cars.json:', error);
+        console.error('Error fetching data:', error);
         context.res = {
             status: 500,
             body: 'Internal Server Error'
         };
     }
 }
-
-async function updateCar(context, id, updatedCar) {
-    const index = cars.findIndex(car => car.id === id);
-    if (index !== -1) {
-        cars[index] = updatedCar;
-        try {
-            const data = JSON.stringify(cars, null, 2);  
-            await fs.promises.writeFile('./cars.json', data);
-            context.res = {
-                body: updatedCar
-            };
-        } catch (error) {
-            console.error('Error writing to cars.json:', error);
-            context.res = {
-                status: 500,
-                body: 'Internal Server Error'
-            };
-        }
-    } else {
-        context.res = {
-            status: 404,
-            body: 'Car not found'
-        };
-    }
-}
-
-
-
-async function deleteCar(context, index) {
-    const carIndex = parseInt(index); // Convert index to an integer
-    if (!isNaN(carIndex) && carIndex >= 0 && carIndex < cars.length) {
-        cars.splice(carIndex, 1);
-        try {
-            const data = JSON.stringify(cars, null, 2);  
-            await fs.promises.writeFile('./cars.json', data);
-            context.res = {
-                status: 200,
-                body: { message: `Car with index ${carIndex} deleted` }
-            };
-        } catch (error) {
-            console.error('Error writing to cars.json:', error);
-            context.res = {
-                status: 500,
-                body: 'Internal Server Error'
-            };
-        }
-    } else {
-        context.res = {
-            status: 404,
-            body: 'Car not found'
-        };
-    }
-}
-
-
