@@ -5,6 +5,10 @@ const functions = require('@azure/functions');
 // Initialize Firebase Admin SDK with service account credentials from environment variable
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 
+if (!serviceAccount) {
+    console.error('FIREBASE_SERVICE_ACCOUNT_KEY is not set');
+}
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: 'https://creativetutorial-ba1bf-default-rtdb.firebaseio.com'
