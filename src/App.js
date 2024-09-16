@@ -4,7 +4,7 @@ import LoginPage from './views/pages/LoginPage.js';
 import SignUpPage from './views/pages/SignUpPage.js';
 import SafetyResources from './views/pages/SafetyResources.js';
 import IncidentReporting from './views/components/IncidentAlert.js';
-import NotificationCentre from './views/pages/notifications.js';
+import NotificationCentre from './views/pages/NotificationCentre.js';
 import EmergencyContacts from './views/components/EmergencyContacts.js';
 import LocationSharing from './views/pages/LocationSharingComponent.jsx';
 import Navbar from './views/components/Navbar.jsx';
