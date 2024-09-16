@@ -19,8 +19,8 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - name: Set up environment
-        run: echo "FIREBASE_SERVICE_ACCOUNT_KEY=${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" >> $GITHUB_ENV
+      - name: Decode Firebase Service Account Key
+        run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64 }}" | base64 --decode > firebase-key.json
 
       - name: Build And Deploy
         id: builddeploy
