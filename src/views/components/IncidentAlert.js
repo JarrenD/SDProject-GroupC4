@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './IncidentAlert.css';
+// import './IncidentAlert.css';
 import EXIF from 'exif-js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";

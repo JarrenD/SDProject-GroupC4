@@ -151,7 +151,7 @@ const DashboardContent = () => {
         <button>View Contacts</button>
       </div>
 
-      {/* Modal to display the latest alert */}
+      {/* Modal to display the latest alert
       {showModal && latestAlert && (
         <div className="modal">
           <div className="modal-content">
@@ -160,7 +160,7 @@ const DashboardContent = () => {
             <button onClick={closeModal}>Close</button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
