@@ -1,23 +1,31 @@
 const admin = require('firebase-admin');
-const { HttpFunctionContext, HttpRequest } = require('@azure/functions');
-const path = require('path');
+const functions = require('@azure/functions');
 
-// Initialize Firebase Admin with Service Account
-if (!admin.apps.length) {
-    const serviceAccountPath = path.join(__dirname, '../creativetutorial-ba1bf-firebase-adminsdk-9p4al-0c98afc609.json'); // Update this path
-    admin.initializeApp({
-        credential: admin.credential.cert(require(serviceAccountPath)),
-        databaseURL: 'https://creativetutorial-ba1bf-default-rtdb.firebaseio.com'
-    });
-}
+// Initialize Firebase Admin SDK with service account credentials from environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://creativetutorial-ba1bf-default-rtdb.firebaseio.com'
+});
 
 const db = admin.database();
+const ref = db.ref('Emergency_Contacts');
 
 module.exports = async function (context, req) {
     const method = req.method;
     switch (method) {
         case 'GET':
             await getContacts(context);
+            break;
+        case 'POST':
+            await addContact(context, req.body);
+            break;
+        case 'PUT':
+            await updateContact(context, req.params.id, req.body);
+            break;
+        case 'DELETE':
+            await deleteContact(context, req.query.index);
             break;
         default:
             context.res = {
@@ -30,23 +38,62 @@ module.exports = async function (context, req) {
 
 async function getContacts(context) {
     try {
-        const contactsRef = db.ref('Emergency_Contacts'); // Use db.ref() for Firebase Admin SDK
-        const snapshot = await contactsRef.once('value'); // Use once() to get data
-
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-            context.res = {
-                status: 200,
-                body: data
-            };
-        } else {
-            context.res = {
-                status: 404,
-                body: 'No data available'
-            };
-        }
+        const snapshot = await ref.once('value');
+        const data = snapshot.val();
+        context.res = {
+            status: 200,
+            body: data
+        };
     } catch (error) {
         console.error('Error fetching data:', error);
+        context.res = {
+            status: 500,
+            body: 'Internal Server Error'
+        };
+    }
+}
+
+async function addContact(context, newContact) {
+    try {
+        await ref.push(newContact);
+        context.res = {
+            status: 201,
+            body: newContact
+        };
+    } catch (error) {
+        console.error('Error adding contact:', error);
+        context.res = {
+            status: 500,
+            body: 'Internal Server Error'
+        };
+    }
+}
+
+async function updateContact(context, id, updatedContact) {
+    try {
+        await ref.child(id).update(updatedContact);
+        context.res = {
+            status: 200,
+            body: updatedContact
+        };
+    } catch (error) {
+        console.error('Error updating contact:', error);
+        context.res = {
+            status: 500,
+            body: 'Internal Server Error'
+        };
+    }
+}
+
+async function deleteContact(context, index) {
+    try {
+        await ref.child(index).remove();
+        context.res = {
+            status: 200,
+            body: { message: `Contact with index ${index} deleted` }
+        };
+    } catch (error) {
+        console.error('Error deleting contact:', error);
         context.res = {
             status: 500,
             body: 'Internal Server Error'
