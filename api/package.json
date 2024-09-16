@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@azure/functions": "^4.5.1",
+    "dotenv": "^16.4.5",
     "firebase-admin": "^12.5.0"
   }
 }
