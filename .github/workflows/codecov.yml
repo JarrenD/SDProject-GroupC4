@@ -13,6 +13,6 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run tests and collect coverage
-        run: npm jest --config=jest.config.cjs --coverage
+        run: npx jest --config=jest.config.cjs --coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
