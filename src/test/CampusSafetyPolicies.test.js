@@ -1,33 +1,28 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // for the "toBeInTheDocument" matcher
-import CampusSafetyPolicies from '../views/components/CampusSafetyPolicies';
+import '@testing-library/jest-dom'; // for the 'toBeInTheDocument' matcher
+import CampusSafetyPolicies from '../views/components/CampusSafetyPolicies'; // Adjust the import path as necessary
 
 describe('CampusSafetyPolicies Component', () => {
-  beforeEach(() => {
+  test('renders without crashing', () => {
     render(<CampusSafetyPolicies />);
+    // Just rendering without crashing
   });
 
-  test('renders the component', () => {
-    const heading = screen.getByText(/Campus Safety Policies/i);
-    expect(heading).toBeInTheDocument();
-  });
+  test('displays policy sections correctly', () => {
+    render(<CampusSafetyPolicies />);
 
-  test('renders Policy 1 link with correct attributes', () => {
-    const policy1Link = screen.getByText(/Policy 1/i);
-    expect(policy1Link).toBeInTheDocument();
-    expect(policy1Link).toHaveAttribute('href', 'https://www.yourcampus.edu/policy1');
-    expect(policy1Link).toHaveAttribute('target', '_blank');
-    expect(policy1Link).toHaveAttribute('rel', 'noopener noreferrer');
-  });
+    // Check the presence of the heading
+    expect(screen.getByText(/Campus Safety Policies/i)).toBeInTheDocument();
 
-  test('renders Policy 2 link with correct attributes', () => {
-    const policy2Link = screen.getByText(/Policy 2/i);
-    expect(policy2Link).toBeInTheDocument();
-    expect(policy2Link).toHaveAttribute('href', 'https://www.yourcampus.edu/policy2');
-    expect(policy2Link).toHaveAttribute('target', '_blank');
-    expect(policy2Link).toHaveAttribute('rel', 'noopener noreferrer');
+    // Check the presence of each policy section
+    expect(screen.getByText(/mySOS Campus Emergency Service/i)).toBeInTheDocument();
+    expect(screen.getByText(/Download mySOS for free and register yourself as a user/i)).toBeInTheDocument();
+    expect(screen.getByText(/Security Escort Service/i)).toBeInTheDocument();
+    expect(screen.getByText(/There is a 24-hour escort service available for staff and students on campus/i)).toBeInTheDocument();
+    expect(screen.getByText(/Identity Card Policy/i)).toBeInTheDocument();
+    expect(screen.getByText(/Access to many University facilities is controlled by the use of your student or staff identity card/i)).toBeInTheDocument();
+    expect(screen.getByText(/Misuse of Student Card/i)).toBeInTheDocument();
+    expect(screen.getByText(/Allowing another person to use your card for any purpose/i)).toBeInTheDocument();
   });
-
-  // Add more tests as needed for additional policies
 });
