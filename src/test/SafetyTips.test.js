@@ -13,11 +13,13 @@ describe('SafetyTips Component', () => {
     render(<SafetyTips />);
 
     // Check the presence of the heading
-    expect(screen.getByText(/safety tips/i)).toBeInTheDocument();
+    expect(screen.getByText(/advice to keep your home safe/i)).toBeInTheDocument();
 
-    // Check the presence of each safety tip
-    expect(screen.getByText(/always be aware of your surroundings/i)).toBeInTheDocument();
-    expect(screen.getByText(/don’t walk alone at night; use the buddy system/i)).toBeInTheDocument();
-    expect(screen.getByText(/report suspicious activity immediately/i)).toBeInTheDocument();
+    // Check the presence of specific tips
+    expect(screen.getByText(/arrange with your neighbours to take out the postal mail/i)).toBeInTheDocument();
+    expect(screen.getByText(/make sure you have good lighting/i)).toBeInTheDocument();
+    expect(screen.getByText(/don’t let too many people know when you are going on holiday/i)).toBeInTheDocument();
+    expect(screen.getByText(/make sure your doors lock properly/i)).toBeInTheDocument();
+    expect(screen.getByText(/notify the police and armed response company/i)).toBeInTheDocument();
   });
 });
