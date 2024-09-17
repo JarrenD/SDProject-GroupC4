@@ -12,6 +12,7 @@ import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
 import './App.css';
 
+
 function App() {
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,6 +23,8 @@ function App() {
     if (storedAuth === 'true') {
       setIsAuthenticated(true);
     }
+    
+   
   }, []);
 
   const handleLogin = () => {
