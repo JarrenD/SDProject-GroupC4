@@ -1,26 +1,10 @@
 import React, { useState } from 'react';
 import './IncidentAlert.css';
 import EXIF from 'exif-js';
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
-    authDomain: "creativetutorial-ba1bf.firebaseapp.com",
-    databaseURL: "https://creativetutorial-ba1bf-default-rtdb.firebaseio.com",
-    projectId: "creativetutorial-ba1bf",
-    storageBucket: "creativetutorial-ba1bf.appspot.com",
-    messagingSenderId: "945665449612",
-    appId: "1:945665449612:web:7cb4ac69350bfc6ad065a9"
-  };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const storage = getStorage(app);
+import { auth, db, storage } from '../../models/firebase/firebaseConfig.js';
+import { ref, set } from "firebase/database";
+import { getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth";
 
 function IncidentAlert() {
     const [incidentType] = useState('theft');
@@ -31,7 +15,6 @@ function IncidentAlert() {
     const [loading, setLoading] = useState(false);
 
     React.useEffect(() => {
-        const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
           if (user) {
             setAuthenticated(true);
@@ -49,7 +32,9 @@ function IncidentAlert() {
             alert('You must be logged in to submit an incident.');
             return;
         }
+
         setLoading(true);
+
         if (photo) {
             EXIF.getData(photo, function() {
                 const gpsLatitude = EXIF.getTag(this, "GPSLatitude");
@@ -65,7 +50,7 @@ function IncidentAlert() {
                     if (EXIF.getTag(this, "GPSLongitudeRef") === "W") longitude = -longitude;
                 }
 
-                uploadIncidentData(incidentType, description, photo, latitude, longitude);
+                uploadIncidentData(incidentType, description, photo, latitude, longitude)
             });
         } else {
             setLoading(false);
@@ -105,7 +90,6 @@ function IncidentAlert() {
             });
     };
 
-    // Update the type and description when a type is selected
     const handleTypeChange = (e) => {
         const selectedType = e.target.value;
         setType(selectedType);

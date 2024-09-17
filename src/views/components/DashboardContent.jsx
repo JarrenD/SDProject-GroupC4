@@ -58,23 +58,9 @@
 import React from 'react';
 import ExpandableCard from '../ExpandableCard';
 import { useNavigate } from 'react-router-dom';
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, off } from "firebase/database";
+import { db } from '../../models/firebase/firebaseConfig';
+import { ref, onValue, off } from "firebase/database";
 import { useState, useEffect } from 'react';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
-  authDomain: "creativetutorial-ba1bf.firebaseapp.com",
-  databaseURL: "https://creativetutorial-ba1bf-default-rtdb.firebaseio.com",
-  projectId: "creativetutorial-ba1bf",
-  storageBucket: "creativetutorial-ba1bf",
-  messagingSenderId: "945665449612",
-  appId: "1:945665449612:web:7cb4ac69350bfc6ad065a9"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
   
 const DashboardContent = () => {
   const [showModal, setShowModal] = useState(false);

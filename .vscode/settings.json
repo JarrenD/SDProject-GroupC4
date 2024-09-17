@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/7148dc8a-9ba2-4d63-950f-c1eedc901dda/resourceGroups/Cryptid-Web-App/providers/Microsoft.Web/sites/Api-endpoint",
+    "appService.deploySubpath": "api"
+}
