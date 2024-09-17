@@ -53,9 +53,9 @@ const DashboardContent = () => {
   return (
     
     <div className="dashboard-content">
-      <div className="card">
-        <h3>Emergency Alert</h3>
-        <p>Press for immediate help. Your location will be shared with campus security.</p>
+      <div className="card emergency-sos">
+        <h3>Emergency SOS </h3>
+        <p>Press for immediate help !!! </p>
         <button onClick={() => navigate('/location-sharing')}>Alert Campus Security</button>
       </div>
 

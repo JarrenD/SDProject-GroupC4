@@ -296,10 +296,16 @@
 
 }
 
+.incident-reporting p{
+  font-weight: bold;
+
+}
+
 .incident-reporting button {
+  font-size: 0.95em;
+  font-weight: medium;
   width: 70%;
   padding: 10px;
-  margin-top: 25px;
   background-color: #4a90e2;
   color: white;
   border: none;
@@ -368,6 +374,8 @@
 }
 
 .safety-resources button {
+  font-size: 0.9em;
+  font-weight: medium;
   width: 70%;
   padding: 10px;
   margin-top: 10px;
@@ -381,6 +389,8 @@
 }
 
 .emergency-contacts button {
+  font-size: 0.95em;
+  font-weight: medium;
   width: 40%;
   padding: 10px;
   margin-top: 10px;
@@ -403,6 +413,23 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   align-items: center;
 }
+.safety-tips h3{
+  font-size: 1.15em;
+  font-weight: bold;
+  text-align: center;
+}
+.safety-tips h3{
+  font-size: 1.15em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.emergency-contacts h3{
+  font-size: 1.15em;
+  font-weight: bold;
+  text-align: center;
+}
+
 .safety-resources button:hover{
   background-color: 	#357ae8;
 }
@@ -411,3 +438,48 @@
   background-color: 	#3c5c87;
 
 }
+
+.emergency-sos{
+  height: auto;
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-sos h3{
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.emergency-sos p {
+  font-size: 1.0em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.emergency-sos button {
+  font-size: 0.95em;
+  font-weight: medium;
+  width: 70%;
+  padding: 10px;
+  margin-top: 25px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.emergency-sos button:hover{
+  background-color: #357ae8;
+}
+
+.emergency-sos button:active{
+  background-color: #3c5c87;
+}
+
