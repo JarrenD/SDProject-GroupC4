@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, off, query, equalTo, orderByChild, get } from "firebase/database";
+import { getDatabase, ref, query, equalTo, orderByChild, get } from "firebase/database";
 import React, { useState, useEffect } from 'react';
 import './notifications.css';
 
@@ -22,7 +22,7 @@ const NotificationCenter = () => {
   const [alerts, setAlerts] = useState([]);
   const [inboxMessages, setInboxMessages] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [alertsRef, setAlertsRef] = useState(null);
+  
 
   useEffect(() => {
     setAnnouncements([
