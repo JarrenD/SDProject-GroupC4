@@ -1,13 +1,74 @@
 .campus-safety-policies {
-    margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  color: #333;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.campus-safety-policies h2 {
+  font-size: 28px;
+  color: #007bff; /* Light blue for the main heading */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.policy-section {
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.policy-section h3 {
+  font-size: 22px;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.policy-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.policy-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.policy-section ul li {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.policy-section ul li::marker {
+  color: #007bff; /* Custom bullet color */
+}
+
+@media (max-width: 600px) {
+  .campus-safety-policies {
+    padding: 15px;
   }
-  
-  .campus-safety-policies a {
-    color: #007bff;
-    text-decoration: none;
+
+  .policy-section {
+    padding: 10px;
   }
-  
-  .campus-safety-policies a:hover {
-    text-decoration: underline;
+
+  .campus-safety-policies h2 {
+    font-size: 24px;
   }
-  
+
+  .policy-section h3 {
+    font-size: 20px;
+  }
+
+  .policy-section p, .policy-section ul li {
+    font-size: 14px;
+  }
+}
