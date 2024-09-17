@@ -79,7 +79,7 @@ const NotificationCenter = () => {
     fetchAlerts(selectedCategory);
 
     return () => {
-      if (alertsRef) {
+      if (alertsRef !== null) {
         off(alertsRef);
       }
     };
