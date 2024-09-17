@@ -79,9 +79,6 @@ const NotificationCenter = () => {
     fetchAlerts(selectedCategory);
 
     return () => {
-      if (alertsRef !== null) {
-        off(alertsRef);
-      }
     };
   }, [selectedCategory]); // Dependency array includes selectedCategory to refetch on change
 
