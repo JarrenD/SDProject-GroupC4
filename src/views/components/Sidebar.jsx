@@ -13,10 +13,9 @@ const Sidebar = () => {
     { name: 'Homepage', icon: Home, href: '/dashboard' },
     { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
     { name: 'Notifications', icon: Bell, href: '/notification-centre' },
-    { name: 'Emergency Contacts', icon: PhoneCall, href: '/emergency-contacts' },
     { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
+    { name: 'Emergency Contacts', icon: PhoneCall, href: '/emergency-contacts' },
     { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
-    { name: 'Help', icon: HelpCircle, href: '#help' },
     { name: 'Settings', icon: Settings, href: '#settings' },
     { name: 'Logout', icon: LogOut, href: '#logout' }
   ];

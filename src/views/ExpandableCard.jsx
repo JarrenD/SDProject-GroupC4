@@ -6,7 +6,7 @@ const ExpandableCard = ({ title, items, initialItemCount = 3 }) => {
   const displayedItems = isExpanded ? items : items.slice(0, initialItemCount);
 
   return (
-    <div className="card">
+    <div>
       <h3>{title}</h3>
       <ul>
         {displayedItems.map((item, index) => (
