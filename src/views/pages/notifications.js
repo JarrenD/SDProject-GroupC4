@@ -49,7 +49,6 @@ const NotificationCenter = () => {
           alertsQuery = query(ref(db, 'Incident_Alerts'), orderByChild('type'), equalTo(category.toLowerCase().replace(' ', '-')));
         }
 
-        setAlertsRef(alertsQuery); // Update with current query
 
         const snapshot = await get(alertsQuery);
         if (snapshot.exists()) {
