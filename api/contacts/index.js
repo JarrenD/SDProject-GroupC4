@@ -2,11 +2,13 @@ const admin = require('firebase-admin');
 const path = require('path');
 const serviceAccountKeyPath = path.resolve(__dirname, '../firebase-key.json'); // Path to the decoded service account key
 
-// Initialize Firebase Admin SDK with the service account key
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountKeyPath),
-  databaseURL: 'https://creativetutorial-ba1bf-default-rtdb.firebaseio.com' // Your Firebase database URL
-});
+// Initialize Firebase Admin SDK with the service account key if not already initialized
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccountKeyPath),
+        databaseURL: 'https://creativetutorial-ba1bf-default-rtdb.firebaseio.com' // Your Firebase database URL
+    });
+}
 
 const db = admin.database();
 
