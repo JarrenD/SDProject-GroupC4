@@ -6,7 +6,6 @@
   display: flex;
   justify-content: space-between;
   background-color: white;
-  color: white;
   padding: 20px;
 }
 
@@ -21,6 +20,7 @@
   justify-content: space-between;
   padding: 20px;
   gap: 20px;
+  color: #777;
 }
 
 .welcome-section {
@@ -143,6 +143,7 @@
 
 .modal {
   position: fixed;
+  color: #777;
   z-index: 1;
   left: 0;
   top: 0;
@@ -156,6 +157,7 @@
 
 .modal-content {
   background-color: #fff;
+  color: #777;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
@@ -164,10 +166,12 @@
 
 .modal-content h3 {
   margin-bottom: 10px;
+  color: #777;
 }
 
 .modal-content p {
   margin-bottom: 20px;
+  color: #777;
 }
 
 .modal-content button {

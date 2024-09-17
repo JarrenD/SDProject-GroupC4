@@ -10,6 +10,7 @@ import LocationSharing from './views/pages/LocationSharingComponent.jsx';
 import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
+import SettingsPage from './views/pages/SettingsPage.js';
 import './App.css';
 
 
@@ -104,6 +105,19 @@ function App() {
             </div>
           ) : <Navigate to="/login" />} 
         />
+
+        <Route 
+            path="/settings" 
+            element={isAuthenticated ? (
+              <div className="app-container">
+                <Navbar />
+                <Sidebar />
+                <div className="main-content">
+                  <SettingsPage />
+                </div>
+              </div>
+            ) : <Navigate to="/login" />} 
+          />
 
         {/* Redirect to login if the route is not found */}
         <Route path="*" element={<Navigate to="/login" />} />
