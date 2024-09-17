@@ -25,7 +25,7 @@ const SafetyResourcesSection = () => {
         <button>View Contacts</button>
       </div>
       <div className='card safety-tips'>
-      <ExpandableCard title="Safety Tips" items={safetyTips} />
+        <ExpandableCard title="Safety Tips" items={safetyTips} />
       </div>
       <button>View Campus Safety Policies</button>
     </div>
