@@ -3,23 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "exif-js": "^2.3.0",
     "express": "^4.19.2",
     "firebase": "^10.13.1",
     "firebase-admin": "^12.4.0",
     "lucide-react": "^0.438.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "util": "^0.12.5",
+    "web-streams-polyfill": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --config=jest.config.cjs",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,7 +40,14 @@
   "type": "module",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "babel-jest": "^29.7.0",
+    "identity-obj-proxy": "^3.0.0",
     "install": "^0.13.0",
-    "npm": "^10.8.3"
+    "jest": "^27.5.1",
+    "npm": "^10.8.3",
+    "supertest": "^7.0.0",
+    "text-encoding": "^0.7.0"
   }
 }
