@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './TopNav.css';
 
 function TopNav({ setActiveSection }) {
-  // Use useEffect to set the default section on the first render
-  useEffect(() => {
-    setActiveSection('safetyTips');
-  }, [setActiveSection]);
-
   return (
     <div className="topnav">
       <button className="topnav-button" onClick={() => setActiveSection('safetyTips')}>Safety Tips</button>
