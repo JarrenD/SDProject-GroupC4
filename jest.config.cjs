@@ -8,6 +8,6 @@ module.exports = {
   transform: {
     "^.+\\.(js|jsx|ts|tsx)?$": "babel-jest",
   },
-  coverageDirectory: 'coverage',
-  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  collectCoverage: true,
+  coverageReporters: ['text', 'cobertura'],
 };
