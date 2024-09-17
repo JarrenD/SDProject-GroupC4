@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './notifications.css';
-import { fetchAlertsFromFirebase, removeFirebaseListener } from './firebaseApi'; // Import the API
+import { fetchAlertsFromFirebase, removeFirebaseListener } from '../api/firebaseAPI'; // Import the API
 
 const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
