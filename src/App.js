@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './Views/pages/LoginPage.js';
-import SignUpPage from './Views/pages/SignUpPage.js';
-import SafetyResources from './Views/pages/SafetyResources.js';
-import IncidentReporting from './Views/components/IncidentAlert.js';
-import NotificationCentre from './Views/pages/NotificationCentre.js';
-import EmergencyContacts from './Views/components/EmergencyContacts.js';
-import LocationSharing from './Views/pages/LocationSharingComponent.jsx';
-import Navbar from './Views/components/Navbar.jsx';
-import Sidebar from './Views/components/Sidebar.jsx';
-import UserDashboard from './Views/pages/userDashboard.jsx';
+import LoginPage from './views/pages/LoginPage.js';
+import SignUpPage from './views/pages/SignUpPage.js';
+import SafetyResources from './views/pages/SafetyResources.js';
+import IncidentReporting from './views/components/IncidentAlert.js';
+import NotificationCentre from './views/pages/NotificationCentre.js';
+import EmergencyContacts from './views/components/EmergencyContacts.js';
+import LocationSharing from './views/pages/LocationSharingComponent.jsx';
+import Navbar from './views/components/Navbar.jsx';
+import Sidebar from './views/components/Sidebar.jsx';
+import UserDashboard from './views/pages/userDashboard.jsx';
 import './App.css';
 
 
