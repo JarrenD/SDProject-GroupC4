@@ -1,5 +1,4 @@
 import React from 'react';
-import SafetyResourcesSection from './SafetyResourcesSection';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
@@ -75,7 +74,6 @@ const DashboardContent = () => {
           </div>
         </div>
       )} */}
-      <SafetyResourcesSection />
     </div>
   );
 };
