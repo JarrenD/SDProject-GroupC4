@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, HelpCircle, Settings, LogOut, Menu } from 'lucide-react';
+import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, Settings, LogOut, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const Sidebar = () => {
