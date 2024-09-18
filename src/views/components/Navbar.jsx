@@ -17,7 +17,7 @@ const Navbar = () => {
     { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
     { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
     { name: 'Help', icon: HelpCircle, href: '#help' },
-    { name: 'Settings', icon: Settings, href: '#settings' },
+    { name: 'Settings', icon: Settings, href: '/settings' },
     { name: 'Logout', icon: LogOut, href: '#logout' }
   ];
 

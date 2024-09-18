@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { Save } from 'lucide-react';
+import React from 'react';
+// import { Save } from 'lucide-react';
 import './SettingsPage.css';
 
 const SettingsPage = () => {
-  const [notifications, setNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
-  const [fontSize, setFontSize] = useState('medium');
+  // const [notifications, setNotifications] = useState(true);
+  // const [darkMode, setDarkMode] = useState(false);
+  // const [fontSize, setFontSize] = useState('medium');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Settings saved:', { notifications, darkMode, fontSize });
-    // success message
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('Settings saved:', { notifications, darkMode, fontSize });
+  //   // success message
+  // };
 
   return (
     <div className="settings-page">
       <h1>Settings</h1>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <div className="setting-group">
           <label htmlFor="notifications">
             <input
@@ -55,7 +55,7 @@ const SettingsPage = () => {
           <Save size={20} />
           Save Settings
         </button>
-      </form>
+      </form> */}
     </div>
   );
 };
