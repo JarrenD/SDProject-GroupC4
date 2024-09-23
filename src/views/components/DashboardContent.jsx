@@ -55,12 +55,12 @@
 // export default DashboardContent;
 
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ExpandableCard from '../ExpandableCard';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
-import { useState, useEffect } from 'react';
+import { PushNotifications, notify } from './pushNotifications';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
@@ -75,18 +75,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-  
 const DashboardContent = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [latestAlert, setLatestAlert] = useState(null);
-  const recentAlerts = [
-    "⚠️ Power outage expected in the West Campus area from 10 AM - 12 PM.",
-    "⚠️ Vehicle break-in reported near the main library. Stay alert.",
-    "⚠️ Water supply interruption on East Campus due to maintenance.",
-    "⚠️ Protest action planned at the Great Hall at 2 PM. Avoid the area.",
-    "⚠️ Suspicious package reported at the Science Stadium. Area cordoned off."
-  ];
-
+  const [latestAlerts, setLatestAlerts] = useState([]); // Changed to handle multiple alerts
+  const recentAlerts = latestAlerts.map(alert => `⚠️ ${alert.description}`).slice(-5);
   const safetyTips = [
     "🔒 Always lock your car doors and keep valuables out of sight.",
     "🔦 Avoid walking alone at night; use the campus escort service.",
@@ -94,35 +85,28 @@ const DashboardContent = () => {
     "🚶‍♀️ Use well-lit walkways and avoid isolated areas, especially at night.",
     "📱 Keep your mobile phone with you and fully charged in case of emergencies."
   ];
+  
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Fetch latest alert from Firebase on component mount
     const alertsRef = ref(db, 'Incident_Alerts');
     onValue(alertsRef, (snapshot) => {
       const data = snapshot.val();
       const fetchedAlerts = data ? Object.values(data) : [];
+      setLatestAlerts(fetchedAlerts); // Update state to an array of alerts
+
       if (fetchedAlerts.length > 0) {
-        const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1]; // Get the latest alert
-        setLatestAlert(mostRecentAlert);
-        setShowModal(true); // Display the modal as soon as the latest alert is fetched
+        const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1];
+        notify(mostRecentAlert.description); // Trigger the notification
       }
     });
 
-    // Clean up the Firebase listener
     return () => {
-      if (alertsRef) {
-        off(alertsRef);
-      }
+      off(alertsRef);
     };
   }, []);
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   return (
-    
     <div className="dashboard-content">
       <div className="card">
         <h3>Emergency Alert</h3>
@@ -133,7 +117,7 @@ const DashboardContent = () => {
       <div className="card">
         <h3>Report Incident</h3>
         <p>Click to provide details of any suspicious or dangerous activities on campus.</p>
-        <button onClick={()=> navigate('/incident-reporting')}>Report Now</button>
+        <button onClick={() => navigate('/incident-reporting')}>Report Now</button>
       </div>
 
       <ExpandableCard title="Recent Alerts" items={recentAlerts} />
@@ -151,16 +135,7 @@ const DashboardContent = () => {
         <button>View Contacts</button>
       </div>
 
-      {/* Modal to display the latest alert */}
-      {showModal && latestAlert && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>{latestAlert.title}</h3>
-            <p>{latestAlert.description}</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </div>
-      )}
+      <PushNotifications />
     </div>
   );
 };
