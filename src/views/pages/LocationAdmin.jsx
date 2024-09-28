@@ -56,10 +56,10 @@ const LocationAdmin = () => {
           {Object.entries(locations).map(([userId, locationData]) => (
             <tr key={userId}>
               <td>{userId}</td>
-              <td>{locationData.venue ? "Venue" : "Coordinates"}</td>
+              <td>{locationData.venue_name ? "Venue" : "Coordinates"}</td>
               <td>
-                {locationData.venue ? (
-                  `${locationData.venue.Name} - ${locationData.venue.Building}`
+                {locationData.venue_name ? (
+                  `${locationData.venue_name} - ${locationData.building}`
                 ) : (
                   `Latitude: ${locationData.latitude}, Longitude: ${locationData.longitude}`
                 )}
