@@ -51,3 +51,33 @@
     font-weight: bold; /* Bold text */
   }
   
+  .location-sharing-container {
+    padding: 20px;
+  }
+  
+  .option-buttons {
+    margin-bottom: 20px;
+  }
+  
+  .venue-search input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .venue-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .venue-list li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .selected-venue {
+    margin-top: 20px;
+  }
+  
