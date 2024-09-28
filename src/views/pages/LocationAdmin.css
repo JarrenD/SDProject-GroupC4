@@ -1,0 +1,79 @@
+/* LocationAdmin.css */
+
+/* Container for the Location Admin */
+.location-admin-container {
+    max-width: 800px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    border: 2px solid #ddd; /* Border around the component */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
+    background-color: #fff; /* Background color */
+}
+
+/* Heading style */
+.location-admin-container h1 {
+    text-align: center; /* Center the title */
+    color: #003366; /* Dark blue color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Loading and error message styles */
+.loading, .error {
+    text-align: center;
+    color: #e74c3c; /* Red color for error messages */
+    font-weight: bold; /* Bold text */
+}
+
+/* Table styles */
+.location-table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Merge borders */
+    margin-top: 20px; /* Space above the table */
+}
+
+.location-table th, .location-table td {
+    padding: 12px; /* Padding inside cells */
+    border: 1px solid #ddd; /* Border around cells */
+    text-align: left; /* Align text to the left */
+}
+
+.location-table th {
+    background-color: #003366; /* Dark blue background for header */
+    color: #fff; /* White text */
+}
+
+.location-table tr:hover {
+    background-color: #f1f1f1; /* Light grey on hover */
+}
+
+/* Styling for the venue list */
+.venue-list {
+    list-style: none; /* No bullets */
+    padding: 0;
+}
+
+.venue-list li {
+    padding: 10px;
+    border: 1px solid #ccc; /* Light border */
+    margin-bottom: 5px; /* Space between items */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.venue-list li:hover {
+    background-color: #f0f0f0; /* Light grey background on hover */
+}
+
+/* Selected venue style */
+.selected-venue {
+    margin-top: 20px;
+    font-weight: bold; /* Bold text */
+}
+
+/* Additional option buttons style */
+.option-buttons {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+}

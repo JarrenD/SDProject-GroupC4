@@ -49,4 +49,27 @@ export class LocationController {
       return { success: false, message: error };
     }
   }
+  async shareVenue(venue) {
+    try {
+      const user = auth.currentUser;
+
+      if (!user) {
+        throw new Error("Please log in");
+      }
+
+      const timestamp = new Date().toISOString();
+
+      const locationData = {
+        user_id: user.uid,
+        venue_id: venue.id,
+        venue_name: venue.Name,
+        building: venue.Building,
+        timestamp: timestamp,
+      };
+
+      return await this.locationModel.saveLocation(user.uid, locationData);
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
+  }
 }
