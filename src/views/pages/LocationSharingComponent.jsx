@@ -81,9 +81,8 @@ const LocationSharingComponent = () => {
       <h3>Location Sharing</h3>
       <div className="option-buttons">
         <button onClick={handleShareLocation}>Share My Location</button>
-        <span style={{ margin: "0 10px" }}>or</span>
       </div>
-
+      <div className="or-divider">OR</div>
       {/* Venue search input */}
       <div className="venue-search">
         <input

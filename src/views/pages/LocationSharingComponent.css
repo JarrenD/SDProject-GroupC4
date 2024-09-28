@@ -1,83 +1,91 @@
 /* Center the container and add padding */
 .location-sharing-container {
-    max-width: 500px; /* Adjust width as needed */
-    margin: 0 auto; /* Center horizontally */
-    padding: 20px;
-    border: 2px solid #ddd; /* Border around the component */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
-    background-color: #fff; /* Background color */
-  }
-  
-  /* Style for the textarea */
-  .location-sharing-container textarea {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding inside the textarea */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    resize: vertical; /* Allow vertical resizing */
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
-  }
-  
-  /* Style for the button */
-  .location-sharing-container button {
-    background-color: #003366; /* Dark blue button color */
-    color: #fff; /* Text color */
-    border: none;
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px 20px; /* Padding inside the button */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth color transition */
-  }
-  
-  .location-sharing-container button:hover {
-    background-color: #002244; /* Even darker blue on hover */
-  }
-  
-  /* Style for the location info */
-  .location-info {
-    margin-top: 20px; /* Space above the location info */
-  }
-  
-  .location-info p {
-    margin: 5px 0; /* Space between lines */
-  }
-  
-  /* Style for the status message */
-  .status {
-    margin-top: 10px; /* Space above the status message */
-    font-weight: bold; /* Bold text */
-  }
-  
-  .location-sharing-container {
-    padding: 20px;
-  }
-  
-  .option-buttons {
-    margin-bottom: 20px;
-  }
-  
-  .venue-search input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .venue-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .venue-list li {
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-  
-  .selected-venue {
-    margin-top: 20px;
-  }
-  
+  max-width: 500px; /* Adjust width as needed */
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  border: 2px solid #ddd; /* Border around the component */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
+  background-color: #fff; /* Background color */
+}
+
+/* Style for the textarea */
+.location-sharing-container textarea {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding inside the textarea */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  resize: vertical; /* Allow vertical resizing */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Style for the button */
+.location-sharing-container button {
+  background-color: #003366; /* Dark blue button color */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 20px; /* Padding inside the button */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth color transition */
+}
+
+/* Button hover effect */
+.location-sharing-container button:hover {
+  background-color: #002244; /* Even darker blue on hover */
+}
+
+/* Style for the location info */
+.location-info {
+  margin-top: 20px; /* Space above the location info */
+}
+
+.location-info p {
+  margin: 5px 0; /* Space between lines */
+}
+
+/* Style for the status message */
+.status {
+  margin-top: 10px; /* Space above the status message */
+  font-weight: bold; /* Bold text */
+}
+
+/* Style for option buttons */
+.option-buttons {
+  margin-bottom: 20px;
+  display: flex; /* Flexbox for positioning */
+  justify-content: space-between; /* Space out buttons */
+  align-items: center; /* Align vertically */
+}
+
+/* Styling for the OR text */
+.or-divider {
+  margin: 5px 10px; /* Space around the "or" text */
+  font-weight: bold; /* Bold text */
+}
+
+/* Style for the venue search input */
+.venue-search input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/* Style for the venue list */
+.venue-list {
+  list-style: none;
+  padding: 0;
+}
+
+.venue-list li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.selected-venue {
+  margin-top: 20px;
+}
