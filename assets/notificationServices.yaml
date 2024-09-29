@@ -3,83 +3,160 @@ info:
   title: Notification Services API
   description: Manages real-time notifications for emergency alerts and announcements.
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/2541773_1/notification-api/1.0.0
-  description: SwaggerHub API Auto Mocking
 paths:
   /notifications:
+    get:
+      summary: Retrieve all notifications
+      description: Fetch all notifications from the Firebase database.
+      responses:
+        "200":
+          description: List of all notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/NotificationData'
+        "500":
+          description: Internal server error
+
     post:
-      summary: Send Notifications to Users
+      summary: Create a new notification
+      description: Add a new notification to the database.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Notification'
-        required: true
+              $ref: '#/components/schemas/NotificationDataInput'
       responses:
         "201":
-          description: Notification sent successfully
+          description: Notification created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
+                type: string
+                example: "New notification added with ID: notification_123"
+        "400":
+          description: Invalid notification data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
   /notifications/{notification_id}:
     get:
-      summary: Retrieve Notification by ID
+      summary: Retrieve a specific notification
+      description: Fetch a notification by its ID.
       parameters:
-      - name: notification_id
-        in: path
-        description: The unique ID of the notification
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: notification_id
+          in: path
+          required: true
+          description: The ID of the notification to retrieve
+          schema:
+            type: string
       responses:
         "200":
-          description: Specific notification details
+          description: Notification retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Notification'
+                $ref: '#/components/schemas/NotificationData'
+        "404":
+          description: Notification not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
     delete:
-      summary: Remove Notification
+      summary: Delete a specific notification
+      description: Remove a notification by its ID.
       parameters:
-      - name: notification_id
-        in: path
-        description: The unique ID of the notification to be deleted
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: notification_id
+          in: path
+          required: true
+          description: The ID of the notification to delete
+          schema:
+            type: string
       responses:
-        "204":
+        "200":
           description: Notification deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Notification with ID notification_123 deleted"
+        "400":
+          description: Notification ID is required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Notification not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
 components:
   schemas:
-    Notification:
+    NotificationData:
       type: object
       properties:
-        type:
+        notification_id:
           type: string
-          example: emergency alert
-        title:
-          type: string
-          example: Campus Evacuation
+          example: "notification_123"
         message:
           type: string
-          example: All students must evacuate the campus immediately.
+          example: "This is a test notification."
         timestamp:
           type: string
           format: date-time
-          example: 2024-08-25T14:15:00Z
-        user_group:
+          example: "2024-08-25T14:15:00Z"
+        type:
           type: string
-          example: students
-    inline_response_201:
+          example: "info"
+        user_id:
+          type: string
+          example: "user_456"
+
+    NotificationDataInput:
+      type: object
+      required:
+        - notification_id
+        - message
+        - timestamp
+        - type
+        - user_id
+      properties:
+        notification_id:
+          type: string
+          example: "notification_123"
+        message:
+          type: string
+          example: "This is a test notification."
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-08-25T14:15:00Z"
+        type:
+          type: string
+          example: "info"
+        user_id:
+          type: string
+          example: "user_456"
+
+    ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Notification sent successfully.
+          example: "Notification ID is required"
