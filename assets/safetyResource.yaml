@@ -3,250 +3,192 @@ info:
   title: Safety Resource API
   description: Provides access to safety resources and emergency contact information.
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/2541773_1/safety-resources-api/1.0.0
-  description: SwaggerHub API Auto Mocking
 paths:
   /resources:
     get:
-      summary: Get All Safety Resources
-      parameters:
-      - name: type
-        in: query
-        description: Filter resources by type
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: fire
+      summary: Retrieve all safety resources
+      description: Fetch all safety resources from the Firebase database.
       responses:
         "200":
-          description: A list of safety resources
+          description: List of all safety resources
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SafetyResource'
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/SafetyResourceData'
+        "500":
+          description: Internal server error
+
     post:
-      summary: Add a New Safety Resource
+      summary: Create a new safety resource
+      description: Add a new safety resource to the database.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SafetyResource'
-        required: true
+              $ref: '#/components/schemas/SafetyResourceDataInput'
       responses:
         "201":
           description: Safety resource created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
-  /resources/{id}:
-    get:
-      summary: Get Safety Resource by ID
-      parameters:
-      - name: id
-        in: path
-        description: The unique identifier of the safety resource
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          example: resource_1
-      responses:
-        "200":
-          description: A specific safety resource
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "resource_123"
+                  name:
+                    type: string
+                    example: "Fire Extinguisher"
+                  description:
+                    type: string
+                    example: "A portable device for extinguishing small fires."
+        "400":
+          description: Invalid resource data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SafetyResource'
-    put:
-      summary: Update an Existing Safety Resource
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
+  /resources/{id}:
+    get:
+      summary: Retrieve a specific safety resource
+      description: Fetch a safety resource by its ID.
       parameters:
-      - name: id
-        in: path
-        description: The unique identifier of the safety resource
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          example: resource_1
+        - name: id
+          in: path
+          required: true
+          description: The ID of the resource to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Safety resource retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafetyResourceData'
+        "404":
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update a specific safety resource
+      description: Modify an existing safety resource by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the resource to update
+          schema:
+            type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SafetyResource'
-        required: true
+              $ref: '#/components/schemas/SafetyResourceDataInput'
       responses:
         "200":
           description: Safety resource updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "resource_123"
+                  name:
+                    type: string
+                    example: "Fire Extinguisher"
+                  description:
+                    type: string
+                    example: "Updated description of the fire extinguisher."
+        "400":
+          description: Invalid resource data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
     delete:
-      summary: Delete a Safety Resource
+      summary: Delete a specific safety resource
+      description: Remove a safety resource by its ID.
       parameters:
-      - name: id
-        in: path
-        description: The unique identifier of the safety resource
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          example: resource_1
+        - name: id
+          in: path
+          required: true
+          description: The ID of the resource to delete
+          schema:
+            type: string
       responses:
         "204":
-          description: No Content
-  /contacts:
-    get:
-      summary: Get Emergency Contacts
-      parameters:
-      - name: region
-        in: query
-        description: Filter contacts by region
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          example: us
-      responses:
-        "200":
-          description: A list of emergency contacts
+          description: Resource deleted successfully
+        "400":
+          description: Resource ID is required
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EmergencyContact'
-    post:
-      summary: Add an Emergency Contact
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmergencyContact'
-        required: true
-      responses:
-        "201":
-          description: Emergency contact created successfully
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Resource not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201_1'
-  /contacts/{id}:
-    put:
-      summary: Update an Emergency Contact
-      parameters:
-      - name: id
-        in: path
-        description: The unique identifier of the emergency contact
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          example: contact_1
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmergencyContact'
-        required: true
-      responses:
-        "200":
-          description: Emergency contact updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200_1'
-    delete:
-      summary: Delete an Emergency Contact
-      parameters:
-      - name: id
-        in: path
-        description: The unique identifier of the emergency contact
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          example: contact_1
-      responses:
-        "204":
-          description: No Content
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
 components:
   schemas:
-    SafetyResource:
+    SafetyResourceData:
       type: object
       properties:
         id:
           type: string
-          example: resource_1
-        title:
-          type: string
-          example: Fire Safety Guidelines
-        description:
-          type: string
-          example: Guidelines to follow during a fire emergency.
-        type:
-          type: string
-          example: fire
-        url:
-          type: string
-          example: https://safetyresource.com/resources/fire_safety_guidelines
-        content:
-          type: string
-          example: Full content of the fire safety guidelines...
-    EmergencyContact:
-      type: object
-      properties:
-        id:
-          type: string
-          example: contact_1
+          example: "resource_123"
         name:
           type: string
-          example: Fire Department
-        phone:
+          example: "Fire Extinguisher"
+        description:
           type: string
-          example: +27 84 691 6590
-        region:
-          type: string
-          example: Braamfontein
-    inline_response_201:
+          example: "A portable device for extinguishing small fires."
+
+    SafetyResourceDataInput:
       type: object
+      required:
+        - name
+        - description
       properties:
-        id:
+        name:
           type: string
-          example: resource_2
-        message:
+          example: "Fire Extinguisher"
+        description:
           type: string
-          example: Safety resource created successfully.
-    inline_response_200:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Safety resource updated successfully.
-    inline_response_201_1:
-      type: object
-      properties:
-        id:
-          type: string
-          example: contact_2
-        message:
-          type: string
-          example: Emergency contact created successfully.
-    inline_response_200_1:
+          example: "A portable device for extinguishing small fires."
+
+    ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Emergency contact updated successfully.
+          example: "Resource not found"
