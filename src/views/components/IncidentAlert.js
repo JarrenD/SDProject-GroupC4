@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './IncidentAlert.css';
+import { useNavigate } from 'react-router-dom';
 import EXIF from 'exif-js';
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,11 +19,12 @@ const firebaseConfig = {
   };
 
 // Initialize Firebase
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const storage = getStorage(app);
 
 function IncidentAlert() {
+    const navigate = useNavigate();
     const [incidentType] = useState('theft');
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState(null);
@@ -119,50 +121,56 @@ function IncidentAlert() {
         document.getElementById('uploadPhoto').value = ''; // Reset the photo input
       };
 
+    const handleExit = () => {
+        navigate('/dashboard'); // Navigate to the dashboard page
+    };
+
     return (
-        <div className="container">
-            <h1>Report an Incident</h1>
-            <h2>Anonymous Reporting</h2>
-            {loading && <p>Submitting your incident, please wait...</p>}
-            <form onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label htmlFor="incidentType">Type of Incident:</label>
-                    <select id="incidentType" value={type} onChange={handleTypeChange} disabled={loading}>
-                        <option value="">Select Type</option>
-                        <option value="Theft">Theft</option>
-                        <option value="Injury">Injury</option>
-                        <option value="Traffic Jam">Traffic Jam</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+        <div className="incident-alert-wrapper">
+            <div className="incident-alert-card">
+                <button className="exit-button" onClick={handleExit}>&times;</button>
+                <h2>Report an Incident</h2>
+                <p className="subtitle">Anonymous Reporting</p>
+                {loading && <p className="loading-indicator">Submitting your incident, please wait...</p>}
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label htmlFor="incidentType">Type of Incident:</label>
+                        <select id="incidentType" value={type} onChange={handleTypeChange} disabled={loading}>
+                            <option value="">Select Type</option>
+                            <option value="Theft">Theft</option>
+                            <option value="Injury">Injury</option>
+                            <option value="Traffic Jam">Traffic Jam</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
 
-                <div className="input-group">
-                    <label htmlFor="incidentDescription">Description of the Incident:</label>
-                    <textarea
-                        id="incidentDescription"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Please describe the incident..."
-                        disabled={loading}
-                    />
-                </div>
+                    <div className="input-group">
+                        <label htmlFor="incidentDescription">Description:</label>
+                        <textarea
+                            id="incidentDescription"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Please describe the incident..."
+                            disabled={loading}
+                        />
+                    </div>
 
-                <div className="input-group">
-                    <label htmlFor="uploadPhoto">Photo Upload:</label>
-                    <input
-                        type="file"
-                        id="uploadPhoto"
-                        accept="image/*"
-                        onChange={(e) => setPhoto(e.target.files[0])}
-                        disabled={loading}
-                    />
-                </div>
+                    <div className="input-group">
+                        <label htmlFor="uploadPhoto">Photo Upload:</label>
+                        <input
+                            type="file"
+                            id="uploadPhoto"
+                            accept="image/*"
+                            onChange={(e) => setPhoto(e.target.files[0])}
+                            disabled={loading}
+                        />
+                    </div>
 
-                <div className="buttons">
-                    <button disabled={loading} type="submit">Submit</button>
-                    <button type="button" onClick={resetForm}>Cancel</button>
-                </div>
-            </form>
+                    <div className="buttons">
+                        <button className="submit-button" disabled={loading} type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
