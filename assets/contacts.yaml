@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Emergency Contacts API
+  description: Provides endpoints to manage emergency contacts (CRUD operations) using Firebase Realtime Database.
+  version: 1.0.0
+paths:
+  /contacts:
+    get:
+      summary: Get all emergency contacts
+      description: Retrieve all emergency contacts from the Firebase database.
+      responses:
+        "200":
+          description: Successfully retrieved all contacts
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Contact'
+        "500":
+          description: Internal server error
+    post:
+      summary: Add a new emergency contact
+      description: Create a new emergency contact in the Firebase database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        "201":
+          description: Contact created successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "New contact added with ID: contact_12345"
+        "400":
+          description: Invalid contact data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
+  /contacts/{id}:
+    put:
+      summary: Update an emergency contact
+      description: Update an existing emergency contact by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique ID of the contact to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+      responses:
+        "200":
+          description: Contact updated successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Contact with ID contact_12345 updated"
+        "400":
+          description: Invalid contact data or missing ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Delete an emergency contact
+      description: Delete an emergency contact from the Firebase database by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique ID of the contact to delete
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Contact deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Contact with ID contact_12345 deleted"
+        "400":
+          description: Missing contact ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Contact not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+          example: contact_12345
+        name:
+          type: string
+          example: John Doe
+        phone:
+          type: string
+          example: "+123456789"
+        region:
+          type: string
+          example: "California"
+    
+    ContactInput:
+      type: object
+      required:
+        - name
+        - phone
+        - region
+      properties:
+        name:
+          type: string
+          example: John Doe
+        phone:
+          type: string
+          example: "+123456789"
+        region:
+          type: string
+          example: "California"
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "An error occurred."
