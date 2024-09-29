@@ -7,71 +7,76 @@ servers:
 - url: https://virtserver.swaggerhub.com/2541773_1/location-api/1.0.0
   description: SwaggerHub API Auto Mocking
 paths:
-  /location/share:
+  /locations:
+    get:
+      summary: Retrieve locations of all users
+      description: Get the real-time locations of all users stored in the Firebase database.
+      responses:
+        "200":
+          description: List of all user locations
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/LocationData'
+        "500":
+          description: Internal server error
+
     post:
-      summary: Share Real-Time Location
+      summary: Share a user's location
+      description: Add a user's location to the database.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LocationData'
-        required: true
+              $ref: '#/components/schemas/LocationDataInput'
       responses:
-        "200":
+        "201":
           description: Location shared successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
-  /location/users:
-    get:
-      summary: Retrieve Real-Time Location of Users
-      parameters:
-      - name: user_id
-        in: query
-        description: The ID of the user to retrieve the location for
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: timestamp
-        in: query
-        description: Filter location data by time
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: date-time
-      responses:
-        "200":
-          description: List of users and their locations
+                $ref: '#/components/schemas/LocationData'
+        "400":
+          description: User ID is required
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LocationData'
-  /location/stop:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
+  /locations/{user_id}:
     delete:
-      summary: Stop Sharing Real-Time Location
+      summary: Stop sharing a user's location
+      description: Delete a user's location from the database.
       parameters:
-      - name: user_id
-        in: query
-        description: The ID of the user to stop sharing location
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the user whose location is to be deleted
+          schema:
+            type: string
       responses:
-        "200":
+        "204":
           description: Location sharing stopped successfully
+        "400":
+          description: User ID is required for deletion
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: User location not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
 components:
   schemas:
     LocationData:
@@ -79,7 +84,7 @@ components:
       properties:
         user_id:
           type: string
-          example: user_123
+          example: "user_123"
         latitude:
           type: number
           format: float
@@ -91,16 +96,35 @@ components:
         timestamp:
           type: string
           format: date-time
-          example: 2024-08-25T14:15:00Z
-    inline_response_200:
+          example: "2024-08-25T14:15:00Z"
+
+    LocationDataInput:
+      type: object
+      required:
+        - user_id
+        - latitude
+        - longitude
+      properties:
+        user_id:
+          type: string
+          example: "user_123"
+        latitude:
+          type: number
+          format: float
+          example: 34.0522
+        longitude:
+          type: number
+          format: float
+          example: -118.2437
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-08-25T14:15:00Z"
+
+    ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Location shared successfully.
-    inline_response_200_1:
-      type: object
-      properties:
-        message:
-          type: string
-          example: Location sharing stopped successfully.
+          example: "User ID is required"
+
