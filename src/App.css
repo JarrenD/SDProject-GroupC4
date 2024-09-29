@@ -105,47 +105,7 @@
 
 /***** DASHBOARD CONTENT STYLING ******/
 
-/* Safety Resources Section
-.safety-resources {
-  height: auto;
-  text-align: center;
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-.safety-resources h3{
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: center;
-}
-.safety-resources h4{
-    font-size: 1.1em;
-    font-weight: bold;
-    text-align: center;
-}
-
-.safety-resources ul {
-  text-align:start;
-  padding-left: 20px;
-  margin-bottom: 15px;
-}
-
-.safety-resources button {
-  font-size: 0.9em;
-  font-weight: medium;
-  width: 70%;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  align-self: center;
-}
+/* Emergency sos card */
 
 .emergency-contacts button {
   font-size: 0.95em;
@@ -162,40 +122,11 @@
   align-self: center;
 }
 
-.safety-tips {
-  height: auto;
-  text-align: center;
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  align-items: center;
-}
-.safety-tips h3{
-  font-size: 1.15em;
-  font-weight: bold;
-  text-align: center;
-}
-.safety-tips h3{
-  font-size: 1.15em;
-  font-weight: bold;
-  text-align: center;
-}
 
 .emergency-contacts h3{
   font-size: 1.15em;
   font-weight: bold;
   text-align: center;
-}
-
-.safety-resources button:hover{
-  background-color: 	#357ae8;
-}
-
-.safety-resources button:active{
-  background-color: 	#3c5c87;
-
 }
 
 .emergency-sos{
@@ -241,9 +172,6 @@
 .emergency-sos button:active{
   background-color: #3c5c87;
 }
-
-
-*/
 
 /* Incident Reporting Button */
 
