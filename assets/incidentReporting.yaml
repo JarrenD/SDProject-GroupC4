@@ -3,140 +3,170 @@ info:
   title: Incident Reporting API
   description: Provides endpoints to report and manage incidents.
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/2541773_1/incident-api/1.0.0
-  description: SwaggerHub API Auto Mocking
 paths:
   /incidents:
     get:
-      summary: Retrieve All Incident Reports
+      summary: Retrieve all incident alerts
+      description: Retrieve all incident alerts stored in the Firebase database.
       responses:
         "200":
-          description: List of all incident reports
+          description: List of all incident alerts
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Incident'
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/IncidentAlert'
+        "500":
+          description: Internal server error
     post:
-      summary: Submit a New Incident Report
+      summary: Submit a new incident alert
+      description: Create a new incident alert.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Incident'
-        required: true
+              $ref: '#/components/schemas/IncidentAlertInput'
       responses:
         "201":
-          description: Incident report created successfully
+          description: Incident created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "incident_12345"
+                  alert:
+                    $ref: '#/components/schemas/IncidentAlert'
+        "500":
+          description: Internal server error
+
   /incidents/{incident_id}:
     get:
-      summary: Retrieve Specific Incident Report
+      summary: Retrieve a specific incident alert by ID
+      description: Get the details of a specific incident alert using its ID.
       parameters:
-      - name: incident_id
-        in: path
-        description: The unique ID of the incident report
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: incident_id
+          in: path
+          required: true
+          description: The ID of the incident to retrieve
+          schema:
+            type: string
       responses:
         "200":
-          description: Specific incident report
+          description: Incident retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Incident'
+                $ref: '#/components/schemas/IncidentAlert'
+        "404":
+          description: Incident not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
     put:
-      summary: Update an Existing Incident Report
+      summary: Update an existing incident alert
+      description: Update the details of an incident alert using its ID.
       parameters:
-      - name: incident_id
-        in: path
-        description: The unique ID of the incident report
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: incident_id
+          in: path
+          required: true
+          description: The ID of the incident to update
+          schema:
+            type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Incident'
-        required: true
+              $ref: '#/components/schemas/IncidentAlertInput'
       responses:
         "200":
-          description: Incident report updated successfully
+          description: Incident updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "incident_12345"
+                  alert:
+                    $ref: '#/components/schemas/IncidentAlert'
+        "400":
+          description: Incident ID is required for update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
     delete:
-      summary: Delete Specific Incident Report
+      summary: Delete an incident alert
+      description: Delete an incident alert by its ID.
       parameters:
-      - name: incident_id
-        in: path
-        description: The unique ID of the incident report
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: incident_id
+          in: path
+          required: true
+          description: The ID of the incident to delete
+          schema:
+            type: string
       responses:
         "204":
-          description: Incident report deleted successfully
+          description: Incident deleted successfully
+        "400":
+          description: Incident ID is required for deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Internal server error
+
 components:
   schemas:
-    Incident:
+    IncidentAlert:
       type: object
       properties:
-        type:
+        id:
           type: string
-          example: theft
-        description:
+          example: incident_12345
+        title:
           type: string
-          example: Wallet stolen from the library
-        photoURL:
+          example: "Fire in the building"
+        message:
           type: string
-          example: https://example.com/photo.jpg
+          example: "There is a fire on the 2nd floor. Evacuate immediately."
         timestamp:
           type: string
           format: date-time
-          example: 2024-08-25T14:15:00Z
-        anonymous:
-          type: boolean
-          example: true
-        location:
-          $ref: '#/components/schemas/Incident_location'
-    inline_response_201:
+          example: "2024-08-25T14:15:00Z"
+
+    IncidentAlertInput:
       type: object
+      required:
+        - title
+        - message
       properties:
-        incident_id:
+        title:
           type: string
-          example: incident_123
+          example: "Fire in the building"
         message:
           type: string
-          example: Incident report created successfully.
-    inline_response_200:
+          example: "There is a fire on the 2nd floor. Evacuate immediately."
+
+    ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Incident report updated successfully.
-    Incident_location:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: float
-          example: 34.0522
-        longitude:
-          type: number
-          format: float
-          example: -118.2437
+          example: "Incident with ID incident_12345 not found"
+
