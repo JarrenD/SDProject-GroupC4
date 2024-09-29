@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
         incidentReporting: 'assets/incidentReporting.yaml',
         emergencyAlert: 'assets/emergencyAlert.yaml',
         notificationServices: 'assets/notificationServices.yaml',
-        locationServices: 'assets/locationServices.yaml'
+        locationServices: 'assets/locationServices.yaml',
+        emergencyContacts: 'assets/contacts.yaml' // New entry for Emergency Contacts
     };
 
     function renderSwaggerUI(spec, domId) {
@@ -33,4 +34,5 @@ document.addEventListener('DOMContentLoaded', function () {
     renderSwaggerUI(specs.emergencyAlert, '#swagger-ui-emergency-alert');
     renderSwaggerUI(specs.notificationServices, '#swagger-ui-notification-services');
     renderSwaggerUI(specs.locationServices, '#swagger-ui-location-services');
+    renderSwaggerUI(specs.emergencyContacts, '#swagger-ui-emergency-contacts'); // Render Emergency Contacts API
 });
