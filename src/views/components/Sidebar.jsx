@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, HelpCircle, Settings, LogOut, Menu } from 'lucide-react';
+import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, HelpCircle, LogOut, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const Sidebar = () => {
@@ -17,7 +17,6 @@ const Sidebar = () => {
     { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
     { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
     { name: 'Help', icon: HelpCircle, href: '#help' },
-    { name: 'Settings', icon: Settings, href: '#settings' },
     { name: 'Logout', icon: LogOut, href: '#logout' }
   ];
 
