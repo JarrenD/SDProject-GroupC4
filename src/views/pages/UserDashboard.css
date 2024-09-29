@@ -191,27 +191,6 @@
   color: rgb(0, 0, 0);
 }
 
-/* Expandable card */
-
-.read-more-link {
-  color: #007bff;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.read-more-link:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.card .read-more-link {
-  position: absolute;
-  bottom: 10px;
-  left: 20px;
-}
-
 
 /* Navbar Styles */
 .navbar {

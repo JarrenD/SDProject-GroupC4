@@ -61,8 +61,12 @@ function SignUpPage({ handleLogin }) {
 
   return (
     <div className="signup-container">
+      <div className="welcome-section">
+      <img src="/images/witslogo.png" alt="Wits Logo" />
+        <h2>Campus Safety</h2>
+      </div>
       <div className="signup-box">
-        <h2>Sign Up</h2>
+        <h2>Create New Account</h2>
         <form id="SignUpForm" onSubmit={handleSignUp}>
           <div className="inputbox">
             <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required placeholder=" " />
@@ -80,7 +84,7 @@ function SignUpPage({ handleLogin }) {
         </form>
         <div className="input">
           <button id="google-login-btn" onClick={handleGoogleLogin} className="google-button">
-          <img src="/images/google-logo.png" alt="Google Logo" className="google-logo" />
+            <img src="/images/google-logo.png" alt="Google Logo" className="google-logo" />
             <i className="text1">Login with Google</i>
           </button>
         </div>
