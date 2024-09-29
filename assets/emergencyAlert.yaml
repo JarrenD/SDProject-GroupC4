@@ -3,88 +3,114 @@ info:
   title: Emergency Alert API
   description: Sends and manages real-time emergency alerts and notifications.
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/2541773_1/alert-api/1.0.0
-  description: SwaggerHub API Auto Mocking
 paths:
-  /alerts/send:
+  /alerts/{alert_id}:
+    get:
+      summary: Retrieve a specific emergency alert by its ID
+      parameters:
+        - name: alert_id
+          in: path
+          required: true
+          description: The unique ID of the alert
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved the alert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        "404":
+          description: Alert not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "400":
+          description: Alert ID is required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /alerts:
     post:
-      summary: Send a New Emergency Alert
+      summary: Send a new emergency alert
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmergencyAlert'
-        required: true
+              $ref: '#/components/schemas/AlertInput'
       responses:
         "201":
-          description: Emergency alert sent successfully
+          description: Emergency alert created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
-  /alerts/status/{alert_id}:
-    get:
-      summary: Retrieve Status of a Specific Alert
-      parameters:
-      - name: alert_id
-        in: path
-        description: The unique ID of the alert
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Status of the alert
+                $ref: '#/components/schemas/AlertResponse'
+        "400":
+          description: Missing title or message in the request body
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/ErrorResponse'
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    EmergencyAlert:
+    Alert:
       type: object
       properties:
         title:
           type: string
-          example: Campus Evacuation
+          example: "Campus Evacuation"
         message:
           type: string
-          example: All students must evacuate the campus immediately.
-        severity:
-          type: string
-          example: high
-        location:
-          $ref: '#/components/schemas/EmergencyAlert_location'
-        send_time:
+          example: "All students must evacuate the campus immediately."
+        timestamp:
           type: string
           format: date-time
-          example: 2024-08-25T14:15:00Z
-    inline_response_201:
+          example: "2024-08-25T14:15:00Z"
+    AlertInput:
+      type: object
+      required:
+        - title
+        - message
+      properties:
+        title:
+          type: string
+          example: "Campus Evacuation"
+        message:
+          type: string
+          example: "All students must evacuate the campus immediately."
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-08-25T14:15:00Z"
+    AlertResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "alert_12345"
+        title:
+          type: string
+          example: "Campus Evacuation"
+        message:
+          type: string
+          example: "All students must evacuate the campus immediately."
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-08-25T14:15:00Z"
+    ErrorResponse:
       type: object
       properties:
         message:
           type: string
-          example: Emergency alert sent successfully.
-    inline_response_200:
-      type: object
-      properties:
-        status:
-          type: string
-          example: active
-        details:
-          type: string
-          example: Alert is currently active.
-    EmergencyAlert_location:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: float
-          example: 34.0522
-        longitude:
-          type: number
-          format: float
-          example: -118.2437
+          example: "An error occurred."
