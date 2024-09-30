@@ -2,6 +2,7 @@
   "name": "hello",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://polite-pond-04aadc51e.5.azurestaticapps.net",
   "dependencies": {
     "@testing-library/user-event": "^7.1.2",
     "codecov": "^3.8.3",
