@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+.navbar{
+  display: none;
+}
+
 
 .sidebar {
   width: 20%;
@@ -191,71 +195,14 @@
   color: rgb(0, 0, 0);
 }
 
-
-/* Navbar Styles */
-.navbar {
-  display: none; /* Hide by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: rgb(235, 235, 235);
-  color: rgb(55, 53, 47);
-  padding: 20px;
-  z-index: 1000;
-}
-
-.navbar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-header h2 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.navbar-menu {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.navbar-menu.open {
-  max-height: 5%;
-}
-
-.navbar-menu li {
-  margin: 18px 0;
-}
-
-.navbar-menu li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgb(55, 53, 47);
-}
-
-.navbar-icon {
-  margin-right: 10px;
-}
-
 /* Responsive Layout */
 @media (max-width: 768px) {
-  .navbar {
-    display: block;
+  .main-content{
+    padding-bottom: 80px; /* Add space for the navbar */
   }
 
   .sidebar {
     display: none;
-  }
-
-  .main-content {
-    margin-top: 60px; /* Adjust based on navbar height */
   }
 
   .app-container {

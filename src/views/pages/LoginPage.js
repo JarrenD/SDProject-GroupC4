@@ -66,10 +66,6 @@ function LoginPage({ handleLogin }) {
 
   return (
     <div className="login-container">
-      <div className="welcome-section">
-        <img src="/images/witslogo.png" alt="Wits Logo" />
-        <h2>Hello, Student</h2>
-      </div>
       <div className="login-box">
         <h2>Login</h2>
         {error && <p className="error-message">{error}</p>}
@@ -98,13 +94,25 @@ function LoginPage({ handleLogin }) {
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>
+  
+        {/* Gray Separator */}
+        <div className="separator">
+          <hr className="line" />
+          <span className="separator-text"> or continue with </span>
+          <hr className="line" />
+        </div>
+  
         <div className="input">
           <button id="google-login-btn" onClick={handleGoogleLogin} className="google-button">
             <img src="/images/google-logo.png" alt="Google Logo" className="google-logo" />
-            <i className="text1">Login with Google</i>
+            <i className="text1">Log in with Google</i>
           </button>
         </div>
-        <p><a href="/signup">Don't have an account?</a></p>
+  
+        {/* Sign up section */}
+        <p className="signup-text">
+          Don’t have an account? <a href="/signup" className="signup-link">Sign up</a>
+        </p>
       </div>
     </div>
   );
