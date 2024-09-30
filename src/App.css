@@ -1,24 +1,19 @@
-/* App.css */
-.app-container {
-  display: flex;
-  height: 100vh;
-}
-
-
+/* Sidebar styling */
 .sidebar {
   width: 20%;
-  height: 105%;
-  background-color: rgb(235, 235, 235);
+  background-color: white;
   color: rgb(55, 53, 47);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  transition: width 0.5s ease;
 }
 
 .sidebar.closed {
   width: 60px;
+  justify-content: center;
 }
+
 
 .sidebar-header {
   display: flex;
@@ -28,7 +23,8 @@
 }
 
 .sidebar-header h2 {
-  font-size: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -44,7 +40,7 @@
 
 .sidebar ul li {
   margin-bottom: 15px;
-  background-color: rgb(235, 235, 235);
+  background-color: white;
   padding: 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease, padding-left 0.3s ease;
@@ -60,14 +56,14 @@
 }
 
 .sidebar ul li:hover {
-  background-color: rgb(225, 225, 225);
+  background-color:	#f1f1f1;
   color: black;
   padding-left: 15px;
 }
 
 .sidebar ul li:active,
 .sidebar ul li a.active {
-  background-color: rgb(175, 175, 175);
+  background-color:	#d6d6d6;
 }
 
 .sidebar ul li:active .sidebar-icon,
@@ -107,163 +103,142 @@
 }
 
 
-/* Main Content Styling */
-.main-content {
-  width: 100%;
-  height: 105%;
-  padding: 20px;
-  background-color: rgb(255, 255, 255);
-  color: rgb(55, 53, 47);
+/***** DASHBOARD CONTENT STYLING ******/
+
+/* Emergency sos card */
+
+.emergency-contacts button {
+  font-size: 0.95em;
+  font-weight: medium;
+  width: 40%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
 }
 
-.header {
-  margin-bottom: 20px;
+
+.emergency-contacts h3{
+  font-size: 1.15em;
+  font-weight: bold;
   text-align: center;
 }
 
-.header h1 {
-  font-size: 28px;
+.emergency-sos{
+  height: auto;
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-sos h3{
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.emergency-sos p {
+  font-size: 1.0em;
   font-weight: bold;
+  text-align: center;
 }
 
-.header p {
-  font-size: 16px;
-  font-weight: bold;
-  color: rgb(55, 53, 47);
+.emergency-sos button {
+  font-size: 0.95em;
+  font-weight: medium;
+  width: 70%;
+  padding: 10px;
+  margin-top: 25px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
 }
 
-.dashboard-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.emergency-sos button:hover{
+  background-color: #357ae8;
 }
 
-.card {
-  background-color: rgb(235, 235, 235);
+.emergency-sos button:active{
+  background-color: #3c5c87;
+}
+
+/* Incident Reporting Button */
+
+
+.incident-reporting{
+  background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* Stack child elements vertically */
+  flex-direction: column; 
   position: relative;
-  padding-bottom: 30px; /* Add some space at the bottom for the link */
+  padding-bottom: 30px;
 }
-
-.card h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+.incident-reporting h3{
+  font-size: 1.5em;
+  font-weight: bold;
   text-align: center;
+
 }
 
-.card p {
-  font-size: 14px;
-  margin-bottom: 20px;
+.incident-reporting p{
+  font-weight: bold;
+
 }
 
-.card ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.card ul li {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.card button {
-  background-color: rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  padding: 10px 15px;
+.incident-reporting button {
+  font-size: 0.95em;
+  font-weight: medium;
+  width: 70%;
+  padding: 10px;
+  background-color: #4a90e2;
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: center; /* Center the button horizontally within the flex container */
-  margin-top: auto; /* Push the button to the bottom of the card */
+  align-self: center;
 }
 
-.card button:hover {
-  background-color: rgb(175, 175, 175);
-  color: rgb(55, 53, 47);
+.incident-reporting button:hover{
+  background-color: #357ae8;
 }
 
-.card button:active {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
+.incident-reporting button:active{
+  background-color: #3c5c87;
 }
 
-/* Expandable card */
+.incident-reporting form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-.read-more-link {
-  color: #007bff;
-  cursor: pointer;
+.incident-reporting textarea {
+  width: 100%;
+  height: 100px;
+  resize: vertical;
+  background-color: #d0d0d0;
+  color: #333;
+  border-radius: 4px;
+  border: none;
+}
+
+.incident-reporting p{
   font-size: 14px;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.read-more-link:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.card .read-more-link {
-  position: absolute;
-  bottom: 10px;
-  left: 20px;
-}
-
-
-/* Navbar Styles */
-.navbar {
-  display: none; /* Hide by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: rgb(235, 235, 235);
-  color: rgb(55, 53, 47);
-  padding: 20px;
-  z-index: 1000;
-}
-
-.navbar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-header h2 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.navbar-menu {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.navbar-menu.open {
-  max-height: 5%;
-}
-
-.navbar-menu li {
-  margin: 18px 0;
-}
-
-.navbar-menu li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgb(55, 53, 47);
-}
-
-.navbar-icon {
-  margin-right: 10px;
+  text-align: center;
+  margin-top: 28px;
 }
 
 /* Responsive Layout */

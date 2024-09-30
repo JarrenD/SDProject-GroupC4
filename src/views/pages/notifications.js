@@ -95,7 +95,7 @@ const NotificationCenter = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Campus Safety</h1>
+        <h1>Notifications</h1>
         <h2>NOTIFICATION CENTER</h2>
       </header>
       <div className="main-container">

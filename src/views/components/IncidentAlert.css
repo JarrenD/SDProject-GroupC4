@@ -1,18 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('/public/images/wits\ picture.jpg');
-    background-size: cover; /* Cover the entire page */
-    background-position: center; 
-    background-attachment: fixed; /* Keeps the image fixed when scrolling */
-    background-repeat: no-repeat;
-}
 .container {
     background-color: #fff;
     padding: 20px;
@@ -79,3 +64,243 @@ h2 {
     box-sizing: border-box;
     margin-bottom: 10px;
 }
+
+
+.app-container {
+    display: flex;
+    width: 100vw; /* spanning the full viewport width */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Main Content */
+  .main-content {
+    width: 100%; 
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(55, 53, 47);
+    overflow-y: auto;
+    flex-grow: 1;
+    overflow: auto;
+    padding: 20px;
+  }
+  
+  
+  .header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .header h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  
+  .header p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: rgb(55, 53, 47);
+  }
+  
+  .dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    position: relative;
+    padding-bottom: 30px;
+  }
+  
+  .card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .card ul li {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  :root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    /* line-height: 1.3; */
+    font-weight: 400;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  a {
+    font-weight: bold;
+    text-decoration: inherit;
+  }
+  
+  
+  @media (prefers-color-scheme: light) {
+    :root {
+      color: #213547;
+      background-color: #ffffff;
+    }
+    a:hover {
+      color: #747bff;
+    }
+    button {
+      background-color: #f9f9f9;
+    }
+  }
+
+
+  .incident-alert-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .incident-alert-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 51, 102, 0.3); /* Blueish tint */
+    backdrop-filter: blur(10px);
+    z-index: 1;
+  }
+  
+  .incident-alert-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    z-index: 2;
+    position: relative;
+  }
+  
+  .exit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #003366;
+  }
+  
+  h2 {
+    color: #003366;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    color: #e74c3c;
+    font-size: 16px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .input-group select,
+  .input-group textarea,
+  .input-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f8f8f8;
+  }
+  
+  .input-group select:focus,
+  .input-group textarea:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background-color: #fff;
+  }
+  
+  .input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .input-group input[type="file"] {
+    padding: 8px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .buttons {
+    margin-top: 20px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  .submit-button:hover {
+    background-color: #357ae8;
+  }
+  
+  .submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .loading-indicator {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #4a90e2;
+  }
+  
+  @media (max-width: 768px) {
+    .incident-alert-card {
+      padding: 20px;
+    }
+  }
+  

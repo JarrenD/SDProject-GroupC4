@@ -1,103 +1,141 @@
 /* src/pages/SignUpPage.css */
-.signup-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-  }
-  
-  .signup-box {
-    background-color: #ffffff; /* White background for the form */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #333; /* Black for letters */
-  }
-  
-  .inputbox {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  .inputbox input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  
-  .inputbox input:focus + span,
-  .inputbox input:not(:placeholder-shown) + span {
-    top: -15px;
-    left: 12px;
-    font-size: 12px;
-    color: #007bff; /* Light blue for the floating label */
-  }
-  
-  .inputbox span {
-    position: absolute;
-    top: 15px;
-    left: 12px;
-    color: #999;
-    font-size: 16px;
-    transition: all 0.2s ease;
-    pointer-events: none;
-  }
-  
-  .signup-button {
-    background-color: #007bff; /* Light blue for the button */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .signup-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  .google-button {
-    background-color: #ffffff; /* White background */
-    color: #5f6368; /* Dark gray color for the text */
-    border: 1px solid #dadce0; /* Light gray border */
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex; /* Make the button a flex container */
-    align-items: center; /* Vertically center the items */
-    justify-content: center; /* Horizontally center the items */
-    margin: 0 auto; /* Centers the button itself within its container */
-  }
-  
-  .google-logo {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px; /* Adds space between the logo and the text */
-  }
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-  .google-button:hover {
-    background-color: #f8f9fa; /* Light gray background on hover */
-    border-color: #c1c3c5; /* Slightly darker border on hover */
-  }
-  
-  a {
-    color: #007bff; /* Light blue for links */
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+.signup-container {
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 800px;
+  max-width: 100%;
+}
+
+.welcome-section {
+  background-color: #4a90e2;
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
+.welcome-section img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.welcome-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.signup-box {
+  padding: 40px;
+  width: 60%;
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputbox {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.inputbox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.inputbox input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.inputbox span {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 14px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.inputbox input:focus + span,
+.inputbox input:not(:placeholder-shown) + span {
+  top: -8px;
+  font-size: 12px;
+  background-color: white;
+  padding: 0 5px;
+}
+
+.signup-button, .google-button {
+  width: 105%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+
+.signup-button {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.signup-button:hover {
+  background-color: #357ae8;
+}
+
+.google-button {
+  background-color: white;
+  color: #757575;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google-button:hover {
+  background-color: #f5f5f5;
+}
+
+.google-logo {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
