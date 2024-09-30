@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
+import { PushNotifications, notify } from './pushNotifications';
 import { useState, useEffect } from 'react';
 
 const firebaseConfig = {
@@ -17,40 +18,32 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-  
 const DashboardContent = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [latestAlert, setLatestAlert] = useState(null);
-
+  const [, setLatestAlerts] = useState([]); // Changed to handle multiple alerts
+ 
+  
+ 
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Fetch latest alert from Firebase on component mount
     const alertsRef = ref(db, 'Incident_Alerts');
     onValue(alertsRef, (snapshot) => {
       const data = snapshot.val();
       const fetchedAlerts = data ? Object.values(data) : [];
+      setLatestAlerts(fetchedAlerts); // Update state to an array of alerts
+
       if (fetchedAlerts.length > 0) {
-        const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1]; // Get the latest alert
-        setLatestAlert(mostRecentAlert);
-        setShowModal(true); // Display the modal as soon as the latest alert is fetched
+        const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1];
+        notify(mostRecentAlert.description); // Trigger the notification
       }
     });
 
-    // Clean up the Firebase listener
     return () => {
-      if (alertsRef) {
-        off(alertsRef);
-      }
+      off(alertsRef);
     };
-  }, []);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  }, [setLatestAlerts]);
 
   return (
-    
     <div className="dashboard-content">
       <div className="card emergency-sos">
         <h3>Emergency SOS </h3>
@@ -61,19 +54,13 @@ const DashboardContent = () => {
       <div className="card incident-reporting">
         <h3>Report Incident</h3>
         <p>Click to provide details of any suspicious or dangerous activities on campus.</p>
-        <button onClick={()=> navigate('/incident-reporting')}>Report Now</button>
+        <button onClick={() => navigate('/incident-reporting')}>Report Now</button>
       </div>
 
-      {/* Modal to display the latest alert */}
-      {showModal && latestAlert && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>{latestAlert.title}</h3>
-            <p>{latestAlert.description}</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </div>
-      )}
+      
+      
+
+      <PushNotifications />
     </div>
   );
 };
