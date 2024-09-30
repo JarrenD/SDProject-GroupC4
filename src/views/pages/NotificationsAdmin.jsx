@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app); // Use Realtime Database instead of Firestore
+const db = getDatabase(app); 
 
 const AdminNotificationsPage = () => {
   const [title, setTitle] = useState(''); // Stores the type of notification (Emergency Alert or Announcement)
