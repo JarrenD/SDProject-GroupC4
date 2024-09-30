@@ -1,148 +1,134 @@
-/* src/pages/LoginPage.css */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #e6f2ff;
+.login-container {
+  background-color: #F2F2F7;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-.login-container {
-  display: flex;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 800px;
-  max-width: 100%;
-}
-
-.welcome-section {
-  background-color: #b8cce2;
-  color: white;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-}
-
-.welcome-section img {
-  width: 100px;
-  height: auto;
-  margin-bottom: 20px;
-}
-
-.welcome-section h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  padding: 20px;
 }
 
 .login-box {
+  background-color: #FFFFFF;
   padding: 40px;
-  width: 60%;
-}
-
-h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.inputbox {
-  margin-bottom: 20px;
-  position: relative;
-}
-
-.inputbox input {
+  border-radius: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+/* Input fields styling */
+.inputbox input {
+  background-color: #F2F2F7;
+  border: 1px solid #D3D3D3;
+  border-radius: 7px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: border-color 0.3s;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 .inputbox input:focus {
-  border-color: #4a90e2;
   outline: none;
+  border: 1px solid;
 }
 
-.inputbox span {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  font-size: 14px;
-  pointer-events: none;
-  transition: 0.3s;
-}
-
-.inputbox input:focus + span,
-.inputbox input:not(:placeholder-shown) + span {
-  top: -8px;
-  font-size: 12px;
-  background-color: white;
-  padding: 0 5px;
-}
-
-.login-button, .google-button {
-  width: 105%;
-  padding: 10px;
+/* Buttons styling */
+.login-button {
+  background-color: #000000;
+  color: #FFFFFF;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
+  padding: 15px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-bottom: 10px;
-}
-
-.login-button {
-  background-color: #4a90e2;
-  color: white;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .login-button:hover {
-  background-color: #357ae8;
+  background-color: #333333;
 }
 
 .google-button {
-  background-color: white;
-  color: #757575;
-  border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.google-button:hover {
-  background-color: #f5f5f5;
+  background-color: #FFFFFF;
+  border: 1px solid #D3D3D3;
+  border-radius: 10px;
+  padding: 15px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 .google-logo {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   margin-right: 10px;
 }
 
-.error-message {
-  color: #e74c3c;
-  margin-bottom: 20px;
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 20px;
+  }
+
+  .login-button, .google-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .inputbox input {
+    padding: 10px;
+    font-size: 14px; 
+  }
+}
+
+@media (min-width: 1200px) {
+  .login-container {
+    justify-content: center;
+  }
+
+  .login-box {
+    max-width: 500px;
+    padding: 50px;
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin: 20px 0;
+}
+
+.line {
+  flex-grow: 1;
+  height: 0.5px; 
+  background-color: #ccc;
+}
+
+.separator-text {
+  padding: 0 10px;
+  color: #999;
   font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Sign up section */
+.signup-text {
   text-align: center;
+  margin-top: 20px;
 }
 
-a {
-  color: #4a90e2;
+.signup-link {
+  color: rgb(43, 131, 189);
   text-decoration: none;
-  font-size: 14px;
 }
 
-a:hover {
+.signup-link:hover {
   text-decoration: underline;
 }

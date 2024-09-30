@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+.navbar{
+  display: none;
+}
+
 
 .sidebar {
   width: 20%;
@@ -208,9 +212,4 @@
   .dashboard-content {
     grid-template-columns: 1fr;
   }
-}
-
-
-.navbar{
-  display: none;
 }
