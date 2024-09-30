@@ -1,9 +1,9 @@
 import React from 'react';
-import ExpandableCard from '../ExpandableCard';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
 import { PushNotifications, notify } from './pushNotifications';
+import { useState, useEffect } from 'react';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
@@ -19,10 +19,10 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const DashboardContent = () => {
-  const [latestAlerts, setLatestAlerts] = useState([]); // Changed to handle multiple alerts
-  const recentAlerts = latestAlerts.map(alert => `⚠️ ${alert.description}`).slice(-5);
+  const [, setLatestAlerts] = useState([]); // Changed to handle multiple alerts
  
   
+ 
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -41,7 +41,7 @@ const DashboardContent = () => {
     return () => {
       off(alertsRef);
     };
-  }, []);
+  }, [setLatestAlerts]);
 
   return (
     <div className="dashboard-content">
@@ -57,9 +57,7 @@ const DashboardContent = () => {
         <button onClick={() => navigate('/incident-reporting')}>Report Now</button>
       </div>
 
-      <ExpandableCard title="Recent Alerts" items={recentAlerts} />
-      <ExpandableCard title="Safety Tips" items={safetyTips} />
-
+      
       
 
       <PushNotifications />
