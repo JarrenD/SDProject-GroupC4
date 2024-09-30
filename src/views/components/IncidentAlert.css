@@ -301,6 +301,9 @@ h2 {
   @media (max-width: 768px) {
     .incident-alert-card {
       padding: 20px;
+      margin-top: 0%;
+      margin: 80px; /* Add space for the navbar */
+      margin-bottom: 140px;
     }
   }
   

@@ -1,43 +1,50 @@
-import React, { useState } from 'react';
-import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, HelpCircle, Settings, LogOut, Menu } from 'lucide-react';
+import React from 'react';
+import { Home, Bell, Clipboard, PhoneCall, Book } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const menuItems = [
-    { name: 'Homepage', icon: Home, href: '/dashboard' },
-    { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-    { name: 'Notifications', icon: Bell, href: '/notification-centre' },
-    { name: 'Emergency Contacts', icon: PhoneCall, href: '/emergency-contacts' },
-    { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
-    { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
-    { name: 'Help', icon: HelpCircle, href: '#help' },
-    { name: 'Settings', icon: Settings, href: '#settings' },
-    { name: 'Logout', icon: LogOut, href: '#logout' }
-  ];
-
   return (
     <nav className="navbar">
-      <div className="navbar-header">
-        <h2>Campus Safety</h2>
-        <button className="toggle-btn" onClick={toggleNavbar}>
-          <Menu size={22} />
-        </button>
-      </div>
-      <ul className={`navbar-menu ${isOpen ? 'open' : ''}`}>
-        {menuItems.map((item, index) => (
-          <li key={index}>
-            <Link to={item.to}>
-              <item.icon className="navbar-icon" size={20} />
-              <span>{item.name}</span>
-            </Link>
-          </li>
-        ))}
+      <ul className="nav-menu">
+        {/* Home */}
+        <li className="nav-item">
+          <Link to="/dashboard" className="nav-link">
+            <Home size={22} />
+            <span>Home</span>
+          </Link>
+        </li>
+
+        {/* Notifications */}
+        <li className="nav-item">
+          <Link to="/notification-centre" className="nav-link">
+            <Bell size={22} />
+            <span>Notifications</span>
+          </Link>
+        </li>
+
+        {/* Incident Reports */}
+        <li className="nav-item">
+          <Link to="/incident-reporting" className="nav-link">
+            <Clipboard size={22} />
+            <span>Incident Reports</span>
+          </Link>
+        </li>
+
+        {/* Emergency Contacts */}
+        <li className="nav-item">
+          <Link to="/emergency-contacts" className="nav-link">
+            <PhoneCall size={22} />
+            <span>Emergency Contacts</span>
+          </Link>
+        </li>
+
+        {/* Campus Resources */}
+        <li className="nav-item">
+          <Link to="/safety-resources" className="nav-link">
+            <Book size={22} />
+            <span>Campus Resources</span>
+          </Link>
+        </li>
       </ul>
     </nav>
   );
