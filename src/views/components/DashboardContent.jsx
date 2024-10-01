@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
-import { useState, useEffect } from 'react';
+import { Locate, AlarmCheck} from 'lucide-react'; // Icons
+import LocationSharingComponent from '../pages/LocationSharingComponent';
 
+
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
   authDomain: "creativetutorial-ba1bf.firebaseapp.com",
@@ -17,31 +20,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-  
 const DashboardContent = () => {
-  const [showModal, setShowModal] = useState(false);
   const [latestAlert, setLatestAlert] = useState(null);
-
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    // Fetch latest alert from Firebase on component mount
+    // Firebase listener to fetch the latest alert
     const alertsRef = ref(db, 'Incident_Alerts');
     onValue(alertsRef, (snapshot) => {
       const data = snapshot.val();
-      const fetchedAlerts = data ? Object.values(data) : [];
-      if (fetchedAlerts.length > 0) {
-        const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1]; // Get the latest alert
-        setLatestAlert(mostRecentAlert);
-        setShowModal(true); // Display the modal as soon as the latest alert is fetched
+      const alerts = data ? Object.values(data) : [];
+      if (alerts.length > 0) {
+        setLatestAlert(alerts[alerts.length - 1]); // Get the latest alert
+        setShowModal(true); // Show modal if there is an alert
       }
     });
 
-    // Clean up the Firebase listener
     return () => {
-      if (alertsRef) {
-        off(alertsRef);
-      }
+      off(alertsRef); // Cleanup Firebase listener
     };
   }, []);
 
@@ -49,31 +46,69 @@ const DashboardContent = () => {
     setShowModal(false);
   };
 
+  const getSeverityColor = (severity) => {
+    switch (severity) {
+      case "high":
+        return "red";
+      case "medium":
+        return "orange";
+      case "low":
+        return "green";
+      default:
+        return "gray";
+    }
+  };
+
   return (
-    
-    <div className="dashboard-content">
-      <div className="card emergency-sos">
-        <h3>Emergency SOS </h3>
-        <p>Press for immediate help !!! </p>
-        <button onClick={() => navigate('/location-sharing')}>Alert Campus Security</button>
+    <div className="dashboard-container">
+      <div className="grid-container">
+        
+        {/* User Info Section */}
+        <div className="card">
+          <h3 className="card-title"> Fullname </h3>
+          <p className="card-subtitle">Student</p>
+          <p className="card-info">65 Empire Rd, Parktown, Johannesburg</p>
+          <p className="card-location">location input</p>
+        </div>
+
+        {/* Nearest Security Office */}
+        <div className="card emergency-card">
+          <h3 className="card-title">Nearest Security Office</h3>
+          <p className="card-info">Campus Security Office, West Campus</p>
+          <button className="emergency-btn" onClick={() => navigate('/location-sharing')}>
+            <AlarmCheck size={20} /> <p> Emergency </p>
+          </button>
+        </div>
+
+                {/* Upload Evidence Section */}
+                <div className="card">
+          <h3 className="card-title">Report Incident</h3>
+          <p className="card-info">Click to provide details of any suspicious or dangerous activities on campus.</p>
+          <button onClick={()=> navigate('/incident-reporting')} className="upload-btn"> Report
+          </button>
+        </div>
+
+        {/* Live Tracking Section */}
+        <div className="card live-tracking-card">
+          <h3 className="card-title">Live Tracking</h3>
+          <button className="tracking-btn" onClick={() => navigate('/live-tracking')}>
+            <Locate size={20} /> Activate Live Tracking
+          </button>
+          <p className="card-info">Image and sound will be recorded when tracking is activated.</p>
+        </div>
       </div>
 
-      <div className="card incident-reporting">
-        <h3>Report Incident</h3>
-        <p>Click to provide details of any suspicious or dangerous activities on campus.</p>
-        <button onClick={()=> navigate('/incident-reporting')}>Report Now</button>
-      </div>
-
-      {/* Modal to display the latest alert */}
-      {showModal && latestAlert && (
+      {/* Alert Modal */}
+      {/* Its a bit annoying, will edit later */}
+      {/* {showModal && latestAlert && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="modal-content" style={{ borderColor: getSeverityColor(latestAlert.severity) }}>
             <h3>{latestAlert.title}</h3>
             <p>{latestAlert.description}</p>
             <button onClick={closeModal}>Close</button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
