@@ -62,7 +62,7 @@ function SignUpPage({ handleLogin }) {
   return (
     <div className="signup-container">
       <div className="signup-box">
-        <h2>Sign Up</h2>
+        <h2>Create New Account</h2>
         <form id="SignUpForm" onSubmit={handleSignUp}>
           <div className="inputbox">
             <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required placeholder=" " />
@@ -70,7 +70,7 @@ function SignUpPage({ handleLogin }) {
           </div>
           <div className="inputbox">
             <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder=" " />
-            <span>E-mail</span>
+            <span>Email</span>
           </div>
           <div className="inputbox">
             <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder=" " />
@@ -78,13 +78,23 @@ function SignUpPage({ handleLogin }) {
           </div>
           <button type="submit" className="signup-button">Sign Up</button>
         </form>
+
+        {/* Gray Separator */}
+        <div className="separator">
+          <hr className="line" />
+          <span className="separator-text"> or continue with </span>
+          <hr className="line" />
+        </div>
         <div className="input">
           <button id="google-login-btn" onClick={handleGoogleLogin} className="google-button">
-          <img src="/images/google-logo.png" alt="Google Logo" className="google-logo" />
-            <i className="text1">Login with Google</i>
+            <img src="/images/google-logo.png" alt="Google Logo" className="google-logo" />
+            <i className="text1">Sign up with Google</i>
           </button>
         </div>
-        <p><a href="/login">Already have an account?</a></p>
+        {/* Login section */}
+        <p className="signup-text">
+          Already have an account? <a href="/login" className="signup-link">Login</a>
+        </p>
       </div>
     </div>
   );

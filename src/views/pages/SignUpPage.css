@@ -1,103 +1,140 @@
-/* src/pages/SignUpPage.css */
 .signup-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-  }
-  
+  background-color: #F2F2F7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+.signup-box {
+  background-color: #FFFFFF;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;  /* Maximum width on larger screens */
+  box-sizing: border-box;
+}
+
+.inputbox {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.inputbox input {
+  background-color: #F2F2F7;
+  border: 1px solid #D3D3D3;
+  border-radius: 7px;
+  padding: 15px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.inputbox input:focus {
+  outline: none;
+  border: 1px solid #b7b7b7;
+}
+
+.inputbox input:focus + span,
+.inputbox input:not(:placeholder-shown) + span {
+  transform: translateY(-28px);
+  font-size: 16px;
+}
+
+.inputbox span {
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  font-size: 16px;
+  color: #A9A9A9;
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+/* Button styling */
+.signup-button {
+  background-color: #000000;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.signup-button:hover {
+  background-color: #333333;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  border: 1px solid #D3D3D3;
+  border-radius: 10px;
+  padding: 15px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.google-button .text1{
+  font-style: normal;
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
   .signup-box {
-    background-color: #ffffff; /* White background for the form */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #333; /* Black for letters */
-  }
-  
-  .inputbox {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  .inputbox input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  
-  .inputbox input:focus + span,
-  .inputbox input:not(:placeholder-shown) + span {
-    top: -15px;
-    left: 12px;
-    font-size: 12px;
-    color: #007bff; /* Light blue for the floating label */
-  }
-  
-  .inputbox span {
-    position: absolute;
-    top: 15px;
-    left: 12px;
-    color: #999;
-    font-size: 16px;
-    transition: all 0.2s ease;
-    pointer-events: none;
-  }
-  
-  .signup-button {
-    background-color: #007bff; /* Light blue for the button */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .signup-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  .google-button {
-    background-color: #ffffff; /* White background */
-    color: #5f6368; /* Dark gray color for the text */
-    border: 1px solid #dadce0; /* Light gray border */
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex; /* Make the button a flex container */
-    align-items: center; /* Vertically center the items */
-    justify-content: center; /* Horizontally center the items */
-    margin: 0 auto; /* Centers the button itself within its container */
-  }
-  
-  .google-logo {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px; /* Adds space between the logo and the text */
   }
 
-  .google-button:hover {
-    background-color: #f8f9fa; /* Light gray background on hover */
-    border-color: #c1c3c5; /* Slightly darker border on hover */
+  .signup-button, .google-button {
+    padding: 12px;
+    font-size: 16px;
   }
-  
-  a {
-    color: #007bff; /* Light blue for links */
-    text-decoration: none;
+
+  .inputbox input {
+    padding: 10px;
+    font-size: 14px;
   }
-  
-  a:hover {
-    text-decoration: underline;
+}
+
+@media (min-width: 1200px) {
+  /* Desktop view */
+  .signup-container {
+    justify-content: center;
   }
-  
+
+  .signup-box {
+    max-width: 500px;
+    padding: 50px;
+  }
+
+  .signup-button, .google-button{
+    font-size: 16px;
+  }
+
+  .inputbox span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+  }
+
+  .inputbox input:focus + span,
+.inputbox input:not(:placeholder-shown) + span {
+  transform: translateY(-36px);
+  font-size: 16px;
+}
+}
+

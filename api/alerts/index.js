@@ -15,6 +15,8 @@ const db = admin.database();
 module.exports = async function (context, req) {
     const { method } = req;
     const alertId = req.params.alert_id;
+    const { page = 1, pageSize = 5 } = req.query; // Default to page 1, 5 items per page
+    const offset = (page - 1) * pageSize; // Calculate the offset
 
     try {
         switch (method) {

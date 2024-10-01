@@ -22,24 +22,26 @@ const NotificationCenter = () => {
   const [alerts, setAlerts] = useState([]);
   const [inboxMessages, setInboxMessages] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  
 
   useEffect(() => {
-    setAnnouncements([
-      {
-        title: "Lock Your Car Doors:",
-        description: "As a reminder, please ensure you lock your car doors and keep valuables out of sight. This simple precaution can help prevent theft.",
-      },
-      {
-        title: "Speed Limit:",
-        description: "Remember to stay within the campus speed limit of 60 km/h. Adhering to this speed limit ensures safety for both drivers and pedestrians.",
-      },
-      {
-        title: "Phone Theft:",
-        description: "With the upcoming Wits Concert, we are aware of the increased risk of phone theft at campus events of this nature. Therefore, the university will be following protocols to ensure your safety. Remember to stay vigilant!",
-      },
-    ]);
+    // Fetch announcements
+    const fetchAnnouncements = async () => {
+      try {
+        const announcementsQuery = ref(db, 'announcements');
+        const snapshot = await get(announcementsQuery);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const fetchedAnnouncements = data ? Object.values(data) : [];
+          setAnnouncements(fetchedAnnouncements);
+        } else {
+          setAnnouncements([]);
+        }
+      } catch (error) {
+        console.error("Error fetching announcements: ", error);
+      }
+    };
 
+    // Fetch alerts based on selected category
     const fetchAlerts = async (category) => {
       try {
         let alertsQuery;
@@ -48,7 +50,6 @@ const NotificationCenter = () => {
         } else {
           alertsQuery = query(ref(db, 'Incident_Alerts'), orderByChild('type'), equalTo(category.toLowerCase().replace(' ', '-')));
         }
-
 
         const snapshot = await get(alertsQuery);
         if (snapshot.exists()) {
@@ -60,7 +61,7 @@ const NotificationCenter = () => {
           const newInboxMessages = fetchedAlerts.map(alert => ({
             title: alert.title,
             description: alert.description,
-            timestamp: new Date(alert.timestamp).toLocaleString(),  // Use the timestamp from Firebase
+            timestamp: new Date(alert.timestamp).toLocaleString(),
             isNew: true,
             category: alert.type 
           }));
@@ -74,11 +75,10 @@ const NotificationCenter = () => {
       }
     };
 
-    
-    fetchAlerts(selectedCategory);
+    fetchAnnouncements(); // Call to fetch announcements
+    fetchAlerts(selectedCategory); // Call to fetch alerts
 
-    return () => {
-    };
+    return () => {};
   }, [selectedCategory]); // Dependency array includes selectedCategory to refetch on change
 
   const handleTabClick = (tabId) => {
@@ -95,7 +95,7 @@ const NotificationCenter = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Campus Safety</h1>
+        <h1>Notifications</h1>
         <h2>NOTIFICATION CENTER</h2>
       </header>
       <div className="main-container">
@@ -140,14 +140,18 @@ const NotificationCenter = () => {
           </div>
 
           <div id="announcements-content" className="content-area" style={{ display: activeTab === 'announcements' ? 'block' : 'none' }}>
-            {announcements.map((announcement, index) => (
-              <div key={index} className="announcement">
-                <div className="announcement-text">
-                  <strong>{announcement.title}</strong>
-                  <p>{announcement.description}</p>
+            {announcements.length === 0 ? (
+              <p>No announcements available</p>
+            ) : (
+              announcements.map((announcement, index) => (
+                <div key={index} className="announcement">
+                  <div className="announcement-text">
+                    <strong>{announcement.title}</strong>
+                    <p>{announcement.message}</p> {/* Assuming the property for the message is named "message" */}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
