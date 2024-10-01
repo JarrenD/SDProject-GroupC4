@@ -47,6 +47,8 @@
 }
 
 .sidebar ul li a {
+  /* This does fix the lagging issue but now ill have to restyle I guess */
+  /* position: fixed; */
   text-decoration: none;
   color: rgb(55, 53, 47);
   font-size: 16px;
@@ -255,9 +257,11 @@
 }
 
 .logout-menu {
-  margin-top: auto;
   margin-bottom: 0%;
+  bottom: 0%;
   padding-top: 20px;
+  position: fixed;
+  width: 18%;
 
 }
 
@@ -265,13 +269,6 @@
   margin-bottom: 0;
 }
 
-.logout-menu::before {
-  content: '';
-  display: block;
-  height: 1px;
-  background-color: rgba(55, 53, 47, 0.2);
-  margin-bottom: 15px;
-}
 
 
 /* This might be repetitive but I think its necessary for the phone view */
@@ -438,6 +435,8 @@
   margin-left: 250px;
   padding: 20px;
   transition: margin-left 0.5s ease;
+  flex-grow: 1;
+  padding-bottom: auto;
 }
 
 .main-content.sidebar-closed {

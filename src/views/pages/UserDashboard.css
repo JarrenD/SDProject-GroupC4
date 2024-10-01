@@ -12,7 +12,7 @@
 
 .sidebar {
   width: 20%;
-  height: 105%;
+  height: 100vh;
   background-color: rgb(235, 235, 235);
   color: rgb(55, 53, 47);
   padding: 20px;
@@ -110,7 +110,6 @@
 .sidebar.closed .sidebar-header {
   justify-content: center;
 }
-
 
 /* Main Content Styling */
 .main-content {
@@ -213,5 +212,112 @@
 
   .dashboard-content {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Footer */
+.campus-safety-footer {
+  /* I honestly dont know where the 16px padding is*/
+  margin-bottom: -16px;
+  margin-left: 16px;
+  margin-right: -32px;
+  margin-top: 500px;
+  width: auto;
+  /* background-color: #f9f9f9; */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.footer-column h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-column .wits-h2{
+  text-align: start;
+}
+
+.footer-column h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-column h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-column p {
+  margin-bottom: 0.5rem;
+}
+
+.footer-column ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-login {
+  background: none;
+  border: none;
+  color: rgb(43, 131, 189);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-login:hover {
+  color: rgb(43, 131, 189);
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(55, 53, 47, 0.2);
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+}
+
+.footer-link {
+  background: none;
+  border: none;
+  color: rgb(43, 131, 189);
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.875rem;
+  margin-right: 1rem;
+}
+
+.footer-link:hover {
+  color: rgb(43, 131, 189);
+}
+
+@media (max-width: 768px) {
+  .campus-safety-footer {
+    display: none;
   }
 }

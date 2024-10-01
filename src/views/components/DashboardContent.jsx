@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
-import { Locate, AlarmCheck} from 'lucide-react'; // Icons
-import LocationSharingComponent from '../pages/LocationSharingComponent';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Locate, AlarmCheck } from 'lucide-react';
 
 
 // Firebase configuration
@@ -19,10 +19,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
 
 const DashboardContent = () => {
   const [latestAlert, setLatestAlert] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [userName, setUserName] = useState('User');
+  const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,8 +40,40 @@ const DashboardContent = () => {
       }
     });
 
+    // Get user information
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userRef = ref(db, 'user/' + user.uid);
+        onValue(userRef, (snapshot) => {
+          const userData = snapshot.val();
+          if (userData && userData.displayName) {
+            setUserName(userData.displayName);
+          }
+        });
+      }
+    });
+
+    // Set greeting based on time of day
+    const updateGreeting = () => {
+      const currentHour = new Date().getHours();
+      if (currentHour >= 5 && currentHour < 12) {
+        setGreeting('Good morning');
+      } else if (currentHour >= 12 && currentHour < 18) {
+        setGreeting('Good afternoon');
+      } else if (currentHour >= 18 && currentHour < 22) {
+        setGreeting('Good evening');
+      } else {
+        setGreeting('Good night');
+      }
+    };
+
+    updateGreeting();
+    const intervalId = setInterval(updateGreeting, 60000); // Update every minute
+
     return () => {
-      off(alertsRef); // Cleanup Firebase listener
+      off(alertsRef);
+      unsubscribe();
+      clearInterval(intervalId);
     };
   }, []);
 
@@ -65,7 +100,7 @@ const DashboardContent = () => {
         
         {/* User Info Section */}
         <div className="card">
-          <h3 className="card-title"> Fullname </h3>
+          <h3 className="card-title"> {userName}</h3>
           <p className="card-subtitle">Student</p>
           <p className="card-info">65 Empire Rd, Parktown, Johannesburg</p>
           <p className="card-location">location input</p>
@@ -80,11 +115,11 @@ const DashboardContent = () => {
           </button>
         </div>
 
-                {/* Upload Evidence Section */}
-                <div className="card">
+        {/* Upload Evidence Section */}
+        <div className="card">
           <h3 className="card-title">Report Incident</h3>
           <p className="card-info">Click to provide details of any suspicious or dangerous activities on campus.</p>
-          <button onClick={()=> navigate('/incident-reporting')} className="upload-btn"> Report
+          <button onClick={() => navigate('/incident-reporting')} className="upload-btn"> Report
           </button>
         </div>
 

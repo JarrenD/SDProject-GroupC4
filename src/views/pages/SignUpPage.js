@@ -17,46 +17,58 @@ function SignUpPage({ handleLogin }) {
   const handleSignUp = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
+      .then((userCredential) => {
+        const user = userCredential.user;
 
-                // Store additional user information in the database
-                set(ref(db, 'user/' + user.uid), {
-                    username: username,
-                    email: email
-                })
-                .then(() => {
-                    alert("SignUp Successful!");
-                    navigate('/LogIn');  // Redirect to login page using history.push
-                })
-                .catch((error) => {
-                    alert("Error storing user data: " + error.message);
-                });
-            })
-            .catch(error => {
-              if (error.code === 'auth/email-already-in-use') {
-                alert("email is already registered. Please LogIn or try again.");
-              } else {
-                alert("Error: " + error.message);
-              }
-            });
-    };
+        // Store additional user information in the database
+        set(ref(db, 'user/' + user.uid), {
+          username: username,
+          email: email,
+          displayName: username // Store the username as displayName
+        })
+        .then(() => {
+          alert("SignUp Successful!");
+          navigate('/LogIn');
+        })
+        .catch((error) => {
+          alert("Error storing user data: " + error.message);
+        });
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          alert("Email is already registered. Please LogIn or try again.");
+        } else {
+          alert("Error: " + error.message);
+        }
+      });
+  };
 
   const handleGoogleLogin = () => {
     signInWithPopup(auth, provider)
-        .then((result) => {
-          handleLogin();  // Call handleLogin to update state
-          navigate('/dashboard');  // Redirect to the dashboard
+      .then((result) => {
+        const user = result.user;
+        // Store user information in the database
+        set(ref(db, 'user/' + user.uid), {
+          username: user.displayName,
+          email: user.email,
+          displayName: user.displayName
+        })
+        .then(() => {
+          handleLogin();
+          navigate('/dashboard');
         })
         .catch((error) => {
-          if (error.code === 'auth/popup-closed-by-user') {
-            console.log("Google Sign-In popup was closed by the user.");
-            // Optionally, you can show a subtle message to the user, or do nothing.
-          } else {
-            console.error("Error during Google Sign-In: ", error.message);
-            setError("Error during Google Sign-In: " + error.message); // Optionally set an error message in the UI
-          }
+          console.error("Error storing user data: ", error);
         });
+      })
+      .catch((error) => {
+        if (error.code === 'auth/popup-closed-by-user') {
+          console.log("Google Sign-In popup was closed by the user.");
+        } else {
+          console.error("Error during Google Sign-In: ", error.message);
+          setError("Error during Google Sign-In: " + error.message);
+        }
+      });
   };
 
   return (
