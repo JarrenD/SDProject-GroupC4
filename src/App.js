@@ -10,7 +10,7 @@ import LocationSharing from './views/pages/LocationSharingComponent.jsx';
 import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
-//import AdminIncidentAlert from './views/components/Admin_IncidentAlert.js';
+import AdminIncidentAlert from './views/components/Admin_IncidentAlert.js';
 import './App.css';
 
 
@@ -37,6 +37,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUpPage handleLogin={handleLogin} />} />
+        <Route path="/adminincident" element={<AdminIncidentAlert />} />
         {/* Protected Routes */}
         <Route 
           path="/dashboard" 

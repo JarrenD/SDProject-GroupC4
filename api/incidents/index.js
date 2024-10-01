@@ -15,6 +15,8 @@ const db = admin.database();
 module.exports = async function (context, req) {
     const { method } = req;
     const incidentId = req.params.incident_id;
+    const limit = parseInt(req.query.limit) || 5;  // Default to 5 incidents per page
+    const offset = parseInt(req.query.offset) || 0;
 
     try {
         switch (method) {
@@ -36,8 +38,12 @@ module.exports = async function (context, req) {
                     }
                 } else {
                     // Retrieve all incident reports
-                    const snapshot = await db.ref('Incident_Alerts').once('value');
-                    const incidents = snapshot.val();
+                    const snapshot = await db.ref('Incident_Alerts').orderByKey().limitToFirst(limit + offset).once('value');
+                    const allIncidents = snapshot.val();
+                    const incidents = Object.entries(allIncidents || {}).slice(offset, offset + limit).reduce((acc, [key, value]) => {
+                        acc[key] = value;
+                        return acc;
+                    }, {});
                     context.res = {
                         status: 200,
                         body: incidents

@@ -6,7 +6,7 @@ const IncidentAdmin = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const API_URL = `/api/incidents`; // Replace with your actual API URL for incidents
+  const API_URL = `/api/incidents`;
 
   useEffect(() => {
     const fetchIncidents = async () => {
