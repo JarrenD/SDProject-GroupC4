@@ -10,14 +10,14 @@
 
 .safety-tips h2 {
   font-size: 28px;
-  color: #007bff; /* Light blue heading color */
+  color: #0072b4; /* Light blue heading color */
   margin-bottom: 20px;
   text-align: center;
 }
 
 .safety-tips h3 {
   font-size: 22px;
-  color: #007bff;
+  color: #0072b4;
   margin-top: 20px;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .safety-tips ul li::marker {
-  color: #007bff; /* Change bullet point color */
+  color: #0072b4; /* Change bullet point color */
 }
 
 .tips-section {
@@ -50,7 +50,8 @@
 
 @media (max-width: 600px) {
   .safety-tips {
-    padding: 15px;
+    padding: 10px;
+    width: auto;
   }
 
   .safety-tips h2 {

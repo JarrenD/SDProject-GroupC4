@@ -45,7 +45,7 @@ h2 {
     text-align: center;
 }
 .buttons button {
-    background-color: #007BFF;
+    background-color: #0072b4;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -54,7 +54,7 @@ h2 {
     margin: 5px;
 }
 .buttons button:hover {
-    background-color: #0056b3;
+    background-color: #005585;
 }
 #incidentType, #incidentDescription {
     width: 100%;
@@ -162,7 +162,7 @@ h2 {
 
 
   .incident-alert-wrapper {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -174,17 +174,6 @@ h2 {
     background-position: center;
   }
   
-  .incident-alert-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 51, 102, 0.3); /* Blueish tint */
-    backdrop-filter: blur(10px);
-    z-index: 1;
-  }
   
   .incident-alert-card {
     background-color: rgba(255, 255, 255, 0.9);
@@ -300,10 +289,16 @@ h2 {
   
   @media (max-width: 768px) {
     .incident-alert-card {
-      padding: 20px;
-      margin-top: 0%;
-      margin: 80px; /* Add space for the navbar */
-      margin-bottom: 140px;
+      padding: 18px;
+    }
+
+    .incident-alert-wrapper{
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
+
+    .incident-alert-wrapper::before {
+      background: white;
+      z-index: 1;
     }
   }
-  

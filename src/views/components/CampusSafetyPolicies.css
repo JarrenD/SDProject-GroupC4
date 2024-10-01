@@ -10,7 +10,7 @@
 
 .campus-safety-policies h2 {
   font-size: 28px;
-  color: #007bff; /* Light blue for the main heading */
+  color: #0072b4; /* Light blue for the main heading */
   text-align: center;
   margin-bottom: 30px;
 }
@@ -25,7 +25,7 @@
 
 .policy-section h3 {
   font-size: 22px;
-  color: #007bff;
+  color: #0072b4;
   margin-bottom: 15px;
 }
 
@@ -48,12 +48,13 @@
 }
 
 .policy-section ul li::marker {
-  color: #007bff; /* Custom bullet color */
+  color: #0072b4; /* Custom bullet color */
 }
 
 @media (max-width: 600px) {
   .campus-safety-policies {
-    padding: 15px;
+    padding: 10px;
+    width: auto;
   }
 
   .policy-section {

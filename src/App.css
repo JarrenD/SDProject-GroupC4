@@ -241,60 +241,6 @@
   margin-top: 28px;
 }
 
-/* Responsive Layout */
-@media (max-width: 768px) {
-  
-  .sidebar {
-    display: none;
-  }
-
-  /* Navbar styling */
-  .navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-
-  .nav-menu {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .nav-item {
-    flex: 1;
-    text-align: center;
-  }
-
-  .nav-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #333;
-    text-decoration: none;
-  }
-
-
-  .app-container {
-    flex-direction: column;
-  }
-
-  .dashboard-content {
-    grid-template-columns: 1fr;
-  }
-}
-
 /*Pushing logout to the bottom */
 
 .sidebar-content {
@@ -325,4 +271,232 @@
   height: 1px;
   background-color: rgba(55, 53, 47, 0.2);
   margin-bottom: 15px;
+}
+
+
+/* This might be repetitive but I think its necessary for the phone view */
+/* Will fix it later */
+
+/* Sidebar styling */
+.sidebar {
+  width: 250px;
+  background-color: white;
+  color: rgb(55, 53, 47);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.5s ease;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: rgb(55, 53, 47);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+  background-color: #f1f1f1;
+  color: black;
+  padding-left: 15px;
+}
+
+.sidebar ul li:active,
+.sidebar ul li a.active {
+  background-color: #d6d6d6;
+}
+
+.sidebar ul li:active .sidebar-icon,
+.sidebar ul li a.active .sidebar-icon {
+  stroke: rgb(55, 53, 47);
+}
+
+.sidebar-icon {
+  margin-right: 10px;
+  stroke: rgb(55, 53, 47);
+  transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.sidebar.closed .sidebar-icon {
+  margin-right: 0;
+}
+
+.sidebar.closed ul li a span {
+  display: none;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: rgb(55, 53, 47);
+  cursor: pointer;
+  padding: 5px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar.closed .sidebar-header {
+  justify-content: center;
+}
+
+/* Dashboard content styling */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 1em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card button {
+  font-size: 1em;
+  width: 100%;
+  padding: 12px;
+  background-color: #0072b4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card button:hover {
+  background-color: #005585;
+  color: #ffffff;
+}
+
+.card button:active {
+  background-color: #004166;
+}
+
+/* Main content layout */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.5s ease;
+}
+
+.main-content.sidebar-closed {
+  margin-left: 60px;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-bottom: 70px;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+  }
+
+  .nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #555;
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .nav-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
 }

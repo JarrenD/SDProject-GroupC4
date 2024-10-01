@@ -1,9 +1,9 @@
 .login-container {
-  background-color: #F2F2F7;
+  background-color: #FFFFFF;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   padding: 20px;
 }
 
@@ -36,7 +36,7 @@
 
 /* Buttons styling */
 .login-button {
-  background-color: #000000;
+  background-color: #0072b4;
   color: #FFFFFF;
   border: none;
   border-radius: 10px;
@@ -48,7 +48,11 @@
 }
 
 .login-button:hover {
-  background-color: #333333;
+  background-color: #005585;
+}
+
+.login-button:active {
+  background-color: #004166;
 }
 
 .google-button {
@@ -78,7 +82,7 @@
 
   .login-button, .google-button {
     padding: 12px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .inputbox input {
