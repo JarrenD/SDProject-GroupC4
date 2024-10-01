@@ -3,6 +3,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import IncidentAlert from '../views/components/IncidentAlert';  // Adjust the import path if necessary
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getDatabase, ref as dbRef, set } from 'firebase/database';
 
 // Mock Firebase dependencies
 jest.mock('firebase/app', () => ({
@@ -13,9 +15,28 @@ jest.mock('firebase/app', () => ({
   jest.mock('firebase/auth');
   jest.mock('firebase/database');
   jest.mock('firebase/storage');
-jest.mock('exif-js', () => ({
-  getData: jest.fn((photo, callback) => callback()),
-  getTag: jest.fn(() => null),
+  jest.mock('exif-js', () => ({
+    getData: jest.fn((photo, callback) => callback()), // Simulate EXIF getData
+    getTag: jest.fn((img, tag) => {                    // Simulate EXIF getTag
+        const mockEXIFData = {
+            GPSLatitude: [37, 58, 30],
+            GPSLongitude: [-122, 24, 45],
+        };
+        return mockEXIFData[tag];
+    }),
+}));
+
+jest.mock('firebase/storage', () => ({
+  getStorage: jest.fn(),
+  ref: jest.fn(),
+  uploadBytes: jest.fn(() => Promise.resolve({ ref: { fullPath: 'mock/full/path' } })),
+  getDownloadURL: jest.fn(() => Promise.resolve('https://mockurl.com/photo.jpg')),
+}));
+
+jest.mock('firebase/database', () => ({
+  getDatabase: jest.fn(),
+  ref: jest.fn(),
+  set: jest.fn(() => Promise.resolve()),
 }));
 
 beforeEach(() => {
@@ -95,4 +116,29 @@ describe('IncidentAlert Component', () => {
     expect(screen.getByLabelText(/Type of Incident:/i)).toHaveValue('');
     expect(screen.getByLabelText(/Description of the Incident:/i)).toHaveValue('');
   });
+
+  it('disables form submission while loading', async () => {
+    const { getByLabelText, getByRole } = render(<IncidentAlert />);
+
+    // Simulate selecting a file to upload
+    const file = new File(['dummy photo'], 'photo.jpg', { type: 'image/jpeg' });
+    fireEvent.change(getByLabelText(/Photo Upload:/i), {
+        target: { files: [file] },
+    });
+
+    // Simulate form submission
+    fireEvent.submit(getByRole('button', { name: /Submit/i }));
+
+    // Wait for the submission to complete and check if uploadBytes and set were called
+    await waitFor(() => {
+        expect(uploadBytes).toHaveBeenCalled();
+        expect(set).toHaveBeenCalled();
+    });
+  });
+
+  
+
+
+  
+  
 });
