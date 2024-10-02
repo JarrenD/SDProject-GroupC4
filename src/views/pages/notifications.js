@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, get } from "firebase/database";
 import React, { useState, useEffect } from 'react';
-import './notifications.css';
+import './notifications.css'; // Make sure your CSS file is correctly referenced
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
@@ -45,7 +45,9 @@ const NotificationCenter = () => {
         // Fetch notifications
         const notificationsSnapshot = await get(ref(db, 'notifications'));
         if (notificationsSnapshot.exists()) {
-          setNotifications(Object.values(notificationsSnapshot.val()));
+          const notificationsData = notificationsSnapshot.val();
+          setNotifications(notificationsData);
+          console.log("notifications snapshot value:", notificationsData);
         } else {
           setNotifications([]);
         }
@@ -88,13 +90,16 @@ const NotificationCenter = () => {
             {activeTab === 'inbox' && (
               <>
                 <h3>Notifications</h3>
-                {notifications.length === 0 ? (
+                {notifications && Object.keys(notifications).length === 0 ? (
                   <p>No notifications</p>
                 ) : (
-                  notifications.map((notification, index) => (
-                    <div key={index} className="inbox-message">
-                      <strong>{notification.title}</strong>
-                      <p>{notification.description}</p>
+                  Object.entries(notifications).map(([key, notification], index) => (
+                    <div key={key} className="inbox-message">
+                      <strong>{notification.message}</strong>
+                      {/* Add more fields like description or timestamp if they exist */}
+                      {notification.timestamp && (
+                        <small>{new Date(notification.timestamp).toLocaleString()}</small>
+                      )}
                     </div>
                   ))
                 )}
