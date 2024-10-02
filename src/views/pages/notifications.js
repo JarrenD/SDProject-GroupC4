@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, get } from "firebase/database";
 import React, { useState, useEffect } from 'react';
-import './notifications.css'; // Make sure your CSS file is correctly referenced
+import './notifications.css'; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
