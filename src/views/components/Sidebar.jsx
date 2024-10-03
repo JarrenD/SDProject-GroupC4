@@ -15,7 +15,7 @@ const Sidebar = () => {
     { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
     { name: 'Emergency Contacts', icon: PhoneCall, href: '/emergency-contacts' },
     { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
-    { name: 'Help', icon: HelpCircle, href: '#help' },
+    { name: 'Help', icon: HelpCircle, href: '/help' },
   ];
 
   const logoutItem = { name: 'Logout', icon: LogOut, href: '/logout' };

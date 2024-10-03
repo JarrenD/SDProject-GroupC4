@@ -18,6 +18,7 @@ import './App.css';
 import AdminSidebar from './views/components/AdminSidebar.jsx';
 import LocationAdmin from './views/pages/LocationAdmin.jsx'
 import AdminNotifications from './views/pages/NotificationsAdmin.jsx'
+import Help from './views/pages/Help.js'
 
 
 function App() {
@@ -131,6 +132,18 @@ function App() {
               <Sidebar />
               <div className="main-content">
                 <Logout />
+              </div>
+            </div>
+          ) : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/help" 
+          element={isAuthenticated ? (
+            <div className="app-container">
+              <Navbar />
+              <Sidebar />
+              <div className="main-content">
+                <Help />
               </div>
             </div>
           ) : <Navigate to="/login" />} 
