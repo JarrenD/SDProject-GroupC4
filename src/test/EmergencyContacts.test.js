@@ -1,49 +1,51 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import EmergencyContacts from '../views/components/EmergencyContacts'; // Adjust the path based on your project structure
 
+global.fetch = jest.fn();
+
 describe('EmergencyContacts Component', () => {
-  test('renders Emergency Contacts heading', () => {
-    render(<EmergencyContacts />);
-    
-    // Check if the heading is rendered
-    expect(screen.getByRole('heading', { name: /Emergency Contacts/i })).toBeInTheDocument();
+  beforeEach(() => {
+    fetch.mockClear();
   });
 
-  test('renders all contact names and phone numbers', () => {
+  test('renders loading state', () => {
     render(<EmergencyContacts />);
-    
-    // Contacts data to match
-    const contacts = [
-      { name: 'Campus Health and Wellness Centre', phone: ['011 717 9111', '011 717 9113'] },
-      { name: 'Wits Protection Services: Braamfontein Campus East', phone: ['011 717 4444', '011 717 6666'] },
-      { name: 'Wits Protection Services: Braamfontein Campus West', phone: ['011 717 1842'] },
-      { name: 'Wits Protection Services: Health Sciences Campus', phone: ['011 717 2222', '011 717 2232'] },
-      { name: 'Wits Protection Services: Education Campus', phone: ['011 717 3340'] },
-      { name: 'Wits Protection Services: Business School Campus', phone: ['011 717 3589'] },
-      { name: 'Occupational Health and Safety / Emergency Response Coordinator', phone: ['011 717 9192', '084 627 3591'] },
-      { name: 'Counselling and Careers Development Unit', phone: ['011 717 9140'] },
-      { name: 'Disability Rights Unit', phone: ['011 717 9151'] },
-      { name: 'Employee Relations', phone: ['011 717 1513'] },
-      { name: 'Gender Equity Office', phone: ['011 717 9790'] },
-      { name: 'Wits Integrity Hotline', phone: ['082 938 4569'] },
-      { name: 'Staff support: Life Health Services', phone: ['0800 004 770'] },
-      { name: 'Transformation and Employment Equity Office', phone: ['011 717 1462'] },
-    ];
-
-    // Check if each contact name is rendered
-    contacts.forEach(contact => {
-      expect(screen.getByText(contact.name)).toBeInTheDocument();
-    });
-
-    // Check if each phone number is rendered and is a valid tel link
-    contacts.forEach(contact => {
-      contact.phone.forEach(phone => {
-        const phoneLink = screen.getByText(phone);
-        expect(phoneLink).toBeInTheDocument();
-        expect(phoneLink).toHaveAttribute('href', `tel:${phone}`);
-      });
-    });
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
+  
+  test('renders error state when API request fails', async () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: false,
+      })
+    );
+    render(<EmergencyContacts />);
+    const errorMessage = await screen.findByText(/Failed to fetch contacts/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
+
+  test('renders emergency contacts from API', async () => {
+    const mockContacts = {
+      1: { id: 1, name: 'John Doe', phone: ['123-456', '789-101'], region: 'North' },
+      2: { id: 2, name: 'Jane Smith', phone: ['234-567'], region: 'South' },
+    };
+
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(mockContacts),
+      })
+    );
+
+    render(<EmergencyContacts />);
+
+    const contactName1 = await screen.findByText('John Doe');
+    const contactName2 = await screen.findByText('Jane Smith');
+
+    expect(contactName1).toBeInTheDocument();
+    expect(contactName2).toBeInTheDocument();
+  });
+
 });

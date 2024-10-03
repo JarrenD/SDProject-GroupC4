@@ -65,4 +65,19 @@ describe('LocationController', () => {
       expect(response).toEqual({ success: false, message: 'Geolocation error' });
     });
   });
+
+
+  describe('shareVenue', () => {
+
+    it('should return an error if user is not logged in when sharing a venue', async () => {
+      auth.currentUser = null; // No user logged in
+      const mockVenue = { id: 1, Name: 'Venue 1', Building: 'Building A' };
+
+      const response = await locationController.shareVenue(mockVenue);
+
+      expect(response).toEqual({ success: false, message: 'Please log in' });
+    });
+
+  
+  });
 });
