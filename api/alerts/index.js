@@ -39,7 +39,7 @@ module.exports = async function (context, req) {
             case 'GET':
                 if (alertId) {
                     // Retrieve a specific alert by ID
-                    const snapshot = await db.ref(`Incident_Alerts/${alertId}`).once('value');
+                    const snapshot = await db.ref(`notifications/${alertId}`).once('value');
                     const alert = snapshot.val();
                     if (alert) {
                         context.res = {
@@ -53,7 +53,7 @@ module.exports = async function (context, req) {
                         };
                     }
                 } else {
-                    const snapshot = await db.ref('Incident_Alerts').once('value');
+                    const snapshot = await db.ref('notifications').once('value');
                 const alert = snapshot.val();
                 context.res = {
                     status: 200,
@@ -67,7 +67,7 @@ module.exports = async function (context, req) {
                 // Send a new emergency alert
                 const alertData = req.body;
                 if (alertData.title && alertData.message) {
-                    const newAlertRef = db.ref('Incident_Alerts').push();
+                    const newAlertRef = db.ref('notifications').push();
                     await newAlertRef.set(alertData);
                     context.res = {
                         status: 201,
