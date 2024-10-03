@@ -10,12 +10,12 @@ const AdminSidebar = () => {
   };
 
   const menuItems = [
-    { name: 'Dashboard', icon: Home, href: '/admin' },
-    { name: 'Incident Management', icon: Clipboard, href: '/admin/incidents' },
-    { name: 'User & Role Management', icon: Users, href: '/admin/users' },
-    { name: 'Notifications', icon: Bell, href: '/admin/notifications' },
-    { name: 'Safety Resources', icon: Book, href: '/admin/resources' },
-    { name: 'Emergency Alerts', icon: AlertTriangle, href: '/admin/alerts' },
+    { name: 'Dashboard', icon: Home, href: '/admin-dashboard' },
+    { name: 'Incident Management', icon: Clipboard, href: '/admin-incidents' },
+    //{ name: 'User & Role Management', icon: Users, href: '/admin/users' },
+    { name: 'Notifications', icon: Bell, href: '/admin-notifications' },
+    //{ name: 'Safety Resources', icon: Book, href: '/admin/resources' },
+    { name: 'Emergency Alerts', icon: AlertTriangle, href: '/admin-locations' },
   ];
 
   const handleClick = (href) => {
