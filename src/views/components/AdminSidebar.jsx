@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Users, Bell, Clipboard, Book, AlertTriangle, Menu, LogOut } from 'lucide-react';
+import { Home, Bell, Clipboard, AlertTriangle, Menu, LogOut } from 'lucide-react';
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
