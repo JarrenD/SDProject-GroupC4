@@ -11,12 +11,7 @@ const AdminDashboardContent = () => {
 
   return (
     <div className="dashboard-content">
-      <AdminIncidentManagement />
-      <AdminEmergencyAlertsPanel />
-      <AdminUserRoleManagement />
-      <AdminSafetyResources />
-      <AdminRealTimeNotifications />
-      <AdminAnalyticsOverview />
+      
     </div>
   );
 };
