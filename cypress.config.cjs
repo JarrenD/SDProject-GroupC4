@@ -12,7 +12,7 @@ module.exports = defineConfig({
       // with any changed environment variables
       return config
     },
-    baseUrl: 'https://polite-pond-04aadc51e.5.azurestaticapps.net/',
+    baseUrl: 'https://polite-pond-04aadc51e.5.azurestaticapps.net',
     specPattern: 'src/test/e2e/**/*.cy.js',
   },
 })

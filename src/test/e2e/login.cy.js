@@ -27,7 +27,7 @@ describe('Login Flow', () => {
     cy.window().then((win) => {
       cy.stub(win, 'alert').as('alertStub');
     });
-    cy.get('input[type="email"]').type('testUser2@gmail.com');
+    cy.get('input[type="email"]').type('testUser1@gmail.com');
     cy.get('input[type="password"]').type('wrongpassword');
     cy.get('button[type="submit"]').click();
     cy.get('@alertStub').should('be.calledWith', 'No account found with this email or the password is wrong. Please sign up first.');

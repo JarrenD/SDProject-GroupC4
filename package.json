@@ -6,10 +6,9 @@
   "dependencies": {
     "-": "^0.0.1",
     "@testing-library/user-event": "^7.1.2",
-    "codecov": "^3.8.3",
     "exif-js": "^2.3.0",
     "express": "^4.19.2",
-    "firebase": "^10.13.1",
+    "firebase": "^10.14.0",
     "firebase-admin": "^12.4.0",
     "lucide-react": "^0.438.0",
     "react": "^18.3.1",
@@ -22,12 +21,13 @@
     "web-streams-polyfill": "^4.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "react-scripts build",
     "test": "jest --config=jest.config.cjs",
     "test:e2e": "cypress open --e2e",
     "cypress:run": "cypress run",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-coverage-report": "npx nyc report --reporter=html > coverage.lcov && npx codecov"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,11 +49,13 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.25.4",
     "@babel/register": "^7.24.6",
-    "@cypress/code-coverage": "^3.13.2",
+    "@cypress/code-coverage": "^3.13.4",
+    "@cypress/instrument-cra": "^1.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "babel-jest": "^29.7.0",
     "babel-plugin-istanbul": "^7.0.0",
+    "codecov": "^3.8.3",
     "cypress": "^13.15.0",
     "identity-obj-proxy": "^3.0.0",
     "install": "^0.13.0",
@@ -66,5 +68,25 @@
     "supertest": "^7.0.0",
     "text-encoding": "^0.7.0",
     "whatwg-fetch": "^3.6.20"
+  },
+  "nyc": {
+    "report-dir": "coverage-cy",
+    "reporter": [
+      "json",
+      "html",
+      "lcov",
+      "text"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "node_modules/*",
+      "node_modules"
+      
+    ]
   }
 }

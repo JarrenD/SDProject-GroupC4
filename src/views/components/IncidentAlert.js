@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './IncidentAlert.css';
 import { useNavigate } from 'react-router-dom';
 import EXIF from 'exif-js';
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

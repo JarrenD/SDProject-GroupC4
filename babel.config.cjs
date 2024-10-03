@@ -8,7 +8,7 @@ module.exports = (api) => {
       '@babel/preset-react',  // For transpiling React JSX
     ],
     plugins: [
-      isCypress && 'istanbul',               // Only include istanbul for Cypress coverage
+      isCypress && "babel-plugin-istanbul",               // Only include istanbul for Cypress coverage
       isCypress && 'transform-class-properties',
     ].filter(Boolean),  // Filters out any false values (like if istanbul is false for Jest)
   };
