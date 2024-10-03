@@ -136,7 +136,7 @@ function App() {
           ) : <Navigate to="/login" />} 
         />
 
-        //admin routes
+        {/*admin routes*/}
         <Route
           path="/admin-dashboard"
           element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin-login" />} 
