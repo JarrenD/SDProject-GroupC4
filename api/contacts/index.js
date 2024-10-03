@@ -16,6 +16,22 @@ module.exports = async function (context, req) {
     const method = req.method;
     const id = req.params.id;
 
+    // Add CORS headers to every response
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*', // or 'http://localhost:3000' to be more specific
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+    };
+
+    // Handle preflight requests (OPTIONS method)
+    if (method === 'OPTIONS') {
+        context.res = {
+            status: 204, // No Content
+            headers: corsHeaders
+        };
+        return;
+    }
+
     try {
         switch (method) {
             // Get all emergency contacts
@@ -24,6 +40,7 @@ module.exports = async function (context, req) {
                 const contacts = snapshot.val();
                 context.res = {
                     status: 200,
+                    headers: corsHeaders,
                     body: contacts
                 };
                 break;
@@ -34,6 +51,7 @@ module.exports = async function (context, req) {
                 if (!newContact || !newContact.name || !newContact.phone || !newContact.region) {
                     context.res = {
                         status: 400,
+                        headers: corsHeaders,
                         body: "Invalid contact data"
                     };
                     return;
@@ -46,6 +64,7 @@ module.exports = async function (context, req) {
 
                 context.res = {
                     status: 201,
+                    headers: corsHeaders,
                     body: `New contact added with ID: ${newContact.id}`
                 };
                 break;
@@ -55,6 +74,7 @@ module.exports = async function (context, req) {
                 if (!id) {
                     context.res = {
                         status: 400,
+                        headers: corsHeaders,
                         body: "Contact ID is required"
                     };
                     return;
@@ -64,6 +84,7 @@ module.exports = async function (context, req) {
                 if (!updatedContact || !updatedContact.name || !updatedContact.phone || !updatedContact.region) {
                     context.res = {
                         status: 400,
+                        headers: corsHeaders,
                         body: "Invalid contact data"
                     };
                     return;
@@ -75,6 +96,7 @@ module.exports = async function (context, req) {
                 if (!contactToUpdateSnapshot.exists()) {
                     context.res = {
                         status: 404,
+                        headers: corsHeaders,
                         body: `Contact with ID ${id} not found`
                     };
                     return;
@@ -84,6 +106,7 @@ module.exports = async function (context, req) {
 
                 context.res = {
                     status: 200,
+                    headers: corsHeaders,
                     body: `Contact with ID ${id} updated`
                 };
                 break;
@@ -93,6 +116,7 @@ module.exports = async function (context, req) {
                 if (!id) {
                     context.res = {
                         status: 400,
+                        headers: corsHeaders,
                         body: "Contact ID is required"
                     };
                     return;
@@ -104,6 +128,7 @@ module.exports = async function (context, req) {
                 if (!contactToDeleteSnapshot.exists()) {
                     context.res = {
                         status: 404,
+                        headers: corsHeaders,
                         body: `Contact with ID ${id} not found`
                     };
                     return;
@@ -113,6 +138,7 @@ module.exports = async function (context, req) {
 
                 context.res = {
                     status: 200,
+                    headers: corsHeaders,
                     body: `Contact with ID ${id} deleted`
                 };
                 break;
@@ -121,6 +147,7 @@ module.exports = async function (context, req) {
             default:
                 context.res = {
                     status: 405,
+                    headers: corsHeaders,
                     body: "Method not allowed"
                 };
                 break;
@@ -129,6 +156,7 @@ module.exports = async function (context, req) {
         context.log(`Error handling request: ${error}`);
         context.res = {
             status: 500,
+            headers: corsHeaders,
             body: `Error handling request: ${error}`
         };
     }

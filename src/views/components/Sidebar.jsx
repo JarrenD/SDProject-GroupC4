@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, LayoutDashboard, Bell, PhoneCall, Clipboard, Book, HelpCircle, LogOut, Menu } from 'lucide-react';
+import { Home, Bell, PhoneCall, Clipboard, Book, HelpCircle, LogOut, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -11,15 +11,14 @@ const Sidebar = () => {
 
   const menuItems = [
     { name: 'Homepage', icon: Home, href: '/dashboard' },
-    { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
     { name: 'Notifications', icon: Bell, href: '/notification-centre' },
     { name: 'Incident Reports', icon: Clipboard, href: '/incident-reporting' },
     { name: 'Emergency Contacts', icon: PhoneCall, href: '/emergency-contacts' },
     { name: 'Campus Resources', icon: Book, href: '/safety-resources' },
-    { name: 'Help', icon: HelpCircle, href: '#help' },
+    { name: 'Help', icon: HelpCircle, href: '/help' },
   ];
 
-  const logoutItem = { name: 'Logout', icon: LogOut, href: '#logout' };
+  const logoutItem = { name: 'Logout', icon: LogOut, href: '/logout' };
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>

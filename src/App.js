@@ -11,7 +11,14 @@ import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
 import AdminIncidentAlert from './views/components/Admin_IncidentAlert.js';
+import Logout from './views/pages/Logout.js';
+import AdminLogin from './views/pages/AdminLoginPage.js';
+import AdminDashboard from './views/pages/AdminDashboard.jsx';
 import './App.css';
+import AdminSidebar from './views/components/AdminSidebar.jsx';
+import LocationAdmin from './views/pages/LocationAdmin.jsx'
+import AdminNotifications from './views/pages/NotificationsAdmin.jsx'
+import Help from './views/pages/Help.js'
 
 
 function App() {
@@ -20,16 +27,29 @@ function App() {
     localStorage.getItem('isAuthenticated') === 'true'
   );
 
+  const [isAdmin,setIsAdmin] = useState(
+    localStorage.getItem('isAdmin') === 'true'
+  );
+
   // Load authentication state from localStorage on initial load
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated.toString());
   }, [isAuthenticated]);
+
+  useEffect(()=>{
+    localStorage.setItem('isAdmin',isAdmin.toString());
+  },[isAdmin])
   
 
   const handleLogin = () => {
     setIsAuthenticated(true);
     localStorage.setItem('isAuthenticated', 'true'); // Persist authentication state
   };
+
+  const handleAdmin = () =>{
+    setIsAdmin(true);
+    localStorage.setItem('isAdmin','true');
+  }
 
   return (
     <Router>
@@ -38,6 +58,7 @@ function App() {
         <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUpPage handleLogin={handleLogin} />} />
         <Route path="/adminincident" element={<AdminIncidentAlert />} />
+        <Route path="/admin-login" element = {<AdminLogin handleLogin={handleLogin} handleAdmin={handleAdmin}/>} />
         {/* Protected Routes */}
         <Route 
           path="/dashboard" 
@@ -102,6 +123,72 @@ function App() {
               </div>
             </div>
           ) : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/logout" 
+          element={isAuthenticated ? (
+            <div className="app-container">
+              <Navbar />
+              <Sidebar />
+              <div className="main-content">
+                <Logout />
+              </div>
+            </div>
+          ) : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/help" 
+          element={isAuthenticated ? (
+            <div className="app-container">
+              <Navbar />
+              <Sidebar />
+              <div className="main-content">
+                <Help />
+              </div>
+            </div>
+          ) : <Navigate to="/login" />} 
+        />
+
+        {/*admin routes*/}
+        <Route
+          path="/admin-dashboard"
+          element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin-login" />} 
+        />
+
+        <Route 
+          path="/admin-locations" 
+          element={isAdmin ? (
+            <div className="app-container">
+              <AdminSidebar />
+              <div className="main-content">
+                <LocationAdmin />
+              </div>
+            </div>
+          ) : <Navigate to="/admin-login" />} 
+        />
+
+        <Route 
+          path="/admin-incidents" 
+          element={isAdmin ? (
+            <div className="app-container">
+              <AdminSidebar />
+              <div className="main-content">
+              <AdminIncidentAlert />
+              </div>
+            </div>
+          ) : <Navigate to="/admin-login" />} 
+        />
+
+        <Route 
+          path="/admin-notifications" 
+          element={isAdmin ? (
+            <div className="app-container">
+              <AdminSidebar />
+              <div className="main-content">
+              <AdminNotifications />
+              </div>
+            </div>
+          ) : <Navigate to="/admin-login" />} 
         />
 
         {/* Redirect to login if the route is not found */}
