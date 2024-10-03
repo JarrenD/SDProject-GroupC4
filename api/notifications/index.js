@@ -16,6 +16,22 @@ module.exports = async function (context, req) {
     const method = req.method;
     const notificationId = req.params.notification_id;
 
+            // Add CORS headers to every response
+            const corsHeaders = {
+                'Access-Control-Allow-Origin': '*', // or 'http://localhost:3000' to be more specific
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+            };
+        
+            // Handle preflight requests (OPTIONS method)
+            if (method === 'OPTIONS') {
+                context.res = {
+                    status: 204, // No Content
+                    headers: corsHeaders
+                };
+                return;
+            }
+
     try {
         switch (method) {
             // Retrieve all notifications
