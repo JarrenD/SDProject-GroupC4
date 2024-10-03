@@ -11,6 +11,7 @@ import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
 import AdminIncidentAlert from './views/components/Admin_IncidentAlert.js';
+import Logout from './views/pages/Logout.js';
 import './App.css';
 
 
@@ -99,6 +100,18 @@ function App() {
               <Sidebar />
               <div className="main-content">
                 <LocationSharing />
+              </div>
+            </div>
+          ) : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/logout" 
+          element={isAuthenticated ? (
+            <div className="app-container">
+              <Navbar />
+              <Sidebar />
+              <div className="main-content">
+                <Logout />
               </div>
             </div>
           ) : <Navigate to="/login" />} 

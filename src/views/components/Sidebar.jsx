@@ -19,7 +19,7 @@ const Sidebar = () => {
     { name: 'Help', icon: HelpCircle, href: '#help' },
   ];
 
-  const logoutItem = { name: 'Logout', icon: LogOut, href: '#logout' };
+  const logoutItem = { name: 'Logout', icon: LogOut, href: '/logout' };
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
