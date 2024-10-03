@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 const AdminSafetyResources = () => {
-    const [resources, setResources] = useState([
+    const [resources, setResources] = useState([]);
+
+    setResources([
         { id: 1, title: 'Emergency Contact List ', type: 'PDF' },
         { id: 2, title: 'Campus Safety Guidelines ', type: 'DOC' },
         { id: 3, title: 'Evacuation Procedures ', type: 'PDF' },
