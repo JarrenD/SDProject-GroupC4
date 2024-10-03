@@ -11,6 +11,9 @@ import Navbar from './views/components/Navbar.jsx';
 import Sidebar from './views/components/Sidebar.jsx';
 import UserDashboard from './views/pages/userDashboard.jsx';
 import AdminIncidentAlert from './views/components/Admin_IncidentAlert.js';
+
+import AdminLoginPage from './views/pages/AdminLoginPage.js';
+
 import './App.css';
 
 
@@ -20,16 +23,28 @@ function App() {
     localStorage.getItem('isAuthenticated') === 'true'
   );
 
+  const [isAdmin,setIsAdmin] = useState(
+    localStorage.getItem('isAdmin') === 'true'
+  );
+
   // Load authentication state from localStorage on initial load
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated.toString());
-  }, [isAuthenticated]);
+    localStorage.setItem('isAdmin',isAdmin.toString());
+  }, [isAuthenticated,isAdmin]);
   
 
   const handleLogin = () => {
     setIsAuthenticated(true);
     localStorage.setItem('isAuthenticated', 'true'); // Persist authentication state
   };
+
+  const handleAdmin = () =>{
+    setIsAdmin(true);
+    localStorage.setItem('isAdmin','true');
+  }
+
+
 
   return (
     <Router>
@@ -38,6 +53,7 @@ function App() {
         <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUpPage handleLogin={handleLogin} />} />
         <Route path="/adminincident" element={<AdminIncidentAlert />} />
+        <Route path="/admin" element={<AdminLoginPage handleLogin={handleLogin} handleAdmin={handleAdmin}/>}/>
         {/* Protected Routes */}
         <Route 
           path="/dashboard" 
