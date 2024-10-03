@@ -18,6 +18,22 @@ module.exports = async function (context, req) {
     const { page = 1, pageSize = 5 } = req.query; // Default to page 1, 5 items per page
     const offset = (page - 1) * pageSize; // Calculate the offset
 
+        // Add CORS headers to every response
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*', // or 'http://localhost:3000' to be more specific
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+    };
+
+    // Handle preflight requests (OPTIONS method)
+    if (method === 'OPTIONS') {
+        context.res = {
+            status: 204, // No Content
+            headers: corsHeaders
+        };
+        return;
+    }
+
     try {
         switch (method) {
             case 'GET':
@@ -37,10 +53,13 @@ module.exports = async function (context, req) {
                         };
                     }
                 } else {
-                    context.res = {
-                        status: 400,
-                        body: 'Alert ID is required'
-                    };
+                    const snapshot = await db.ref('Incident_Alerts').once('value');
+                const alert = snapshot.val();
+                context.res = {
+                    status: 200,
+                    headers: corsHeaders,
+                    body: alert
+                };
                 }
                 break;
 
