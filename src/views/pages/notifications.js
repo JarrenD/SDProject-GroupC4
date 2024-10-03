@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get } from "firebase/database";
+import { getDatabase, ref, get, push } from "firebase/database";
 import React, { useState, useEffect } from 'react';
-import './notifications.css'; 
+import './notifications.css';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
@@ -13,7 +13,6 @@ const firebaseConfig = {
   appId: "1:945665449612:web:7cb4ac69350bfc6ad065a9"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
@@ -21,43 +20,73 @@ const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
   const [announcements, setAnnouncements] = useState([]);
   const [alerts, setAlerts] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState({});
+
+const fetchRoutes = async () => {
+  try {
+    const response = await fetch('https://virtserver.swaggerhub.com/WendyMaboa/GPSTracking/1.0.0/routes', {
+      headers: {
+        'accept': 'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log('Fetched route data:', data);
+    
+    // Transform mock data into more realistic data for testing
+    return data.map((route, index) => ({
+      id: route.id === 'string' ? `route-${index + 1}` : route.id,
+      name: route.name === 'string' ? `Route ${index + 1}` : route.name,
+      coordinates: route.coordinates
+    }));
+  } catch (error) {
+    console.error("Error fetching routes: ", error);
+    return [];
+  }
+};
+
+const pushRouteNotification = async (route) => {
+  const notificationRef = ref(db, 'notifications');
+  const routeName = route.name && typeof route.name === 'string' ? route.name : `Route ${route.id}`;
+  const newNotification = {
+    message: `New route available: ${routeName}`,
+    timestamp: Date.now(),
+    type: 'route',
+  };
+  await push(notificationRef, newNotification);
+};
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch announcements
-        const announcementsSnapshot = await get(ref(db, 'announcements'));
-        if (announcementsSnapshot.exists()) {
-          setAnnouncements(Object.values(announcementsSnapshot.val()));
-        } else {
-          setAnnouncements([]);
-        }
+        const [announcementsSnapshot, alertsSnapshot, notificationsSnapshot] = await Promise.all([
+          get(ref(db, 'announcements')),
+          get(ref(db, 'Incident_Alerts')),
+          get(ref(db, 'notifications'))
+        ]);
 
-        // Fetch alerts
-        const alertsSnapshot = await get(ref(db, 'Incident_Alerts'));
-        if (alertsSnapshot.exists()) {
-          setAlerts(Object.values(alertsSnapshot.val()));
-        } else {
-          setAlerts([]);
-        }
+        setAnnouncements(announcementsSnapshot.exists() ? Object.values(announcementsSnapshot.val()) : []);
+        setAlerts(alertsSnapshot.exists() ? Object.values(alertsSnapshot.val()) : []);
+        const notificationsData = notificationsSnapshot.exists() ? notificationsSnapshot.val() : {};
+        setNotifications(notificationsData);
 
-        // Fetch notifications
-        const notificationsSnapshot = await get(ref(db, 'notifications'));
-        if (notificationsSnapshot.exists()) {
-          const notificationsData = notificationsSnapshot.val();
-          setNotifications(notificationsData);
-          console.log("notifications snapshot value:", notificationsData);
-        } else {
-          setNotifications([]);
+        const routes = await fetchRoutes();
+        for (const route of routes) {
+          const existingNotifications = Object.values(notificationsData).some(
+            (notification) => notification.message.includes(route.name) || notification.message.includes(route.id)
+          );
+
+          if (!existingNotifications) {
+            await pushRouteNotification(route);
+          } else {
+            console.log(`Notification for this route ${route.name} (ID: ${route.id}) already exists.`);
+          }
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     };
-
     fetchData();
-  }, []);
+  }, []); 
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -90,13 +119,13 @@ const NotificationCenter = () => {
             {activeTab === 'inbox' && (
               <>
                 <h3>Notifications</h3>
-                {notifications && Object.keys(notifications).length === 0 ? (
+                {Object.keys(notifications).length === 0 ? (
                   <p>No notifications</p>
                 ) : (
-                  Object.entries(notifications).map(([key, notification], index) => (
+                  Object.entries(notifications).map(([key, notification]) => (
                     <div key={key} className="inbox-message">
-                      <strong>{notification.message}</strong>
-                      {/* Add more fields like description or timestamp if they exist */}
+                      <strong>{notification.type === 'route' ? 'Route Update' : 'Notification'}</strong>
+                      <p>{notification.message}</p>
                       {notification.timestamp && (
                         <small>{new Date(notification.timestamp).toLocaleString()}</small>
                       )}
@@ -112,7 +141,6 @@ const NotificationCenter = () => {
                     <div key={index} className="inbox-message">
                       <strong>{alert.title}</strong>
                       <p>{alert.description}</p>
-                      {/* If timestamp exists, display it, else skip */}
                       {alert.timestamp && <small>{new Date(alert.timestamp).toLocaleString()}</small>}
                     </div>
                   ))
@@ -146,7 +174,6 @@ const NotificationCenter = () => {
               <div className="notification-alert">
                 <strong>{alerts[alerts.length - 1].title}</strong>
                 <p>{alerts[alerts.length - 1].description}</p>
-                {/* Check if the timestamp exists before rendering */}
                 {alerts[alerts.length - 1].timestamp && (
                   <small>{new Date(alerts[alerts.length - 1].timestamp).toLocaleString()}</small>
                 )}
