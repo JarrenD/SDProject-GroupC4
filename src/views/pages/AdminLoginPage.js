@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, provider } from '../../models/firebase/firebaseConfig.js';  // Import from firebaseConfig.js
-import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../models/firebase/firebaseConfig.js';  // Import from firebaseConfig.js
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import './LoginPage.css';
 
 function LoginPage({ handleLogin,handleAdmin }) {
@@ -26,6 +26,7 @@ function LoginPage({ handleLogin,handleAdmin }) {
           navigate('/dashboard');
         })
         .catch(error => {
+          setError(error);
           if (error.code === 'auth/wrong-password') {
             alert("Incorrect password. Please try again.");
           } else if (error.code === 'auth/user-not-found') {
