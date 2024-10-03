@@ -30,8 +30,11 @@ function App() {
   // Load authentication state from localStorage on initial load
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated.toString());
+  }, [isAuthenticated]);
+
+  useEffect(()=>{
     localStorage.setItem('isAdmin',isAdmin.toString());
-  }, [isAuthenticated,isAdmin]);
+  },[isAdmin])
   
 
   const handleLogin = () => {
