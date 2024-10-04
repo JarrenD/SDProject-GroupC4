@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, query, equalTo, orderByChild, get } from "firebase/database";
+import { getDatabase, ref, get, push } from "firebase/database";
 import React, { useState, useEffect } from 'react';
 import './notifications.css';
 
@@ -20,77 +20,77 @@ const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
   const [announcements, setAnnouncements] = useState([]);
   const [alerts, setAlerts] = useState([]);
-  const [inboxMessages, setInboxMessages] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [notifications, setNotifications] = useState({});
+
+const fetchRoutes = async () => {
+  try {
+    const response = await fetch('https://virtserver.swaggerhub.com/WendyMaboa/GPSTracking/1.0.0/routes', {
+      headers: {
+        'accept': 'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log('Fetched route data:', data);
+    
+    // Transform mock data into more realistic data for testing
+    return data.map((route, index) => ({
+      id: route.id === 'string' ? `route-${index + 1}` : route.id,
+      name: route.name === 'string' ? `Route ${index + 1}` : route.name,
+      coordinates: route.coordinates
+    }));
+  } catch (error) {
+    console.error("Error fetching routes: ", error);
+    return [];
+  }
+};
+
+const pushRouteNotification = async (route) => {
+  const notificationRef = ref(db, 'notifications');
+  const routeName = route.name && typeof route.name === 'string' ? route.name : `Route ${route.id}`;
+  const newNotification = {
+    message: `New route available: ${routeName}`,
+    timestamp: Date.now(),
+    type: 'route',
+  };
+  await push(notificationRef, newNotification);
+};
 
   useEffect(() => {
-    // Fetch announcements
-    const fetchAnnouncements = async () => {
+    const fetchData = async () => {
       try {
-        const announcementsQuery = ref(db, 'announcements');
-        const snapshot = await get(announcementsQuery);
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          const fetchedAnnouncements = data ? Object.values(data) : [];
-          setAnnouncements(fetchedAnnouncements);
-        } else {
-          setAnnouncements([]);
+        const [announcementsSnapshot, alertsSnapshot, notificationsSnapshot] = await Promise.all([
+          get(ref(db, 'announcements')),
+          get(ref(db, 'Incident_Alerts')),
+          get(ref(db, 'notifications'))
+        ]);
+
+        setAnnouncements(announcementsSnapshot.exists() ? Object.values(announcementsSnapshot.val()) : []);
+        setAlerts(alertsSnapshot.exists() ? Object.values(alertsSnapshot.val()) : []);
+        const notificationsData = notificationsSnapshot.exists() ? notificationsSnapshot.val() : {};
+        setNotifications(notificationsData);
+
+        const routes = await fetchRoutes();
+        for (const route of routes) {
+          const existingNotifications = Object.values(notificationsData).some(
+            (notification) => notification.message.includes(route.name) || notification.message.includes(route.id)
+          );
+
+          if (!existingNotifications) {
+            await pushRouteNotification(route);
+          } else {
+            console.log(`Notification for this route ${route.name} (ID: ${route.id}) already exists.`);
+          }
         }
       } catch (error) {
-        console.error("Error fetching announcements: ", error);
+        console.error("Error fetching data: ", error);
       }
     };
-
-    // Fetch alerts based on selected category
-    const fetchAlerts = async (category) => {
-      try {
-        let alertsQuery;
-        if (category === 'All') {
-          alertsQuery = ref(db, 'Incident_Alerts');
-        } else {
-          alertsQuery = query(ref(db, 'Incident_Alerts'), orderByChild('type'), equalTo(category.toLowerCase().replace(' ', '-')));
-        }
-
-        const snapshot = await get(alertsQuery);
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          const fetchedAlerts = data ? Object.values(data) : [];
-          setAlerts(fetchedAlerts);
-
-          // Create inbox messages
-          const newInboxMessages = fetchedAlerts.map(alert => ({
-            title: alert.title,
-            description: alert.description,
-            timestamp: new Date(alert.timestamp).toLocaleString(),
-            isNew: true,
-            category: alert.type 
-          }));
-          setInboxMessages(newInboxMessages);
-        } else {
-          setAlerts([]);
-          setInboxMessages([]);
-        }
-      } catch (error) {
-        console.error("Error fetching alerts: ", error);
-      }
-    };
-
-    fetchAnnouncements(); // Call to fetch announcements
-    fetchAlerts(selectedCategory); // Call to fetch alerts
-
-    return () => {};
-  }, [selectedCategory]); // Dependency array includes selectedCategory to refetch on change
+    fetchData();
+  }, []); 
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  // Filter inbox messages based on selected category
-  const filteredMessages = selectedCategory === 'All' ? inboxMessages : inboxMessages.filter(message => message.category === selectedCategory.toLowerCase().replace(' ', '-'));
 
   return (
     <div className="App">
@@ -115,58 +115,71 @@ const NotificationCenter = () => {
             </button>
           </div>
 
-          <div id="inbox-content" className="content-area" style={{ display: activeTab === 'inbox' ? 'block' : 'none' }}>
-            <div className="dropdown">
-              <label htmlFor="category-select">Filter by category:</label>
-              <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
-                <option value="All">All</option>
-                <option value="Theft">Theft</option>
-                <option value="Injury">Injury</option>
-                <option value="Traffic Jam">Traffic Jam</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            {filteredMessages.length === 0 ? (
-              <p>No messages in inbox</p>
-            ) : (
-              filteredMessages.map((message, index) => (
-                <div key={index} className={`inbox-message ${message.isNew ? 'new-message' : ''}`}>
-                  <strong>{message.title}</strong>
-                  <p>{message.description}</p>
-                  <small>{message.timestamp}</small>
-                </div>
-              ))
-            )}
-          </div>
+          <div className="content-area">
+            {activeTab === 'inbox' && (
+              <>
+                <h3>Notifications</h3>
+                {Object.keys(notifications).length === 0 ? (
+                  <p>No notifications</p>
+                ) : (
+                  Object.entries(notifications).map(([key, notification]) => (
+                    <div key={key} className="inbox-message">
+                      <strong>{notification.type === 'route' ? 'Route Update' : 'Notification'}</strong>
+                      <p>{notification.message}</p>
+                      {notification.timestamp && (
+                        <small>{new Date(notification.timestamp).toLocaleString()}</small>
+                      )}
+                    </div>
+                  ))
+                )}
 
-          <div id="announcements-content" className="content-area" style={{ display: activeTab === 'announcements' ? 'block' : 'none' }}>
-            {announcements.length === 0 ? (
-              <p>No announcements available</p>
-            ) : (
-              announcements.map((announcement, index) => (
-                <div key={index} className="announcement">
-                  <div className="announcement-text">
-                    <strong>{announcement.title}</strong>
-                    <p>{announcement.message}</p> {/* Assuming the property for the message is named "message" */}
-                  </div>
-                </div>
-              ))
+                <h3>Alerts</h3>
+                {alerts.length === 0 ? (
+                  <p>No alerts</p>
+                ) : (
+                  alerts.map((alert, index) => (
+                    <div key={index} className="inbox-message">
+                      <strong>{alert.title}</strong>
+                      <p>{alert.description}</p>
+                      {alert.timestamp && <small>{new Date(alert.timestamp).toLocaleString()}</small>}
+                    </div>
+                  ))
+                )}
+              </>
+            )}
+
+            {activeTab === 'announcements' && (
+              <>
+                {announcements.length === 0 ? (
+                  <p>No announcements available</p>
+                ) : (
+                  announcements.map((announcement, index) => (
+                    <div key={index} className="announcement">
+                      <strong>Announcement</strong>
+                      <p>{announcement.message}</p>
+                    </div>
+                  ))
+                )}
+              </>
             )}
           </div>
         </div>
 
         <div className="notifications-panel">
-          <h3>Alerts</h3>
-          <div className="real-time-notification">
-            {alerts.length === 0 ? (
-              <p>No new alerts</p>
-            ) : (
+          <h3>Latest Alert</h3>
+          {alerts.length === 0 ? (
+            <p>No alerts</p>
+          ) : (
+            <div className="real-time-notification">
               <div className="notification-alert">
                 <strong>{alerts[alerts.length - 1].title}</strong>
                 <p>{alerts[alerts.length - 1].description}</p>
+                {alerts[alerts.length - 1].timestamp && (
+                  <small>{new Date(alerts[alerts.length - 1].timestamp).toLocaleString()}</small>
+                )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
