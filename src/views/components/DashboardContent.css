@@ -1,0 +1,88 @@
+.dashboard-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  background-color: white;
+}
+
+.card {
+  width: calc(50% - 32px);
+  min-width: 280px;
+  max-width: 400px;
+  padding: 24px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(55, 53, 47);
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: rgb(55, 53, 47);
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.card button {
+  background-color: rgb(74, 144, 226);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 80%;
+}
+
+.card button:hover {
+  background-color: rgb(53, 122, 232);
+  transform: translateY(-1px);
+}
+
+.card button:active {
+  transform: translateY(0);
+}
+
+/* Softer styling for emergency SOS card */
+.emergency-sos button {
+  background-color: #ef4444;  /* Less intense red */
+}
+
+.emergency-sos button:hover {
+  background-color: #dc2626;
+}
+
+.emergency-sos button:active {
+  background-color: #b91c1c;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 15px;
+    gap: 16px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: none;
+    padding: 20px;
+  }
+
+  .card button {
+    width: 90%;
+  }
+}

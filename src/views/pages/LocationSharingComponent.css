@@ -1,79 +1,85 @@
-/* Center the container and add padding */
+/* Main container styling */
 .location-sharing-container {
-  max-width: 500px; /* Adjust width as needed */
-  margin: 0 auto; /* Center horizontally */
+  max-width: 500px;
+  margin: 0 auto;
   padding: 20px;
-  border: 2px solid #ddd; /* Border around the component */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
-  background-color: #fff; /* Background color */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center;
 }
 
-/* Style for the textarea */
-.location-sharing-container textarea {
-  width: 100%; /* Full width */
-  padding: 10px; /* Padding inside the textarea */
-  border: 1px solid #ccc; /* Border color */
-  border-radius: 4px; /* Rounded corners */
-  font-size: 16px; /* Font size */
-  resize: vertical; /* Allow vertical resizing */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
+.location-sharing-container h3{
+  font-size: 2.0em;
+  font-weight: bold;
+  color: rgb(55, 53, 47);
 }
 
-/* Style for the button */
-.location-sharing-container button {
-  background-color: #003366; /* Dark blue button color */
-  color: #fff; /* Text color */
-  border: none;
-  border-radius: 4px; /* Rounded corners */
-  padding: 10px 20px; /* Padding inside the button */
-  font-size: 16px; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth color transition */
-}
-
-/* Button hover effect */
-.location-sharing-container button:hover {
-  background-color: #002244; /* Even darker blue on hover */
-}
-
-/* Style for the location info */
-.location-info {
-  margin-top: 20px; /* Space above the location info */
-}
-
-.location-info p {
-  margin: 5px 0; /* Space between lines */
-}
-
-/* Style for the status message */
-.status {
-  margin-top: 10px; /* Space above the status message */
-  font-weight: bold; /* Bold text */
-}
-
-/* Style for option buttons */
-.option-buttons {
-  margin-bottom: 20px;
-  display: flex; /* Flexbox for positioning */
-  justify-content: space-between; /* Space out buttons */
-  align-items: center; /* Align vertically */
-}
-
-/* Styling for the OR text */
-.or-divider {
-  margin: 5px 10px; /* Space around the "or" text */
-  font-weight: bold; /* Bold text */
-}
-
-/* Style for the venue search input */
+/* Common input styling */
+.location-sharing-container textarea,
 .venue-search input {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
-/* Style for the venue list */
+.location-sharing-container textarea {
+  resize: vertical;
+}
+
+.venue-search input {
+  margin-bottom: 10px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+.location-sharing-container button {
+  background-color: #003366;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  justify-self: center;
+}
+
+.location-sharing-container button:hover {
+  background-color: #002244;
+  transform: scale(1.02);
+}
+
+.share-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Option buttons layout */
+.option-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.option-buttons button {
+  width: 48%;
+}
+
+/* Divider styling */
+.or-divider {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #888;
+}
+
+/* Venue list styling */
 .venue-list {
   list-style: none;
   padding: 0;
@@ -81,11 +87,108 @@
 
 .venue-list li {
   padding: 10px;
-  border: 1px solid #ccc;
+  background-color: #fff;
+  border: 1px solid #ddd;
   margin-bottom: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.venue-list li:hover {
+  background-color: #f0f4f8;
+}
+
+/* Selected venue and location info styling */
+.selected-venue,
+.location-info {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 6px;
 }
 
 .selected-venue {
-  margin-top: 20px;
+  background-color: #e8f4ff;
+  border: 1px solid #cce1ff;
+}
+
+.location-info {
+  background-color: #eef5ff;
+  border: 1px solid #ccdff1;
+}
+
+.location-info p {
+  margin: 5px 0;
+}
+
+/* Status message styling */
+.status {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: #3c5c87;
+}
+
+
+/* Toggle switch styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-bottom: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #003366;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .location-sharing-container {
+    padding: 15px;
+  }
+
+  .option-buttons {
+    flex-direction: column;
+  }
+
+  .option-buttons button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

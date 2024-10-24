@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
 import { PushNotifications, notify } from './pushNotifications';
 import { useState, useEffect } from 'react';
+import './DashboardContent.css';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEbqPXRCr6BcsTBoM6VKiHcAFVVkqSW7E",
@@ -19,10 +20,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const DashboardContent = () => {
-  const [, setLatestAlerts] = useState([]); // Changed to handle multiple alerts
- 
-  
- 
+  const [, setLatestAlerts] = useState([]);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -30,11 +28,11 @@ const DashboardContent = () => {
     onValue(alertsRef, (snapshot) => {
       const data = snapshot.val();
       const fetchedAlerts = data ? Object.values(data) : [];
-      setLatestAlerts(fetchedAlerts); // Update state to an array of alerts
+      setLatestAlerts(fetchedAlerts);
 
       if (fetchedAlerts.length > 0) {
         const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1];
-        notify(mostRecentAlert.description); // Trigger the notification
+        notify(mostRecentAlert.description);
       }
     });
 
@@ -46,8 +44,8 @@ const DashboardContent = () => {
   return (
     <div className="dashboard-content">
       <div className="card emergency-sos">
-        <h3>Emergency SOS </h3>
-        <p>Press for immediate help !!! </p>
+        <h3>Emergency SOS</h3>
+        <p>Press for immediate help!!!</p>
         <button onClick={() => navigate('/location-sharing')}>Alert Campus Security</button>
       </div>
 
@@ -56,9 +54,6 @@ const DashboardContent = () => {
         <p>Click to provide details of any suspicious or dangerous activities on campus.</p>
         <button onClick={() => navigate('/incident-reporting')}>Report Now</button>
       </div>
-
-      
-      
 
       <PushNotifications />
     </div>
