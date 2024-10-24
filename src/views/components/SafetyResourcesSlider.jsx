@@ -11,22 +11,22 @@ const SafetyResourcesSlider = () => {
     {
       title: "Campus Safety Tips",
       description: "Essential tips and guidelines for staying safe on campus",
-      route: "/safety-tips"
+      route: "/safety-resources"
     },
     {
       title: "Safety Policies",
       description: "View detailed campus safety policies and procedures",
-      route: "/safety-policies"
+      route: "/safety-resources"
     },
     {
       title: "Bus Schedules",
       description: "Check campus bus routes and timings",
-      route: "/bus-schedules"
+      route: "/safety-resources"
     },
     {
       title: "Night Shuttle Service",
       description: "View night shuttle schedules and request rides",
-      route: "/night-shuttle"
+      route: "/safety-resources"
     },
     {
       title: "Recent Alerts",

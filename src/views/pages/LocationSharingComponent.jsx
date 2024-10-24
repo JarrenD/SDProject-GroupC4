@@ -3,7 +3,7 @@ import "./LocationSharingComponent.css";
 import { LocationController } from "../../controllers/LocationController";
 
 const LocationSharingComponent = () => {
-  const [enabled, setEnabled] = useState(false);  // Toggle for enabling/disabling location services
+  const [enabled, setEnabled] = useState(false);
   const [location, setLocation] = useState(null);
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,7 +12,6 @@ const LocationSharingComponent = () => {
 
   const controller = new LocationController();
 
-  // API URL ***hide this***
   const API_URL = "https://campus-infrastructure-management.azurewebsites.net/api/venues";
   const API_KEY = "kpy8PxJshr0KqzocQL2ZZuZIcNcKVLUOwuS8YVnogqSZNCvKcFHJa8kweD0sP8JlUOhWStMuKNCKf2ZZVPoGZjzNiWUodIVASAaOfcVNKb2bFapQ5L9a2WKzCTBWSfMG";
 
@@ -36,9 +35,9 @@ const LocationSharingComponent = () => {
 
     if (result.success) {
       setLocation(result.location);
-      setStatus(result.message);
+      setStatus("Location shared successfully!");
     } else {
-      setStatus(`${result.message}`);
+      setStatus(result.message || "Error sharing location");
     }
   };
 
@@ -89,33 +88,30 @@ const LocationSharingComponent = () => {
 
     if (result.success) {
       setLocation(result.location);
-      setStatus(result.message);
+      setStatus("Venue shared successfully!");
     } else {
-      setStatus(`${result.message}`);
+      setStatus(result.message || "Error sharing venue");
     }
   };
 
   return (
     <div className="location-sharing-container">
       <h3>Location Sharing</h3>
-      {/* Toggle Button */}
       <label className="switch">
         <input type="checkbox" checked={enabled} onChange={handleToggle} />
         <span className="slider"></span>
       </label>
       <p>{enabled ? 'GPS Tracking Enabled' : 'GPS Tracking Disabled'}</p>
 
-      {/* Share My Location Button */}
       <button 
         onClick={handleShareLocation} 
         disabled={!enabled}
         className="share-button"
       >
-        Share Location with Campus Security
+        Share My Location
       </button>
       <div className="or-divider">OR</div>
 
-      {/* Venue Search */}
       <div className="venue-search">
         <input
           type="text"
@@ -134,7 +130,6 @@ const LocationSharingComponent = () => {
         )}
       </div>
 
-      {/* Display Selected Venue */}
       {selectedVenue && (
         <div className="selected-venue">
           <p>Selected Venue: {selectedVenue.Name}</p>
@@ -145,7 +140,6 @@ const LocationSharingComponent = () => {
         </div>
       )}
 
-      {/* Display Location Info */}
       {location && !selectedVenue && (
         <div className="location-info">
           <p>Latitude: {location.latitude}</p>
