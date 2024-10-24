@@ -326,3 +326,15 @@
   background-color: rgba(55, 53, 47, 0.2);
   margin-bottom: 15px;
 }
+
+.dashboard-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  background-color: white;
+}

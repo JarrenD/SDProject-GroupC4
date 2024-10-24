@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Header from '../components/Header';
 import DashboardContent from '../components/DashboardContent';
 import CampusSafetyFooter from '../components/Footer';
+import SafetyResourcesSlider from '../components/SafetyResourcesSlider';
 import './UserDashboard.css';
 
 function userDashboard() {
@@ -13,6 +14,7 @@ function userDashboard() {
       <Sidebar />
       <div className="main-content">
         <Header />
+        <SafetyResourcesSlider />
         <DashboardContent />
         <CampusSafetyFooter />
       </div>
