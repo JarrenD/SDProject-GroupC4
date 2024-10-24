@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { Twitter, Instagram, Facebook, Youtube } from 'lucide-react';
 
 const CampusSafetyFooter = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleAdminLoginClick = () => {
+    navigate('/admin-login'); // Redirect to the admin login page
+  };
+
   return (
     <footer className="campus-safety-footer">
       <div className="footer-container">
@@ -19,7 +26,10 @@ const CampusSafetyFooter = () => {
               <Facebook size={24} />
               <Youtube size={24} />
             </div>
-            <button className="admin-login">Admin Login</button>
+            {/* Add onClick to redirect to admin login */}
+            <button className="admin-login" onClick={handleAdminLoginClick}>
+              Admin Login
+            </button>
           </div>
           <div className="footer-column">
             <h4>Departments</h4>

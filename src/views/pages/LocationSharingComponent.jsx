@@ -1,43 +1,30 @@
+// src/views/LocationSharingComponent.jsx
 import React, { useState } from "react";
 import "./LocationSharingComponent.css";
 import { LocationController } from "../../controllers/LocationController";
 
 const LocationSharingComponent = () => {
-  const [enabled, setEnabled] = useState(false);
   const [location, setLocation] = useState(null);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("");  // Set to an empty string
   const [searchQuery, setSearchQuery] = useState("");
   const [venues, setVenues] = useState([]);
   const [selectedVenue, setSelectedVenue] = useState(null);
 
   const controller = new LocationController();
 
+  // API URL ***hide this***
   const API_URL = "https://campus-infrastructure-management.azurewebsites.net/api/venues";
   const API_KEY = "kpy8PxJshr0KqzocQL2ZZuZIcNcKVLUOwuS8YVnogqSZNCvKcFHJa8kweD0sP8JlUOhWStMuKNCKf2ZZVPoGZjzNiWUodIVASAaOfcVNKb2bFapQ5L9a2WKzCTBWSfMG";
 
-  const handleToggle = () => {
-    setEnabled((prevState) => !prevState);
-    if (!enabled) {
-      setStatus("Location services enabled");
-    } else {
-      setStatus("Location services disabled");
-      setLocation(null);
-    }
-  };
-
   const handleShareLocation = async () => {
-    if (!enabled) {
-      setStatus("Please enable location services first");
-      return;
-    }
     setStatus("Sharing location...");
     const result = await controller.shareLocation();
 
     if (result.success) {
       setLocation(result.location);
-      setStatus("Location shared successfully!");
+      setStatus(result.message);
     } else {
-      setStatus(result.message || "Error sharing location");
+      setStatus(`${result.message}`);
     }
   };
 
@@ -48,7 +35,7 @@ const LocationSharingComponent = () => {
         const response = await fetch(API_URL, {
           method: "GET",
           headers: {
-            "x-api-key": API_KEY,
+            "x-api-key": API_KEY, // Attach API key to the headers
             "Accept": "application/json"
           }
         });
@@ -58,60 +45,45 @@ const LocationSharingComponent = () => {
         }
 
         const venues = await response.json();
-        const filteredVenues = venues.filter(venue =>
-          venue.Name && venue.Name.toLowerCase().includes(query.toLowerCase())
-        );
+        // Filter venues safely
+        const filteredVenues = venues.filter(venue => venue.Name && venue.Name.toLowerCase().includes(query.toLowerCase()));
         setVenues(filteredVenues);
       } catch (error) {
         console.error("Error fetching venues:", error);
         setStatus("Error fetching venues. Please try again later.");
       }
     } else {
-      setVenues([]);
+      setVenues([]); // Clear the venue list if the query is too short
     }
   };
 
   const handleSelectVenue = (venue) => {
     setSelectedVenue(venue);
-    setStatus(`Selected venue: ${venue.Name}`);
-    setVenues([]);
-  };
+    setStatus(`Selected venue: ${venue.Name}`);  // Use venue.Name for the correct case
+    setVenues([]); // Clear the dropdown
+  }
 
   const handleShareVenue = async () => {
-    if (!enabled) {
-      setStatus("Please enable location services first");
-      return;
-    }
     setStatus("Sharing venue...");
 
     const result = await controller.shareVenue(selectedVenue);
 
     if (result.success) {
       setLocation(result.location);
-      setStatus("Venue shared successfully!");
+      setStatus(result.message);
     } else {
-      setStatus(result.message || "Error sharing venue");
+      setStatus(`${result.message}`);
     }
-  };
+  }
 
   return (
     <div className="location-sharing-container">
       <h3>Location Sharing</h3>
-      <label className="switch">
-        <input type="checkbox" checked={enabled} onChange={handleToggle} />
-        <span className="slider"></span>
-      </label>
-      <p>{enabled ? 'GPS Tracking Enabled' : 'GPS Tracking Disabled'}</p>
-
-      <button 
-        onClick={handleShareLocation} 
-        disabled={!enabled}
-        className="share-button"
-      >
-        Share My Location
-      </button>
+      <div className="option-buttons">
+        <button onClick={handleShareLocation}>Share My Location</button>
+      </div>
       <div className="or-divider">OR</div>
-
+      {/* Venue search input */}
       <div className="venue-search">
         <input
           type="text"
@@ -130,17 +102,17 @@ const LocationSharingComponent = () => {
         )}
       </div>
 
+      {/* Display selected venue info */}
       {selectedVenue && (
         <div className="selected-venue">
           <p>Selected Venue: {selectedVenue.Name}</p>
           <p>Building: {selectedVenue.Building}</p>
-          <button onClick={handleShareVenue} disabled={!enabled}>
-            Share This Venue
-          </button>
+          <button onClick={handleShareVenue}>Share This Venue</button>
         </div>
       )}
 
-      {location && !selectedVenue && (
+      {/* Display location info if shared */}
+      {location && !selectedVenue && ( // Show location info only when sharing location
         <div className="location-info">
           <p>Latitude: {location.latitude}</p>
           <p>Longitude: {location.longitude}</p>
