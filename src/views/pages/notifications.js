@@ -53,7 +53,7 @@ const NotificationCenter = () => {
   const getAddressFromCoordinates = async (latitude, longitude) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCRScbysptD1nDAefqm4U6Goz8Uc88Z-iQ`  
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`  
       );
       const data = await response.json();
       
