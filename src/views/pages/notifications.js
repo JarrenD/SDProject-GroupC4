@@ -16,44 +16,93 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+
 const NotificationCenter = () => {
   const [activeTab, setActiveTab] = useState('inbox');
   const [announcements, setAnnouncements] = useState([]);
   const [alerts, setAlerts] = useState([]);
-  const [notifications, setNotifications] = useState({});
+  const [notifications, setNotifications] = useState([]);
+  const [routes, setRoutes] = useState([]); // New state for routes
 
-const fetchRoutes = async () => {
-  try {
-    const response = await fetch('https://virtserver.swaggerhub.com/WendyMaboa/GPSTracking/1.0.0/routes', {
-      headers: {
-        'accept': 'application/json'
-      }
-    });
-    const data = await response.json();
-    console.log('Fetched route data:', data);
-    
-    // Transform mock data into more realistic data for testing
-    return data.map((route, index) => ({
-      id: route.id === 'string' ? `route-${index + 1}` : route.id,
-      name: route.name === 'string' ? `Route ${index + 1}` : route.name,
-      coordinates: route.coordinates
-    }));
-  } catch (error) {
-    console.error("Error fetching routes: ", error);
-    return [];
-  }
-};
+ 
 
-const pushRouteNotification = async (route) => {
-  const notificationRef = ref(db, 'notifications');
-  const routeName = route.name && typeof route.name === 'string' ? route.name : `Route ${route.id}`;
-  const newNotification = {
-    message: `New route available: ${routeName}`,
-    timestamp: Date.now(),
-    type: 'route',
+  const fetchRoutes = async () => {
+    try {
+      const response = await fetch('https://virtserver.swaggerhub.com/WendyMaboa/GPSTracking/1.0.0/routes', {
+        headers: {
+          'accept': 'application/json'
+        }
+      });
+      const data = await response.json();
+      console.log('Fetched route data:', data);
+      
+      const transformedRoutes = data.map((route, index) => ({
+        id: route.id === 'string' ? `route-${index + 1}` : route.id,
+        name: route.name === 'string' ? `Route ${index + 1}` : route.name,
+        coordinates: route.coordinates
+      }));
+
+      setRoutes(transformedRoutes); // Set routes in state
+      return transformedRoutes;
+    } catch (error) {
+      console.error("Error fetching routes: ", error);
+      return [];
+    }
   };
-  await push(notificationRef, newNotification);
+
+  const getAddressFromCoordinates = async (latitude, longitude) => {
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCRScbysptD1nDAefqm4U6Goz8Uc88Z-iQ`  
+      );
+      const data = await response.json();
+      
+      if (data.results && data.results.length > 0) {
+        // Get the formatted address from the first result
+        return data.results[0].formatted_address;
+      }
+      return 'Location not found';
+    } catch (error) {
+      console.error('Error getting address:', error);
+      return 'Error getting location';
+    }
+  };
+
+  
+
+// Internal coordinate display component
+const RouteCoordinateDisplay = ({ coord, index }) => {
+  const [address, setAddress] = useState('Loading address...');
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+      const result = await getAddressFromCoordinates(coord.latitude, coord.longitude);
+      setAddress(result);
+    };
+    fetchAddress();
+  }, [coord.latitude, coord.longitude]);
+
+  return (
+    <li key={index} className="coordinate-item">
+      <div className="address">{address}</div>
+      <div className="coordinates-small">
+        <small>({coord.latitude}, {coord.longitude})</small>
+      </div>
+    </li>
+  );
 };
+
+  const pushRouteNotification = async (route) => {
+    const notificationRef = ref(db, 'notifications');
+    const routeName = route.name && typeof route.name === 'string' ? route.name : `Route ${route.id}`;
+    const newNotification = {
+      message: `New route available: ${routeName}`,
+      createdAt: Date.now(),
+      recipientType: 'route',
+      title: 'Route Update'
+    };
+    await push(notificationRef, newNotification);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,12 +115,17 @@ const pushRouteNotification = async (route) => {
 
         setAnnouncements(announcementsSnapshot.exists() ? Object.values(announcementsSnapshot.val()) : []);
         setAlerts(alertsSnapshot.exists() ? Object.values(alertsSnapshot.val()) : []);
+        
         const notificationsData = notificationsSnapshot.exists() ? notificationsSnapshot.val() : {};
-        setNotifications(notificationsData);
+        const notificationsArray = notificationsData ? Object.entries(notificationsData).map(([key, value]) => ({
+          id: key,
+          ...value,
+        })) : [];
+        setNotifications(notificationsArray);
 
         const routes = await fetchRoutes();
         for (const route of routes) {
-          const existingNotifications = Object.values(notificationsData).some(
+          const existingNotifications = notificationsArray.some(
             (notification) => notification.message.includes(route.name) || notification.message.includes(route.id)
           );
 
@@ -87,10 +141,18 @@ const pushRouteNotification = async (route) => {
     };
     fetchData();
   }, []); 
-
+  
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+
+  const generalNotifications = notifications.filter(
+    notification => notification.recipientType === 'all'
+  );
+
+  const routeNotifications = notifications.filter(
+    notification => notification.recipientType === 'route'
+  );
 
   return (
     <div className="App">
@@ -118,30 +180,67 @@ const pushRouteNotification = async (route) => {
           <div className="content-area">
             {activeTab === 'inbox' && (
               <>
-                <h3>Notifications</h3>
-                {Object.keys(notifications).length === 0 ? (
-                  <p>No notifications</p>
+                <h3>Available Routes</h3>
+                {routes.length === 0 ? (
+                  <p>No routes available</p>
                 ) : (
-                  Object.entries(notifications).map(([key, notification]) => (
-                    <div key={key} className="inbox-message">
-                      <strong>{notification.type === 'route' ? 'Route Update' : 'Notification'}</strong>
+                  routes.map(route => (
+                    <div key={route.id} className="inbox-message">
+                      <strong>{route.name}</strong>
+                      <p>Route ID: {route.id}</p>
+                      <div>
+                        <p>Coordinates:</p>
+                        <ul>
+                          {route.coordinates.map((coord, index) => (
+                            <RouteCoordinateDisplay key={index} coord={coord} index={index} />
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ))
+                )}
+
+                <h3>Route Updates</h3>
+                {routeNotifications.length === 0 ? (
+                  <p>No route updates</p>
+                ) : (
+                  routeNotifications.map(notification => (
+                    <div key={notification.id} className="inbox-message">
+                      <strong>{notification.title}</strong>
                       <p>{notification.message}</p>
-                      {notification.timestamp && (
-                        <small>{new Date(notification.timestamp).toLocaleString()}</small>
+                      {notification.createdAt && (
+                        <small>{new Date(notification.createdAt).toLocaleString()}</small>
                       )}
                     </div>
                   ))
                 )}
 
-                <h3>Alerts</h3>
+                <h3>Incidents</h3>
                 {alerts.length === 0 ? (
-                  <p>No alerts</p>
+                  <p>No incidents</p>
                 ) : (
                   alerts.map((alert, index) => (
                     <div key={index} className="inbox-message">
                       <strong>{alert.title}</strong>
                       <p>{alert.description}</p>
-                      {alert.timestamp && <small>{new Date(alert.timestamp).toLocaleString()}</small>}
+                      {alert.timestamp && (
+                        <small>{new Date(alert.timestamp).toLocaleString()}</small>
+                      )}
+                    </div>
+                  ))
+                )}
+
+                <h3>General Notifications</h3>
+                {generalNotifications.length === 0 ? (
+                  <p>No general notifications</p>
+                ) : (
+                  generalNotifications.map(notification => (
+                    <div key={notification.id} className="inbox-message">
+                      <strong>{notification.title}</strong>
+                      <p>{notification.message}</p>
+                      {notification.createdAt && (
+                        <small>{new Date(notification.createdAt).toLocaleString()}</small>
+                      )}
                     </div>
                   ))
                 )}

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, off } from "firebase/database";
 import { PushNotifications, notify } from './pushNotifications';
-import { useState, useEffect } from 'react';
 import './DashboardContent.css';
 
 const firebaseConfig = {
@@ -22,7 +21,8 @@ const db = getDatabase(app);
 const DashboardContent = () => {
   const [, setLatestAlerts] = useState([]);
   const navigate = useNavigate();
-  
+  const [, setGeneralNotifications] = useState([]);
+
   useEffect(() => {
     const alertsRef = ref(db, 'Incident_Alerts');
     onValue(alertsRef, (snapshot) => {
@@ -32,14 +32,41 @@ const DashboardContent = () => {
 
       if (fetchedAlerts.length > 0) {
         const mostRecentAlert = fetchedAlerts[fetchedAlerts.length - 1];
-        notify(mostRecentAlert.description);
+        console.log('Fetched Incident Alert:', mostRecentAlert);
+        if (mostRecentAlert && mostRecentAlert.description) {
+          notify(mostRecentAlert.description);
+        } else {
+          console.warn('No description in most recent alert');
+        }
+      }
+    });
+
+    const notificationsRef = ref(db, 'notifications');
+    onValue(notificationsRef, (snapshot) => {
+      const data = snapshot.val();
+      const fetchedNotifications = data ? Object.values(data) : [];
+      setGeneralNotifications(fetchedNotifications);
+
+      if (fetchedNotifications.length > 0) {
+        const mostRecentNotification = fetchedNotifications[fetchedNotifications.length - 1];
+        console.log('Fetched General Notification:', mostRecentNotification);
+        if (mostRecentNotification && mostRecentNotification.message) {
+          if (mostRecentNotification.type === 'all') {
+            notify(`Emergency Alert: ${mostRecentNotification.message}`);
+          } else {
+            notify(`Notification: ${mostRecentNotification.message}`);
+          }
+        } else {
+          console.warn('No message in most recent notification');
+        }
       }
     });
 
     return () => {
       off(alertsRef);
+      off(notificationsRef);
     };
-  }, [setLatestAlerts]);
+  }, [setLatestAlerts, setGeneralNotifications]);
 
   return (
     <div className="dashboard-content">

@@ -54,31 +54,9 @@ export const PushNotifications = () => {
   return (
     <>
       {permissionState === 'default' && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: '#3490dc',
-          color: 'white',
-          padding: '1rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          zIndex: 1000
-        }}>
+        <div className="notification-banner">
           <span>Would you like to receive push notifications for important campus alerts?</span>
-          <button 
-            onClick={requestNotificationPermission}
-            style={{
-              backgroundColor: 'white',
-              color: '#3490dc',
-              border: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '0.25rem',
-              cursor: 'pointer'
-            }}
-          >
+          <button onClick={requestNotificationPermission} className="enable-button">
             Enable Notifications
           </button>
         </div>
