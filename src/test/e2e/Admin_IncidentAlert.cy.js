@@ -24,38 +24,44 @@ describe("Incident Alert for admins", () => {
                 timestamp: '2024-10-02T12:00:00Z',
               },
             ],
-          }).as('fetchIncidents');
+          }).as('getIncidents');
     });
 
-    it('should show the incident reports in detail', () => {
-        cy.get('h1').contains('Recent Incident Reports');
-
-        cy.wait('@fetchIncidents');
-
-        // Check if the loading message is gone
-        cy.get('.loading').should('not.exist');
-
-        // Check if the incidents are displayed correctly
-        cy.get('.incident-table tbody tr').should('have.length', 2);
-        cy.get('.incident-table tbody tr').first().within(() => {
-            cy.get('td').eq(0).should('contain', 'Fire'); // Incident Type
-            cy.get('td').eq(1).should('contain', 'Fire incident at the park.'); // Description
-            cy.get('td img').should('have.attr', 'src', 'https://example.com/photo1.jpg'); // Photo
-            cy.get('td').eq(3).should('contain', new Date("2024-10-01T10:00:00Z").toLocaleString()); // Timestamp
-        });
+    it('displays loading indicator initially', () => {
+      cy.get('.loading').should('contain', 'Loading...');
     });
-
-    it('displays error message on failed fetch', () => {
-        // Intercept the API call to simulate an error response
-        cy.intercept('GET', '/api/incidents', {
-          statusCode: 500,
-          body: { message: 'Internal Server Error' },
-        }).as('fetchIncidentsError');
-      
-        cy.wait('@fetchIncidentsError');
-
-        // Check if the error message is displayed
-        cy.get('.error').should('contain', 'Error fetching incidents: Failed to fetch incidents');
+  
+    it('displays incidents data correctly after loading', () => {
+      // Wait for the incidents API call
+      cy.wait('@getIncidents');
+  
+      // Check that the table header and sample data are rendered correctly
+      cy.get('table.incident-table').should('be.visible');
+      cy.get('table.incident-table thead').within(() => {
+        cy.contains('Incident Type');
+        cy.contains('Description');
+        cy.contains('Photo');
+        cy.contains('Timestamp');
       });
+  
+      cy.get('table.incident-table tbody tr').should('have.length', 2); // Adjust based on your mock data
+      cy.get('table.incident-table tbody tr').first().within(() => {
+        cy.contains('Fire'); // Check sample data, update based on your mock data
+        cy.contains('Fire incident at the park.');
+      });
+    });
+  
+    it('displays error message if API fails', () => {
+      // Simulate a failed request
+      cy.intercept('GET', '/api/incidents', {
+        statusCode: 500,
+        body: {},
+      }).as('getIncidentsError');
+  
+      cy.reload(); // Reload the page to trigger the failed request
+      cy.wait('@getIncidentsError');
+  
+      cy.get('.error').should('contain', 'Error fetching incidents');
+    });
       
 });

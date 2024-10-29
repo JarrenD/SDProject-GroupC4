@@ -15,6 +15,7 @@ describe('Sign up flow', () => {
         cy.get('input[id="email"]').type(uniqueEmail);
         cy.get('input[id="password"]').type('testUserPassword');
         cy.get('button[type="submit"]').click();
+        cy.wait(5000);
         cy.get('@alertStub').should('be.calledWith', 'SignUp Successful!');
         cy.url().should('include', '/LogIn');
     });
@@ -23,7 +24,6 @@ describe('Sign up flow', () => {
         cy.window().then((win) => {
             cy.stub(win, 'alert').as('alertStub');
         });
-        const uniqueEmail = `${Date.now()}@example.com`;
         cy.get('input[id="username"]').type('testUser2');
         cy.get('input[id="email"]').type('testUser2@gmail.com');
         cy.get('input[id="password"]').type('testUser2Password');

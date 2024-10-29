@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "type": "Fire",
+        "description": "Fire incident at the park.",
+        "photoURL": "https://example.com/photo1.jpg",
+        "timestamp": "2024-10-01T10:00:00Z"
+    },
+    {
+        "id": 2,
+        "type": "Flood",
+        "description": "Flooding in the downtown area.",
+        "photoURL": "https://example.com/photo2.jpg",
+        "timestamp": "2024-10-02T12:00:00Z"
+    }
+]
