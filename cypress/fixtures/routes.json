@@ -1,0 +1,11 @@
+[
+    {
+      "id": "1",
+      "name": "Route 1",
+      "coordinates": [
+        { "latitude": -25.7479, "longitude": 28.2293 },
+        { "latitude": -25.7463, "longitude": 28.2263 }
+      ]
+    }
+  ]
+  

@@ -1,8 +1,11 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
+  projectId: 'mdowfz',
   // setupNodeEvents can be defined in either
   // the e2e or component configuration
+  video: true,
+  videoCompression: true,
   e2e: {
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config)

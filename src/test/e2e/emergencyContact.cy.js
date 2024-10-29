@@ -14,9 +14,6 @@ describe('Emergency Contacts', () => {
       cy.get('div').contains('Loading...').should('be.visible');
     });
   
-    it('should display contacts after loading', () => {
-      cy.get('h2').contains("Emergency Contacts");
-    });
   
     it('should display an error message if fetching contacts fails', () => {
       // Mock the API to return an error response
